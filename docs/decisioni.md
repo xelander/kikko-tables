@@ -310,9 +310,10 @@ cameriere (F3), modifica del menù e delle foto dall'admin (F5), PWA e cache off
   monitor (F6).
 - **Tavolo e PIN** li gestiscono cameriere e capo: il PIN si genera da solo all'apertura e resta valido per tutta la
   seduta, per tutti i telefoni che arrivano.
-- **PIN sempre visibile al cameriere, niente "Nuovo PIN"** (decisione successiva, stesso giorno): il PIN si vede nella
-  lista dei tavoli e, in grande, nella pagina del tavolo. Il pulsante "Nuovo PIN" è stato tolto dall'app; l'endpoint
-  `POST /sedute/:id/pin` resta per i casi di emergenza (per esempio un PIN finito nelle mani sbagliate).
+- **PIN sempre visibile al cameriere** (decisione successiva, stesso giorno): il PIN si vede nella lista dei tavoli e,
+  in grande, nella pagina del tavolo. **"Nuovo PIN" resta come opzione** nella pagina del tavolo, con conferma: serve
+  se il PIN è finito nelle mani sbagliate o per sbloccare subito un tavolo bloccato da troppi tentativi. I telefoni già
+  al tavolo restano collegati e il nuovo PIN compare subito.
 - **Unione di due tavoli già aperti**: sì, solo con la stessa formula. **Separazione**: no, si chiude e si riapre.
 - **Coperti** modificabili da cameriere e capo.
 
@@ -360,5 +361,6 @@ cifrata (`Seduta.pinCifrato`, AES-256-GCM con l'id della seduta come dato associ
 `PIN_HMAC_SECRET`). Il controllo dei PIN usa sempre e solo l'HMAC. La copia cifrata compare solo nelle API staff
 (lista e dettaglio dei tavoli), mai in quelle dei clienti, e un test lo verifica. Il rischio aggiunto è basso: il PIN
 vale una sola seduta, cambia a ogni apertura e i tentativi sbagliati restano bloccati. Cambiare `PIN_HMAC_SECRET` rende
-illeggibili i PIN dei tavoli già aperti (la lista mostra "—"). Sblocco di un tavolo bloccato da troppi tentativi: si
-sblocca da solo allo scadere del blocco (da 60 s fino a un'ora); se servisse prima, si potrà aggiungere un pulsante in F4.
+illeggibili i PIN dei tavoli già aperti (la lista mostra "—"): in quel caso "Nuovo PIN" ne genera uno leggibile. Un
+tavolo bloccato da troppi tentativi si sblocca da solo allo scadere del blocco (da 60 s fino a un'ora) oppure subito con
+"Nuovo PIN".

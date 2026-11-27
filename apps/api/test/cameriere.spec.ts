@@ -192,6 +192,13 @@ describe('waiter app: ordering for the table, covers, moving and joining tables'
       expect(JSON.stringify(vistaCliente.body)).not.toMatch(/"pin/);
       const statoCliente = await request(server).get('/api/t/tavolo-02').set('Cookie', anna);
       expect(JSON.stringify(statoCliente.body)).not.toMatch(/"pin/);
+      // optional new PIN: shown right away, the old one stops working, the phone stays in
+      const nuovo = (await request(server).post(`/api/sedute/${aperta.seduta.id}/pin`).set(staff()).expect(200)).body;
+      const dopo = (await request(server).get(`/api/sedute/${aperta.seduta.id}`).set(staff()))
+        .body as SedutaDettaglioDto;
+      expect(dopo.pin).toBe(nuovo.pin);
+      const ancora = (await request(server).get('/api/t/tavolo-02').set('Cookie', anna)).body as StatoTavoloCliente;
+      expect(ancora.stato).toBe('CONNESSO');
     });
 
     it('changes the covers: the round limit follows, the formula copy does not change', async () => {

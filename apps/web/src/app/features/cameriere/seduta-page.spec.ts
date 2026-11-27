@@ -127,10 +127,25 @@ describe('SedutaPage', () => {
     expect(bottone(el, 'Chiudi tavolo')).toBeUndefined(); // waiters cannot close
   });
 
-  it('always shows the PIN, and has no "new PIN" action any more', async () => {
+  it('always shows the PIN', async () => {
     const el = await render();
     expect(el.querySelector('[data-testid="pin-tavolo"]')?.textContent).toContain('0427');
-    expect(bottone(el, 'Nuovo PIN')).toBeUndefined();
+  });
+
+  it('can generate a new PIN after a confirmation, and it replaces the one shown', async () => {
+    const conferma = vi.fn(() => true);
+    vi.stubGlobal('confirm', conferma);
+    const el = await render();
+    bottone(el, 'Nuovo PIN').click();
+    expect(conferma).toHaveBeenCalledWith(expect.stringContaining('i telefoni già al tavolo restano collegati'));
+    await attendi();
+    http.expectOne('/api/sedute/s1/pin').flush({ pin: '5521', tavoloId: 't4', seduta: {} });
+    await attendi();
+    http.expectOne('/api/sedute/s1').flush(dettaglio({ pin: '5521' }));
+    await attendi();
+    expect(el.querySelector('[data-testid="pin-tavolo"]')?.textContent).toContain('5521');
+    expect(el.textContent).toContain('Nuovo PIN: 5521');
+    vi.unstubAllGlobals();
   });
 
   it('changes the covers', async () => {

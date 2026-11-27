@@ -54,6 +54,10 @@ export class TavoliApi {
     );
   }
 
+  rigeneraPin(sedutaId: string): Promise<SedutaConPin> {
+    return firstValueFrom(this.http.post<SedutaConPin>(`/api/sedute/${sedutaId}/pin`, {}));
+  }
+
   chiudi(sedutaId: string): Promise<void> {
     return firstValueFrom(this.http.post<void>(`/api/sedute/${sedutaId}/chiudi`, {}));
   }

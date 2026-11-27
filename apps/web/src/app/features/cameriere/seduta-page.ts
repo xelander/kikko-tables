@@ -26,7 +26,7 @@ type Dialogo = 'coperti' | 'sposta' | 'unisci';
 
 const STATI_GIRO: Record<string, string> = { INVIATO: 'In attesa', APPROVATO: 'Approvato', RIFIUTATO: 'Rifiutato' };
 
-/** Waiter: an open table. Always-visible PIN, order for it, covers, move, join or merge tables, close (manager). */
+/** Waiter: an open table. Always-visible PIN (new PIN optional), order for it, covers, move, join, close (manager). */
 @Component({
   selector: 'app-seduta-page',
   imports: [StaffShell, RouterLink],
@@ -145,6 +145,21 @@ export class SedutaPage {
 
   protected cambia(quale: 'adulti' | 'bambini', delta: number): void {
     (quale === 'adulti' ? this.adulti : this.bambini).update((v) => Math.max(0, Math.min(50, v + delta)));
+  }
+
+  /**
+   * Optional: a new PIN when the old one leaked, or to unlock a table blocked by wrong attempts.
+   * Phones already at the table stay connected.
+   */
+  protected async nuovoPin(): Promise<void> {
+    const conferma =
+      'Generare un nuovo PIN? Il PIN attuale smette di funzionare, i telefoni già al tavolo restano collegati ' +
+      'e il tavolo si sblocca se era bloccato da troppi tentativi.';
+    if (globalThis.confirm && !globalThis.confirm(conferma)) return;
+    await this.esegui(async () => {
+      const r = await this.api.rigeneraPin(this.sedutaId());
+      this.messaggio.set(`Nuovo PIN: ${r.pin}`);
+    }, false);
   }
 
   protected async salvaCoperti(): Promise<void> {

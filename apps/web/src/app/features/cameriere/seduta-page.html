@@ -38,6 +38,7 @@
       </a>
 
       <div class="azioni">
+        <button type="button" class="azione" [disabled]="lavoro()" (click)="nuovoPin()">🔑 Nuovo PIN</button>
         <button type="button" class="azione" (click)="apriDialogo('sposta')">↔ Sposta</button>
         <button type="button" class="azione" (click)="apriDialogo('unisci')">➕ Unisci</button>
         @if (puoChiudere()) {
