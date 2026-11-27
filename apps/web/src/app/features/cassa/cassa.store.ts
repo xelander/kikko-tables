@@ -137,7 +137,7 @@ export class CassaStore {
   }
 
   attesaLunga(g: GiroCassaDto): boolean {
-    return this.minutiAttesa(g) >= SOGLIA_GIRO_IN_ATTESA_MIN;
+    return this.minutiAttesa(g) >= (this.coda()?.sogliaAttesaMin ?? SOGLIA_GIRO_IN_ATTESA_MIN);
   }
 
   async carica(): Promise<void> {

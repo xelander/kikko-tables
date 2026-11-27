@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { DispositivoThrottlerGuard } from './common/throttler.guard.js';
+import { AdminModule } from './admin/admin.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { CassaModule } from './cassa/cassa.module.js';
 import { ClienteModule } from './cliente/cliente.module.js';
@@ -37,6 +38,7 @@ import { TavoliModule } from './tavoli/tavoli.module.js';
     ClienteModule,
     SalaModule,
     CassaModule,
+    AdminModule,
     RealtimeModule,
   ],
   // Rate limiting runs before authentication (AuthGuard is registered in AuthModule).

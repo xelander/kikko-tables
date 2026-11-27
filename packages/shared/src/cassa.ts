@@ -4,7 +4,7 @@ import type { StatoGiro } from './regole.js';
 // ---------- Cashier / manager area (CLAUDE.md §3 step 5–6, F4) ----------
 // Browser-safe: no Zod here (request schemas live in cassa-schemi.ts).
 
-/** A round waiting longer than this is highlighted in the cashier queue. */
+/** Default of the setting "a round waiting longer than this is highlighted" at the till. */
 export const SOGLIA_GIRO_IN_ATTESA_MIN = 5;
 
 /** Extra minutes offered as quick buttons to the manager. */
@@ -52,6 +52,8 @@ export interface GiroCassaDto {
 export interface CodaCassaDto {
   /** Server clock, to compute waiting times. */
   ora: string;
+  /** A round waiting at least this many minutes is highlighted (set by the administrator). */
+  sogliaAttesaMin: number;
   /** Rounds to approve, oldest first. */
   inAttesa: GiroCassaDto[];
   /** Last rounds handled (most recent first), for reference. */

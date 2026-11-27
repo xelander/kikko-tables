@@ -12,3 +12,4 @@ export * from './clienti.js';
 export * from './regole.js';
 export * from './cassa.js';
 export * from './cassa-schemi.js';
+export * from './admin.js';

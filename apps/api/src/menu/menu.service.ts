@@ -16,7 +16,7 @@ export class MenuService {
     const [categorie, gruppi, piatti] = await Promise.all([
       this.prisma.categoria.findMany({ orderBy: [{ ordine: 'asc' }, { nomeIt: 'asc' }] }),
       this.prisma.gruppoLimite.findMany({ orderBy: { codice: 'asc' } }),
-      this.prisma.piatto.findMany({ orderBy: [{ ordine: 'asc' }, { nomeIt: 'asc' }] }),
+      this.prisma.piatto.findMany({ where: { archiviato: false }, orderBy: [{ ordine: 'asc' }, { nomeIt: 'asc' }] }),
     ]);
     const ordineCategoria = new Map(categorie.map((c, i) => [c.id, i]));
     const corpo = {
@@ -73,6 +73,7 @@ export class MenuService {
           id: true,
           inFormula: true,
           disponibile: true,
+          archiviato: true,
           maxPerPersona: true,
           maxPerGiro: true,
           gruppoLimiteId: true,
@@ -82,7 +83,13 @@ export class MenuService {
       tx.gruppoLimite.findMany({ select: { id: true, maxPerPersona: true } }),
     ]);
     return {
-      piatti: new Map(piatti.map((p) => [p.id, { ...p, gruppoId: p.gruppoLimiteId }])),
+      // An archived dish left in a cart counts as unavailable.
+      piatti: new Map(
+        piatti.map(({ archiviato, ...p }) => [
+          p.id,
+          { ...p, disponibile: p.disponibile && !archiviato, gruppoId: p.gruppoLimiteId },
+        ]),
+      ),
       gruppi: new Map(gruppi.map((g) => [g.id, g])),
     };
   }

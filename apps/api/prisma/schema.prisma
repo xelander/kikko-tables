@@ -89,11 +89,15 @@ enum TipoEvento {
 
 /// Impostazioni globali del locale: una sola riga (id = 1).
 model Impostazioni {
-  id         Int      @id @default(1)
-  nomeLocale String
-  fusoOrario String
-  valuta     String
-  updatedAt  DateTime @updatedAt
+  id                  Int      @id @default(1)
+  nomeLocale          String
+  fusoOrario          String
+  valuta              String
+  /// Un giro in attesa da almeno questi minuti è evidenziato alla cassa.
+  sogliaGiroAttesaMin Int      @default(5)
+  /// Indirizzo pubblico dell'app (es. https://ordina.kikko.it) usato nei QR stampati; null = quello da cui si stampa.
+  urlBaseQr           String?
+  updatedAt           DateTime @updatedAt
 }
 
 model Formula {
@@ -173,6 +177,8 @@ model Piatto {
   gruppoLimiteId    String?        @db.Uuid
   gruppoLimite      GruppoLimite?  @relation(fields: [gruppoLimiteId], references: [id], onDelete: SetNull)
   disponibile       Boolean        @default(true)
+  /// Tolto dal menù dall'amministratore ma già ordinato in passato: resta per lo storico e i report.
+  archiviato        Boolean        @default(false)
   ordine            Int            @default(0)
   vociCarrello      VoceCarrello[]
   vociGiro          VoceGiro[]

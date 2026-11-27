@@ -53,6 +53,20 @@ describe('perCliente', () => {
     expect(perCliente({ ...esaurito, tipo: 'CONFIG_MODIFICATA' }, 'seduta-1')).toBeNull();
   });
 
+  it('tells customers about menu changes made by the administrator, and about nothing else of the configuration', () => {
+    const config: EventoDto = {
+      ...base,
+      tipo: 'CONFIG_MODIFICATA',
+      attore: { ruolo: 'ADMIN', id: 'admin-1', dispositivoStaffId: null },
+      sedutaId: null,
+      tavoloId: null,
+      payload: { ambito: 'menu', azione: 'MODIFICATO', piattoId: 'p-1', nome: 'Bao' },
+    };
+    expect(perCliente(config, 'seduta-1')?.payload).toEqual({ ambito: 'menu' });
+    for (const ambito of ['formule', 'impostazioni', 'tavoli', 'utenti'])
+      expect(perCliente({ ...config, payload: { ambito, azione: 'MODIFICATO' } }, 'seduta-1')).toBeNull();
+  });
+
   it.each(['TAVOLO_APERTO', 'PIN_RIGENERATO', 'PIN_ERRATO', 'CLIENT_RICONNESSO', 'PRECONTO_GENERATO'] as const)(
     'never sends %s to customers',
     (tipo) => {

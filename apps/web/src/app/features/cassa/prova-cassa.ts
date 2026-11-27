@@ -34,7 +34,7 @@ export function giroProva(over: Partial<GiroCassaDto> = {}): GiroCassaDto {
 }
 
 export function codaProva(inAttesa: GiroCassaDto[] = [giroProva()], recenti: GiroCassaDto[] = []): CodaCassaDto {
-  return { ora: new Date().toISOString(), inAttesa, recenti };
+  return { ora: new Date().toISOString(), sogliaAttesaMin: 5, inAttesa, recenti };
 }
 
 export function tavoloAperto(numero: number, over: Partial<SedutaRiepilogo> = {}): TavoloStato {

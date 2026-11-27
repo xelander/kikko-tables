@@ -24,6 +24,8 @@ export const TIPI_VISIBILI_CLIENTE = Object.keys(CAMPI_CLIENTE) as TipoEvento[];
 const CAMPI_CLIENTE_GLOBALI: Partial<Record<TipoEvento, readonly string[]>> = {
   PIATTO_ESAURITO: ['piattoId'],
   PIATTO_RIPRISTINATO: ['piattoId'],
+  // Only menu changes (see perCliente): open customer menus reload.
+  CONFIG_MODIFICATA: ['ambito'],
 };
 
 export const TIPI_GLOBALI_CLIENTE = Object.keys(CAMPI_CLIENTE_GLOBALI) as TipoEvento[];
@@ -41,6 +43,7 @@ export function perCliente(evento: EventoDto, sedutaId: string): EventoDto | nul
         ? CAMPI_CLIENTE[evento.tipo]
         : undefined;
   if (!campi) return null;
+  if (evento.tipo === 'CONFIG_MODIFICATA' && evento.payload['ambito'] !== 'menu') return null;
   const payload = Object.fromEntries(campi.filter((c) => c in evento.payload).map((c) => [c, evento.payload[c]]));
   return {
     seq: evento.seq,

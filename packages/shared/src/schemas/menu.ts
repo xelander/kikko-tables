@@ -39,58 +39,64 @@ export const ImmagineSchema = z.object({
   anteprima: z.string().startsWith('data:image/'),
 });
 
-export const PiattoSchema = z
-  .object({
-    codice: CodiceSchema,
-    /** Number printed on the restaurant menu (e.g. "8a"), used by staff to talk about dishes. */
-    numero: z
-      .string()
-      .regex(/^\d{1,3}[a-z]?$/)
-      .nullable()
-      .default(null),
-    nome: TestoLocalizzatoSchema,
-    descrizione: TestoLocalizzatoOpzionaleSchema.default({ it: '', en: '' }),
-    categoria: CodiceSchema,
-    pezzi: InteroPositivoSchema.nullable().default(null),
-    immagine: ImmagineSchema.nullable().default(null),
-    allergeni: z.array(AllergeneSchema).default([]),
-    vegetariano: z.boolean().default(false),
-    piccante: z.boolean().default(false),
-    senzaGlutine: z.boolean().default(false),
-    /** Included in the all-you-can-eat price. Extras are paid and do not count towards the round limit. */
-    inFormula: z.boolean().default(true),
-    /** Price of an extra, shown to customers. */
-    prezzoExtraCent: CentesimiSchema.nullable().default(null),
-    /** À la carte price from the printed menu: kept for the admin dashboard, never shown to customers. */
-    prezzoCartaCent: CentesimiSchema.nullable().default(null),
-    /** "At most N times": per person for the whole session (limit = N × covers). */
-    maxPerPersona: InteroPositivoSchema.nullable().default(null),
-    /** At most N pieces in a single round, for the whole table. */
-    maxPerGiro: InteroPositivoSchema.nullable().default(null),
-    /** Code of a shared limit group. */
-    gruppo: CodiceSchema.nullable().default(null),
-    disponibile: z.boolean().default(true),
-    ordine: z.number().int().default(0),
-  })
-  .superRefine((p, ctx) => {
-    if (!p.inFormula && p.prezzoExtraCent === null) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Un piatto fuori formula deve avere un prezzo extra',
-        path: ['prezzoExtraCent'],
-      });
-    }
-    if (p.inFormula && p.prezzoExtraCent !== null) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Un piatto in formula non può avere un prezzo extra',
-        path: ['prezzoExtraCent'],
-      });
-    }
-    if (new Set(p.allergeni).size !== p.allergeni.length) {
-      ctx.addIssue({ code: 'custom', message: 'Allergeni duplicati', path: ['allergeni'] });
-    }
-  });
+/** Fields of a dish, without the cross-field rules (see `regolePiatto`). */
+export const PiattoBaseSchema = z.object({
+  codice: CodiceSchema,
+  /** Number printed on the restaurant menu (e.g. "8a"), used by staff to talk about dishes. */
+  numero: z
+    .string()
+    .regex(/^\d{1,3}[a-z]?$/)
+    .nullable()
+    .default(null),
+  nome: TestoLocalizzatoSchema,
+  descrizione: TestoLocalizzatoOpzionaleSchema.default({ it: '', en: '' }),
+  categoria: CodiceSchema,
+  pezzi: InteroPositivoSchema.nullable().default(null),
+  immagine: ImmagineSchema.nullable().default(null),
+  allergeni: z.array(AllergeneSchema).default([]),
+  vegetariano: z.boolean().default(false),
+  piccante: z.boolean().default(false),
+  senzaGlutine: z.boolean().default(false),
+  /** Included in the all-you-can-eat price. Extras are paid and do not count towards the round limit. */
+  inFormula: z.boolean().default(true),
+  /** Price of an extra, shown to customers. */
+  prezzoExtraCent: CentesimiSchema.nullable().default(null),
+  /** À la carte price from the printed menu: kept for the admin dashboard, never shown to customers. */
+  prezzoCartaCent: CentesimiSchema.nullable().default(null),
+  /** "At most N times": per person for the whole session (limit = N × covers). */
+  maxPerPersona: InteroPositivoSchema.nullable().default(null),
+  /** At most N pieces in a single round, for the whole table. */
+  maxPerGiro: InteroPositivoSchema.nullable().default(null),
+  /** Code of a shared limit group. */
+  gruppo: CodiceSchema.nullable().default(null),
+  disponibile: z.boolean().default(true),
+  ordine: z.number().int().default(0),
+});
+
+type RegolePiattoInput = Pick<z.infer<typeof PiattoBaseSchema>, 'inFormula' | 'prezzoExtraCent' | 'allergeni'>;
+
+/** Rules across fields of a dish: extras have a price, included dishes do not, no duplicated allergens. */
+export function regolePiatto(p: RegolePiattoInput, ctx: z.RefinementCtx): void {
+  if (!p.inFormula && p.prezzoExtraCent === null) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Un piatto fuori formula deve avere un prezzo extra',
+      path: ['prezzoExtraCent'],
+    });
+  }
+  if (p.inFormula && p.prezzoExtraCent !== null) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Un piatto in formula non può avere un prezzo extra',
+      path: ['prezzoExtraCent'],
+    });
+  }
+  if (new Set(p.allergeni).size !== p.allergeni.length) {
+    ctx.addIssue({ code: 'custom', message: 'Allergeni duplicati', path: ['allergeni'] });
+  }
+}
+
+export const PiattoSchema = PiattoBaseSchema.superRefine(regolePiatto);
 
 export const MenuSchema = z
   .object({

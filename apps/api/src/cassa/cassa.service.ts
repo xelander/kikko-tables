@@ -7,6 +7,7 @@ import {
   type PiattoCassaDto,
   type PrecontoDto,
   type TempoSedutaDto,
+  SOGLIA_GIRO_IN_ATTESA_MIN,
   calcolaPreconto,
   calcolaScadenza,
 } from '@kikko/shared';
@@ -56,7 +57,7 @@ export class CassaService {
 
   async coda(): Promise<CodaCassaDto> {
     const ora = new Date();
-    const [inAttesa, recenti] = await Promise.all([
+    const [inAttesa, recenti, impostazioni] = await Promise.all([
       this.prisma.giro.findMany({
         where: { stato: 'INVIATO', seduta: { stato: 'APERTA' } },
         orderBy: { inviatoIl: 'asc' },
@@ -71,6 +72,7 @@ export class CassaService {
         take: RECENTI,
         include: includeGiroCassa,
       }),
+      this.prisma.impostazioni.findUnique({ where: { id: 1 }, select: { sogliaGiroAttesaMin: true } }),
     ]);
     const idStaff = [...new Set(recenti.map((g) => g.gestitoDaId).filter((id): id is string => id !== null))];
     const staff = idStaff.length
@@ -79,6 +81,7 @@ export class CassaService {
     const nomi = new Map(staff.map((s) => [s.id, s.nome]));
     return {
       ora: ora.toISOString(),
+      sogliaAttesaMin: impostazioni?.sogliaGiroAttesaMin ?? SOGLIA_GIRO_IN_ATTESA_MIN,
       inAttesa: inAttesa.map((g) => this.giroDto(g, nomi)),
       recenti: recenti.map((g) => this.giroDto(g, nomi)),
     };
@@ -158,6 +161,7 @@ export class CassaService {
 
   async piatti(): Promise<PiattoCassaDto[]> {
     const piatti = await this.prisma.piatto.findMany({
+      where: { archiviato: false },
       include: { categoria: { select: { nomeIt: true, ordine: true } } },
       orderBy: [{ categoria: { ordine: 'asc' } }, { ordine: 'asc' }, { nomeIt: 'asc' }],
     });
