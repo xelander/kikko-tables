@@ -7,10 +7,16 @@
 
 <div class="sala">
   <header class="testata">
-    <img class="testata__logo" src="/assets/brand/logo.svg" alt="Kikko" width="40" height="40" />
+    @if (staff) {
+      <button type="button" class="testata__indietro" (click)="indietro.emit()" aria-label="Torna al tavolo">←</button>
+    } @else {
+      <img class="testata__logo" src="/assets/brand/logo.svg" alt="Kikko" width="40" height="40" />
+    }
     <div class="testata__info">
       <strong>{{ t.tavolo }} {{ s?.tavoli?.join(' + ') }}</strong>
-      @if (store.io(); as io) {
+      @if (staff) {
+        <span class="testata__io">🧑‍🍳 Ordine per conto del tavolo</span>
+      } @else if (store.io(); as io) {
         <span class="testata__io">{{ io.emoji }} {{ io.soprannome }}</span>
       }
     </div>

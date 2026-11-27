@@ -1,0 +1,197 @@
+<app-staff-shell>
+  <main class="pagina">
+    <a routerLink="/staff/cameriere" class="indietro">‹ Tutti i tavoli</a>
+
+    @if (seduta(); as s) {
+      <header class="testa">
+        <h1>Tavolo {{ s.tavoli.map((t) => t.numero).join(' + ') }}</h1>
+        <p class="testa__sotto">
+          {{ s.formula.nome.it }} · aperto alle {{ orario(s.apertaIl) }} da {{ s.apertaDa }} · ⏱
+          {{ rimanente(s.scadeIl) }}
+        </p>
+      </header>
+
+      <section class="numeri" aria-label="Riepilogo">
+        <button type="button" class="numero" (click)="apriDialogo('coperti')" data-testid="coperti">
+          <strong>{{ s.copertiAdulti + s.copertiBambini }}</strong>
+          <span>coperti · modifica</span>
+        </button>
+        <div class="numero">
+          <strong>{{ telefoni().length }}</strong>
+          <span>telefoni</span>
+        </div>
+        <div class="numero">
+          <strong>{{ s.formula.piattiPerPersonaPerGiro * (s.copertiAdulti + s.copertiBambini) }}</strong>
+          <span>piatti per giro</span>
+        </div>
+      </section>
+
+      <a class="ordina" [routerLink]="['/staff/cameriere/sedute', s.sedutaId, 'ordina']" data-testid="ordina">
+        🧑‍🍳 Ordina per il tavolo
+      </a>
+
+      <div class="azioni">
+        <button type="button" class="azione" [disabled]="lavoro()" (click)="nuovoPin()">🔑 Nuovo PIN</button>
+        <button type="button" class="azione" (click)="apriDialogo('sposta')">↔ Sposta</button>
+        <button type="button" class="azione" (click)="apriDialogo('unisci')">➕ Unisci</button>
+        @if (puoChiudere()) {
+          <button type="button" class="azione azione--pericolo" [disabled]="lavoro()" (click)="chiudiTavolo()">
+            Chiudi tavolo
+          </button>
+        }
+      </div>
+
+      @if (messaggio(); as m) {
+        <p class="ok" role="status">{{ m }}</p>
+      }
+      @if (errore() && !dialogo()) {
+        <p class="errore" role="alert">{{ errore() }}</p>
+      }
+
+      <section>
+        <h2>Carrello del tavolo</h2>
+        @if (carrello().length) {
+          <ul class="voci" data-testid="carrello-tavolo">
+            @for (r of carrello(); track r.nome) {
+              <li>
+                <span>{{ r.totale }} × {{ r.nome }}</span>
+                <span class="voci__chi">{{ r.chi.join(' · ') }}</span>
+              </li>
+            }
+          </ul>
+        } @else {
+          <p class="vuoto">Vuoto.</p>
+        }
+      </section>
+
+      <section>
+        <h2>Giri</h2>
+        @if (s.giri.length) {
+          <ul class="giri" data-testid="giri-tavolo">
+            @for (g of s.giri.slice().reverse(); track g.id) {
+              <li class="giro" [attr.data-stato]="g.stato">
+                <div class="giro__testa">
+                  <strong>Giro {{ g.numero }}</strong>
+                  <span>{{ orario(g.inviatoIl) }}</span>
+                  <span class="giro__stato">{{ statiGiro[g.stato] }}</span>
+                </div>
+                <p class="giro__voci">
+                  @for (v of g.voci; track v.piattoId; let ultimo = $last) {
+                    {{ v.quantita }} × {{ nome(v.piattoId) }}{{ ultimo ? '' : ', ' }}
+                  }
+                </p>
+                @if (g.motivoRifiuto) {
+                  <p class="giro__motivo">{{ g.motivoRifiuto }}</p>
+                }
+              </li>
+            }
+          </ul>
+        } @else {
+          <p class="vuoto">Nessun giro ancora.</p>
+        }
+      </section>
+
+      @if (telefoni().length) {
+        <section>
+          <h2>Telefoni al tavolo</h2>
+          <p class="telefoni">
+            @for (d of telefoni(); track d.id) {
+              <span>{{ d.emoji }} {{ d.soprannome }}</span>
+            }
+          </p>
+        </section>
+      }
+    } @else if (errore()) {
+      <p class="errore" role="alert">{{ errore() }}</p>
+    } @else {
+      <p class="vuoto">Caricamento…</p>
+    }
+  </main>
+
+  <dialog #finestra class="dialogo" (close)="dialogo.set(null); pin.set(null)">
+    @switch (dialogo()) {
+      @case ('pin') {
+        <h2>Nuovo PIN</h2>
+        <p class="pin" data-testid="pin">{{ pin() }}</p>
+        <p class="nota">I telefoni già al tavolo restano collegati. Il PIN precedente non funziona più.</p>
+        <button type="button" class="primario" (click)="chiudiDialogo()">Fatto</button>
+      }
+      @case ('coperti') {
+        <h2>Coperti</h2>
+        <fieldset class="contatore">
+          <legend>Adulti</legend>
+          <button type="button" (click)="cambia('adulti', -1)" aria-label="Un adulto in meno">−</button>
+          <output>{{ adulti() }}</output>
+          <button type="button" (click)="cambia('adulti', 1)" aria-label="Un adulto in più">+</button>
+        </fieldset>
+        <fieldset class="contatore">
+          <legend>Bambini</legend>
+          <button type="button" (click)="cambia('bambini', -1)" aria-label="Un bambino in meno">−</button>
+          <output>{{ bambini() }}</output>
+          <button type="button" (click)="cambia('bambini', 1)" aria-label="Un bambino in più">+</button>
+        </fieldset>
+        <p class="nota">Il limite di piatti per giro e i limiti "a persona" si aggiornano subito.</p>
+        <button
+          type="button"
+          class="primario"
+          [disabled]="lavoro() || adulti() + bambini() < 1"
+          (click)="salvaCoperti()"
+        >
+          Salva
+        </button>
+      }
+      @case ('sposta') {
+        <h2>Sposta al tavolo…</h2>
+        @if ((seduta()?.tavoli?.length ?? 0) > 1) {
+          <label class="campo">
+            Tavolo da liberare
+            <select (change)="daTavoloId.set($any($event.target).value)">
+              @for (t of seduta()?.tavoli; track t.id) {
+                <option [value]="t.id" [selected]="daTavoloId() === t.id">{{ t.numero }}</option>
+              }
+            </select>
+          </label>
+        }
+        <div class="scelte" data-testid="tavoli-liberi">
+          @for (t of liberi(); track t.id) {
+            <button type="button" class="scelta" [disabled]="lavoro()" (click)="sposta(t.id, t.numero)">
+              {{ t.numero }}
+            </button>
+          } @empty {
+            <p class="vuoto">Nessun tavolo libero.</p>
+          }
+        </div>
+      }
+      @case ('unisci') {
+        <h2>Unisci tavoli</h2>
+        <h3>Aggiungi un tavolo libero</h3>
+        <div class="scelte">
+          @for (t of liberi(); track t.id) {
+            <button type="button" class="scelta" [disabled]="lavoro()" (click)="aggiungi(t.id, t.numero)">
+              {{ t.numero }}
+            </button>
+          } @empty {
+            <p class="vuoto">Nessun tavolo libero.</p>
+          }
+        </div>
+        <h3>Unisci un tavolo già aperto</h3>
+        <p class="nota">Solo tavoli con la stessa formula. Telefoni, carrello e giri passano qui.</p>
+        <div class="scelte" data-testid="tavoli-unibili">
+          @for (t of unibili(); track t.id) {
+            <button type="button" class="scelta scelta--aperto" [disabled]="lavoro()" (click)="unisci(t)">
+              {{ t.seduta?.tavoli?.join('+') }}
+            </button>
+          } @empty {
+            <p class="vuoto">Nessun tavolo aperto con la stessa formula.</p>
+          }
+        </div>
+      }
+    }
+    @if (errore() && dialogo()) {
+      <p class="errore" role="alert">{{ errore() }}</p>
+    }
+    @if (dialogo() !== 'pin') {
+      <button type="button" class="link" (click)="chiudiDialogo()">Annulla</button>
+    }
+  </dialog>
+</app-staff-shell>

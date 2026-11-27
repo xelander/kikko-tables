@@ -1,6 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import type { ApriTavoloRichiesta, FormuleDisponibili, SedutaConPin, TavoloStato } from '@kikko/shared';
+import type {
+  ApriTavoloRichiesta,
+  CopertiRichiesta,
+  FormuleDisponibili,
+  MenuDto,
+  SedutaConPin,
+  SedutaDettaglioDto,
+  SedutaRiepilogo,
+  TavoloStato,
+} from '@kikko/shared';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -21,6 +30,32 @@ export class TavoliApi {
 
   rigeneraPin(sedutaId: string): Promise<SedutaConPin> {
     return firstValueFrom(this.http.post<SedutaConPin>(`/api/sedute/${sedutaId}/pin`, {}));
+  }
+
+  dettaglio(sedutaId: string): Promise<SedutaDettaglioDto> {
+    return firstValueFrom(this.http.get<SedutaDettaglioDto>(`/api/sedute/${sedutaId}`));
+  }
+
+  menu(): Promise<MenuDto> {
+    return firstValueFrom(this.http.get<MenuDto>('/api/menu'));
+  }
+
+  coperti(sedutaId: string, coperti: CopertiRichiesta): Promise<SedutaRiepilogo> {
+    return firstValueFrom(this.http.patch<SedutaRiepilogo>(`/api/sedute/${sedutaId}/coperti`, coperti));
+  }
+
+  sposta(sedutaId: string, daTavoloId: string, aTavoloId: string): Promise<SedutaRiepilogo> {
+    return firstValueFrom(this.http.post<SedutaRiepilogo>(`/api/sedute/${sedutaId}/sposta`, { daTavoloId, aTavoloId }));
+  }
+
+  aggiungiTavolo(sedutaId: string, tavoloId: string): Promise<SedutaRiepilogo> {
+    return firstValueFrom(this.http.post<SedutaRiepilogo>(`/api/sedute/${sedutaId}/tavoli`, { tavoloId }));
+  }
+
+  unisci(sedutaId: string, altraSedutaId: string): Promise<SedutaRiepilogo> {
+    return firstValueFrom(
+      this.http.post<SedutaRiepilogo>(`/api/sedute/${sedutaId}/unisci`, { sedutaId: altraSedutaId }),
+    );
   }
 
   chiudi(sedutaId: string): Promise<void> {

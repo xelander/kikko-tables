@@ -1,5 +1,5 @@
 import { signal } from '@angular/core';
-import type { EventoDto, MenuDto, SedutaClienteDto, SessioneStaff } from '@kikko/shared';
+import type { EventoDto, MenuDto, SedutaClienteDto, SessioneStaff, SessioneTerminata } from '@kikko/shared';
 import { Subject } from 'rxjs';
 import type { Socket } from 'socket.io-client';
 import type { StatoConnessione } from '../core/realtime/realtime.service';
@@ -18,7 +18,7 @@ export class RealtimeFinto {
   readonly stato = signal<StatoConnessione>('inattivo');
   readonly eventi$ = new Subject<EventoDto>();
   readonly ricarica$ = new Subject<void>();
-  readonly terminata$ = new Subject<{ motivo: 'TAVOLO_CHIUSO' }>();
+  readonly terminata$ = new Subject<SessioneTerminata>();
   avviato: unknown = null;
   avvia(config: unknown): void {
     this.avviato = config;

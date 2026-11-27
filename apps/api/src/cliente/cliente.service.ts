@@ -150,8 +150,9 @@ export class ClienteService {
       }
 
       await this.blocchi.azzera(tx, chiavi);
+      // Customer phones only: the waiter's ordering device does not take an emoji or a guest number.
       const presenti = await tx.dispositivoCliente.findMany({
-        where: { sedutaId: seduta.id },
+        where: { sedutaId: seduta.id, utenteStaffId: null },
         select: { emoji: true },
       });
       const usate = new Set(presenti.map((p) => p.emoji));

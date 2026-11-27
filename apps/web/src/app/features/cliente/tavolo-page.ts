@@ -81,7 +81,11 @@ export class TavoloPage {
       }
     });
 
-    this.realtime.terminata$.pipe(takeUntilDestroyed()).subscribe(() => this.vista.set({ tipo: 'chiuso' }));
+    this.realtime.terminata$.pipe(takeUntilDestroyed()).subscribe((m) => {
+      // Merged with another table: the same cookie now belongs to the merged session, reload and follow it.
+      if (m.motivo === 'TAVOLI_UNITI') void this.carica(this.slug());
+      else this.vista.set({ tipo: 'chiuso' });
+    });
     this.realtime.eventi$.pipe(takeUntilDestroyed()).subscribe((e) => {
       if (e.tipo === 'TAVOLO_CHIUSO') this.vista.set({ tipo: 'chiuso' });
       if (e.tipo === 'TEMPO_ESTESO') void this.carica(this.slug());

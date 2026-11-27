@@ -300,3 +300,52 @@ regola lo impedisce. Filtri "escludi allergeni", vegetariani e senza glutine, ri
 
 Approvazione e rifiuto dei giri alla cassa e piatti esauriti in tempo reale (F4), ordini per conto del cliente dal
 cameriere (F3), modifica del menù e delle foto dall'admin (F5), PWA e cache offline del menù (F8).
+
+## F3 – App cameriere
+
+### Decisioni del committente (2026-11-27)
+
+- **Lista invece della mappa della sala**: i camerieri usano il telefono, dove una mappa sarebbe scomoda. La lista si
+  filtra per aperti, liberi e "giro in attesa" e si cerca per numero. Le posizioni dei tavoli restano nel database per il
+  monitor (F6).
+- **Tavolo e PIN** li gestiscono cameriere e capo: il PIN si genera da solo all'apertura (già così da F1) e si può
+  rigenerare dalla pagina del tavolo. Non si può rivedere, perché il server ne salva solo l'impronta.
+- **Unione di due tavoli già aperti**: sì, solo con la stessa formula. **Separazione**: no, si chiude e si riapre.
+- **Coperti** modificabili da cameriere e capo.
+
+### Ordini per conto del tavolo
+
+Il cameriere usa lo stesso schermo del cliente (stessi componenti), collegato agli endpoint staff della seduta. Per non
+duplicare carrello, giri e regole, ordina tramite un "dispositivo" della seduta creato al primo uso
+(`DispositivoCliente.utenteStaffId`, emoji 🧑‍🍳, senza un token utilizzabile). Le sue righe compaiono nel carrello
+condiviso e i clienti le vedono; le regole sono le stesse e gli eventi registrano il cameriere come autore. Questo
+dispositivo non conta tra i telefoni collegati e non prende emoji né numero "Ospite".
+
+### Spostare un tavolo
+
+La seduta passa da un suo tavolo a uno libero, con un aggiornamento condizionale che resta sicuro con richieste
+simultanee. I telefoni restano dentro e vedono il nuovo numero in tempo reale. Il QR del vecchio tavolo continua a
+funzionare per i telefoni già entrati: una regola riconosce i tavoli che la loro seduta ha occupato. Lo stesso PIN vale
+al nuovo tavolo.
+
+### Unire tavoli
+
+- **Tavolo libero**: si aggiunge alla seduta e il suo QR porta alla stessa seduta, con lo stesso PIN.
+- **Due tavoli aperti** (stessa formula): tavoli, telefoni, carrello e giri passano alla seduta principale. I giri vengono
+  rinumerati dopo quelli della principale e continuano a contare per i limiti "a persona". I coperti si sommano; per il
+  tempo valgono l'apertura più vecchia e il maggiore dei minuti extra. La seduta assorbita viene chiusa con `unitaInId`.
+  Il PIN valido resta quello della principale.
+- I telefoni del tavolo assorbito ricevono `sessione_terminata` con motivo `TAVOLI_UNITI`: ricaricano lo stato e si
+  ricollegano, entrando così nella stanza della seduta principale. Le sedute coinvolte vengono bloccate in ordine di id
+  (`SELECT … FOR UPDATE`) per evitare conflitti e deadlock.
+
+### Coperti
+
+Modificarli aggiorna subito il limite del giro e i limiti "a persona"; le regole della formula restano quelle copiate
+all'apertura. Nuovo tipo di evento `COPERTI_MODIFICATI`, visibile ai clienti (solo i numeri dei coperti).
+
+### Nota di processo
+
+Alcune modifiche alla documentazione di F1 e F2 fatte con script non erano state applicate, perché la formattazione
+automatica aveva cambiato le tabelle: le variabili d'ambiente e le API mancanti sono state aggiunte al README in F3.
+Da qui in poi le modifiche ai file esistenti si fanno solo con sostituzioni verificate.

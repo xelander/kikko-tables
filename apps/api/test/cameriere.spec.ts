@@ -142,6 +142,13 @@ describe('waiter app: ordering for the table, covers, moving and joining tables'
       expect(t.seduta?.dispositiviCollegati).toBe(1);
     });
 
+    it('does not count the waiter as a guest when the next phone joins', async () => {
+      const aperta = await apri(4);
+      await request(server).get(`/api/sedute/${aperta.seduta.id}/sala`).set(staff()).expect(200);
+      const res = await request(server).post('/api/t/tavolo-04/join').send({ pin: aperta.pin }).expect(200);
+      expect(res.body).toMatchObject({ soprannome: 'Ospite 1', emoji: '🐼' });
+    });
+
     it('is for waiters only, on open tables only', async () => {
       const aperta = await apri(6);
       const monitor = await login(server, 'monitor');

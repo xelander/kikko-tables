@@ -4,70 +4,155 @@
 
 .pagina {
   padding: var(--space-4);
-  max-width: 72rem;
+  max-width: 40rem;
   margin: 0 auto;
 }
 
-.riepilogo {
-  margin: 0 0 var(--space-3);
-  color: var(--color-text-muted);
+.ricerca__input {
+  width: 100%;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font: inherit;
+  font-size: 16px;
 }
 
-.mappa {
+.filtri {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  margin: var(--space-3) 0;
+  scrollbar-width: none;
+}
+
+.filtro {
+  flex: none;
+  min-height: 2.5rem;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  cursor: pointer;
+
+  &[aria-pressed='true'] {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: var(--color-bg);
+  }
+}
+
+.filtro__n {
+  margin-left: var(--space-1);
+  opacity: 0.7;
+}
+
+.lista {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
-.tavolo {
+.riga {
   width: 100%;
-  min-height: 6.5rem;
-  display: grid;
-  align-content: start;
-  gap: var(--space-1);
-  padding: var(--space-3);
-  border: 2px solid var(--color-border);
+  min-height: 4.25rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-left: 6px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text);
   text-align: start;
   font: inherit;
   cursor: pointer;
-  transition:
-    transform var(--duration-fast) var(--easing-standard),
-    border-color var(--duration-base) var(--easing-standard),
-    background-color var(--duration-base) var(--easing-standard);
 
   &:active {
-    transform: scale(0.97);
+    transform: scale(0.99);
   }
 
   &[data-stato='aperto'] {
-    border-color: var(--color-success);
-    background: var(--color-success-bg);
+    border-left-color: var(--color-success);
   }
 
   &[data-stato='quasi-scaduto'] {
-    border-color: var(--color-warning);
-    background: var(--color-warning-bg);
+    border-left-color: var(--color-warning);
   }
 
   &[data-stato='scaduto'] {
-    border-color: var(--color-danger);
+    border-left-color: var(--color-danger);
     background: var(--color-danger-bg);
   }
 }
 
-.tavolo__numero {
-  font-size: var(--font-size-xl);
+.riga__numero {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  line-height: 1;
+
+  [data-stato='aperto'] &,
+  [data-stato='quasi-scaduto'] &,
+  [data-stato='scaduto'] & {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+  }
 }
 
-.tavolo__info {
+.riga__testo {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.riga__uniti {
+  margin-left: var(--space-1);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+}
+
+.riga__dettagli {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
   font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.riga__attesa {
+  flex: none;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.riga__freccia {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-muted);
+}
+
+.vuoto {
+  padding: var(--space-4);
   color: var(--color-text-muted);
 }
 

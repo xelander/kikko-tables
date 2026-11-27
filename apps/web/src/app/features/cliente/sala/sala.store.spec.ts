@@ -83,6 +83,22 @@ describe('SalaStore', () => {
     expect(store.pezziNelCarrello()).toBe(2);
   });
 
+  it('ignores events of other tables (staff receive them all) and reloads after a move or a merge', async () => {
+    realtime.eventi$.next({ ...evento({ piattoId: 'p-salmone', quantita: 5, dispositivoId: 'x' }), sedutaId: 'altra' });
+    expect(store.pezziNelCarrello()).toBe(0);
+    for (const tipo of ['TAVOLO_SPOSTATO', 'TAVOLI_UNITI', 'COPERTI_MODIFICATI'] as const) {
+      realtime.eventi$.next(evento({}, tipo));
+      http.expectOne('/api/cliente/seduta').flush(sedutaProva({ tavoli: [9] }));
+      await vi.advanceTimersByTimeAsync(0);
+    }
+    expect(store.seduta()?.tavoli).toEqual([9]);
+  });
+
+  it('reloads the session to learn the emoji of a new device in the cart', () => {
+    realtime.eventi$.next(evento({ piattoId: 'p-salmone', quantita: 1, dispositivoId: 'cameriere' }));
+    http.expectOne('/api/cliente/seduta').flush(sedutaProva());
+  });
+
   it('knows how many more of a dish can be added (bao: 1 per person × 2)', () => {
     expect(store.disponibili('p-bao')).toBe(2);
     store.imposta('p-bao', 2);

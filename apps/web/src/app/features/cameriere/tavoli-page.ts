@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,16 +9,17 @@ import {
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 import type { FormulaDto, SedutaConPin, TavoloStato } from '@kikko/shared';
 import { debounceTime, merge } from 'rxjs';
-import { puo } from '../../core/auth/staff.guard';
-import { StaffAuthService } from '../../core/auth/staff-auth.service';
 import { RealtimeService } from '../../core/realtime/realtime.service';
 import { StaffShell } from '../staff/staff-shell';
+import { messaggioErroreStaff } from './errori';
 import { TavoliApi } from './tavoli.api';
 import { SOGLIA_QUASI_SCADUTO_MIN, tempoRimanente } from './tempo';
 
 export type StatoTavolo = 'libero' | 'aperto' | 'quasi-scaduto' | 'scaduto';
+export type Filtro = 'tutti' | 'aperti' | 'liberi' | 'attesa';
 
 export function statoTavolo(t: TavoloStato, ora: number): StatoTavolo {
   if (!t.seduta) return 'libero';
@@ -28,7 +28,24 @@ export function statoTavolo(t: TavoloStato, ora: number): StatoTavolo {
   return rimasti <= SOGLIA_QUASI_SCADUTO_MIN * 60_000 ? 'quasi-scaduto' : 'aperto';
 }
 
-/** Events that change what the table map shows. */
+export function filtraTavoli(tavoli: readonly TavoloStato[], filtro: Filtro, cerca: string): TavoloStato[] {
+  const numero = cerca.trim();
+  return tavoli.filter((t) => {
+    if (numero && !String(t.numero).startsWith(numero)) return false;
+    switch (filtro) {
+      case 'aperti':
+        return t.seduta !== null;
+      case 'liberi':
+        return t.seduta === null;
+      case 'attesa':
+        return (t.seduta?.giriInAttesa ?? 0) > 0;
+      default:
+        return true;
+    }
+  });
+}
+
+/** Events that change what the table list shows. */
 const TIPI_RILEVANTI = new Set([
   'TAVOLO_APERTO',
   'TAVOLO_CHIUSO',
@@ -36,9 +53,14 @@ const TIPI_RILEVANTI = new Set([
   'TEMPO_ESTESO',
   'TAVOLI_UNITI',
   'TAVOLO_SPOSTATO',
+  'COPERTI_MODIFICATI',
+  'GIRO_INVIATO',
+  'GIRO_APPROVATO',
+  'GIRO_RIFIUTATO',
+  'CARRELLO_MODIFICATO',
 ]);
 
-/** Waiter: table map, opening with covers and formula, PIN, minimal closing (F1). */
+/** Waiter: list of tables (designed for phones), opening a table with covers and formula and showing the PIN. */
 @Component({
   selector: 'app-tavoli-page',
   imports: [StaffShell],
@@ -48,12 +70,14 @@ const TIPI_RILEVANTI = new Set([
 })
 export class TavoliPage {
   private readonly api = inject(TavoliApi);
-  private readonly auth = inject(StaffAuthService);
   private readonly realtime = inject(RealtimeService);
+  private readonly router = inject(Router);
 
   protected readonly tavoli = signal<TavoloStato[] | null>(null);
   protected readonly errore = signal<string | null>(null);
   protected readonly ora = signal(Date.now());
+  protected readonly filtro = signal<Filtro>('tutti');
+  protected readonly cerca = signal('');
   protected readonly selezionato = signal<TavoloStato | null>(null);
   protected readonly formule = signal<FormulaDto[]>([]);
   protected readonly formulaId = signal<string | null>(null);
@@ -61,29 +85,31 @@ export class TavoliPage {
   protected readonly bambini = signal(0);
   protected readonly pinMostrato = signal<SedutaConPin | null>(null);
   protected readonly lavoro = signal(false);
-  protected readonly puoChiudere = computed(() => puo(this.auth.utente()?.ruolo, 'CAPO'));
 
-  protected readonly riepilogo = computed(() => {
-    const tavoli = this.tavoli() ?? [];
-    return { liberi: tavoli.filter((t) => !t.seduta).length, aperti: tavoli.filter((t) => t.seduta).length };
+  protected readonly conteggi = computed(() => {
+    const t = this.tavoli() ?? [];
+    return {
+      tutti: t.length,
+      aperti: t.filter((x) => x.seduta).length,
+      liberi: t.filter((x) => !x.seduta).length,
+      attesa: t.filter((x) => (x.seduta?.giriInAttesa ?? 0) > 0).length,
+    };
   });
+  protected readonly visibili = computed(() => filtraTavoli(this.tavoli() ?? [], this.filtro(), this.cerca()));
+  protected readonly filtri: { valore: Filtro; etichetta: string }[] = [
+    { valore: 'tutti', etichetta: 'Tutti' },
+    { valore: 'aperti', etichetta: 'Aperti' },
+    { valore: 'liberi', etichetta: 'Liberi' },
+    { valore: 'attesa', etichetta: 'Giro in attesa' },
+  ];
 
   private readonly dialogo = viewChild<ElementRef<HTMLDialogElement>>('dialogo');
-
   protected readonly statoTavolo = statoTavolo;
-
-  protected rimanente(scadeIl: string): string {
-    return tempoRimanente(Date.parse(scadeIl) - this.ora());
-  }
-
-  protected orario(iso: string): string {
-    return new Date(iso).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
-  }
 
   constructor() {
     void this.carica();
     merge(this.realtime.ricarica$, this.realtime.eventi$)
-      .pipe(debounceTime(150), takeUntilDestroyed())
+      .pipe(debounceTime(200), takeUntilDestroyed())
       .subscribe((e) => {
         if (!e || TIPI_RILEVANTI.has(e.tipo)) void this.carica();
       });
@@ -91,22 +117,28 @@ export class TavoliPage {
     inject(DestroyRef).onDestroy(() => clearInterval(timer));
   }
 
-  protected async seleziona(tavolo: TavoloStato): Promise<void> {
+  protected rimanente(scadeIl: string): string {
+    return tempoRimanente(Date.parse(scadeIl) - this.ora());
+  }
+
+  protected async tocca(tavolo: TavoloStato): Promise<void> {
+    if (tavolo.seduta) {
+      await this.router.navigate(['/staff/cameriere/sedute', tavolo.seduta.id]);
+      return;
+    }
     this.selezionato.set(tavolo);
     this.pinMostrato.set(null);
     this.errore.set(null);
-    if (!tavolo.seduta) {
-      this.adulti.set(Math.min(tavolo.posti, 2));
-      this.bambini.set(0);
-      try {
-        const disponibili = await this.api.formule();
-        this.formule.set(disponibili.formule);
-        this.formulaId.set(disponibili.propostaId ?? disponibili.formule[0]?.id ?? null);
-      } catch {
-        this.errore.set('Impossibile caricare le formule.');
-      }
-    }
+    this.adulti.set(Math.min(tavolo.posti, 2));
+    this.bambini.set(0);
     this.dialogo()?.nativeElement.showModal();
+    try {
+      const disponibili = await this.api.formule();
+      this.formule.set(disponibili.formule);
+      this.formulaId.set(disponibili.propostaId ?? disponibili.formule[0]?.id ?? null);
+    } catch {
+      this.errore.set('Impossibile caricare le formule.');
+    }
   }
 
   protected chiudiDialogo(): void {
@@ -124,57 +156,31 @@ export class TavoliPage {
     const tavolo = this.selezionato();
     const formulaId = this.formulaId();
     if (!tavolo || !formulaId || this.adulti() + this.bambini() < 1) return;
-    await this.azione(async () => {
-      this.pinMostrato.set(
-        await this.api.apri(tavolo.id, { formulaId, copertiAdulti: this.adulti(), copertiBambini: this.bambini() }),
-      );
-    });
-  }
-
-  protected async nuovoPin(): Promise<void> {
-    const seduta = this.selezionato()?.seduta;
-    if (!seduta) return;
-    await this.azione(async () => this.pinMostrato.set(await this.api.rigeneraPin(seduta.id)));
-  }
-
-  protected async chiudiTavolo(): Promise<void> {
-    const tavolo = this.selezionato();
-    if (!tavolo?.seduta) return;
-    if (globalThis.confirm && !globalThis.confirm(`Chiudere il tavolo ${tavolo.numero}?`)) return;
-    await this.azione(async () => {
-      await this.api.chiudi(tavolo.seduta!.id);
-      this.chiudiDialogo();
-    });
-  }
-
-  private async azione(fn: () => Promise<void>): Promise<void> {
     this.lavoro.set(true);
     this.errore.set(null);
     try {
-      await fn();
+      this.pinMostrato.set(
+        await this.api.apri(tavolo.id, { formulaId, copertiAdulti: this.adulti(), copertiBambini: this.bambini() }),
+      );
       await this.carica();
     } catch (error) {
-      const codice = error instanceof HttpErrorResponse ? (error.error as { codice?: string } | null)?.codice : null;
-      this.errore.set(
-        codice === 'TAVOLO_GIA_APERTO'
-          ? 'Il tavolo è già stato aperto da un collega.'
-          : codice === 'SEDUTA_CHIUSA'
-            ? 'Il tavolo è già stato chiuso.'
-            : 'Operazione non riuscita, riprova.',
-      );
+      this.errore.set(messaggioErroreStaff(error));
       await this.carica();
     } finally {
       this.lavoro.set(false);
     }
   }
 
+  protected async vaiAlTavolo(): Promise<void> {
+    const pin = this.pinMostrato();
+    this.chiudiDialogo();
+    if (pin) await this.router.navigate(['/staff/cameriere/sedute', pin.seduta.id]);
+  }
+
   private async carica(): Promise<void> {
     try {
-      const tavoli = await this.api.elenco();
-      this.tavoli.set(tavoli);
+      this.tavoli.set(await this.api.elenco());
       this.ora.set(Date.now());
-      const sel = this.selezionato();
-      if (sel && !this.pinMostrato()) this.selezionato.set(tavoli.find((t) => t.id === sel.id) ?? null);
     } catch {
       if (!this.tavoli()) this.errore.set('Impossibile caricare i tavoli.');
     }

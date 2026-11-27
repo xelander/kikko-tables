@@ -316,6 +316,9 @@ export class SalaStore {
   }
 
   private applicaEvento(e: EventoDto): void {
+    // Staff receive the events of every table: keep only this session's.
+    const seduta = this.seduta();
+    if (!seduta || (e.sedutaId !== null && e.sedutaId !== seduta.sedutaId)) return;
     switch (e.tipo) {
       case 'CARRELLO_MODIFICATO': {
         const { piattoId, quantita, dispositivoId } = e.payload as {
@@ -327,6 +330,8 @@ export class SalaStore {
           const altre = righe.filter((r) => !(r.piattoId === piattoId && r.dispositivoId === dispositivoId));
           return quantita > 0 ? [...altre, { piattoId, dispositivoId, quantita }] : altre;
         });
+        // A device we do not know yet (e.g. the waiter ordering for the table): reload to get its emoji.
+        if (!seduta.dispositivi.some((d) => d.id === dispositivoId)) void this.caricaSeduta().catch(() => undefined);
         break;
       }
       case 'GIRO_INVIATO':
@@ -334,6 +339,9 @@ export class SalaStore {
       case 'GIRO_RIFIUTATO':
       case 'TEMPO_ESTESO':
       case 'DISPOSITIVO_UNITO':
+      case 'COPERTI_MODIFICATI':
+      case 'TAVOLO_SPOSTATO':
+      case 'TAVOLI_UNITI':
         void this.caricaSeduta().catch(() => undefined);
         break;
     }

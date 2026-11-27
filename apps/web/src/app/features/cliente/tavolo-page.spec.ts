@@ -115,6 +115,21 @@ describe('TavoloPage (customer)', () => {
     http.match('/api/cliente/seduta');
   });
 
+  it('follows the merged session when the table is joined to another one', async () => {
+    const f = render();
+    http.expectOne('/api/t/tavolo-07').flush(connesso);
+    await stabile(f);
+    http.match('/api/menu');
+    http.match('/api/cliente/seduta');
+    realtime.terminata$.next({ motivo: 'TAVOLI_UNITI' });
+    await stabile(f);
+    http.expectOne('/api/t/tavolo-07').flush({ ...connesso, sedutaId: 'seduta-unita' });
+    await stabile(f);
+    expect(realtime.avviato).toEqual({ modo: 'cliente', chiave: 'seduta-unita' });
+    expect((f.nativeElement as HTMLElement).querySelector('[data-testid="tavolo-chiuso"]')).toBeNull();
+    http.match(() => true);
+  });
+
   it('shows the goodbye screen when the table is closed', async () => {
     const f = render();
     http.expectOne('/api/t/tavolo-07').flush(connesso);

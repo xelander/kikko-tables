@@ -4,6 +4,7 @@ import {
   type ElementRef,
   computed,
   inject,
+  output,
   signal,
   viewChild,
 } from '@angular/core';
@@ -13,6 +14,7 @@ import { I18nService, LINGUE, type Lingua } from '../../../core/i18n/i18n.servic
 import { ConnessioneBanner } from '../../../core/realtime/connessione-banner';
 import { archivio } from '../../../core/storage';
 import { SchedaPiatto } from './scheda-piatto';
+import { SalaApi } from './sala.api';
 import { SalaStore } from './sala.store';
 import { Stepper } from './stepper';
 import { TESTI_SALA, conto, messaggioRegola, nomeAllergene, prezzo } from './testi-sala';
@@ -46,6 +48,10 @@ function filtriSalvati(): Filtri {
 })
 export class SalaCliente {
   protected readonly store = inject(SalaStore);
+  /** A waiter ordering for the table (different header, "back" button). */
+  protected readonly staff = inject(SalaApi).modo === 'staff';
+  /** Staff mode: the waiter leaves the ordering screen. */
+  readonly indietro = output<void>();
   protected readonly i18n = inject(I18nService);
 
   protected readonly lingua = this.i18n.lingua;

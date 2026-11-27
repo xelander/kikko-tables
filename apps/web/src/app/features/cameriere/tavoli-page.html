@@ -1,37 +1,69 @@
 <app-staff-shell>
   <main class="pagina">
-    <p class="riepilogo">
-      <span>{{ riepilogo().aperti }} aperti</span> · <span>{{ riepilogo().liberi }} liberi</span>
-    </p>
+    <div class="ricerca">
+      <label class="visually-hidden" for="cerca-tavolo">Cerca tavolo</label>
+      <input
+        id="cerca-tavolo"
+        class="ricerca__input"
+        inputmode="numeric"
+        placeholder="N° tavolo"
+        [value]="cerca()"
+        (input)="cerca.set($any($event.target).value)"
+      />
+    </div>
+    <div class="filtri" role="group" aria-label="Filtra i tavoli">
+      @for (f of filtri; track f.valore) {
+        <button type="button" class="filtro" [attr.aria-pressed]="filtro() === f.valore" (click)="filtro.set(f.valore)">
+          {{ f.etichetta }} <span class="filtro__n">{{ conteggi()[f.valore] }}</span>
+        </button>
+      }
+    </div>
 
-    @if (tavoli(); as lista) {
-      <ul class="mappa" aria-label="Tavoli">
-        @for (t of lista; track t.id) {
+    @if (tavoli()) {
+      <ul class="lista" aria-label="Tavoli">
+        @for (t of visibili(); track t.id) {
           @let stato = statoTavolo(t, ora());
           <li>
             <button
               type="button"
-              class="tavolo"
+              class="riga"
               [attr.data-stato]="stato"
               [attr.data-testid]="'tavolo-' + t.numero"
-              (click)="seleziona(t)"
+              (click)="tocca(t)"
             >
-              <span class="tavolo__numero">{{ t.numero }}</span>
+              <span class="riga__numero">{{ t.numero }}</span>
               @if (t.seduta; as s) {
-                <span class="tavolo__info"
-                  >{{ s.copertiAdulti + s.copertiBambini }} coperti · {{ s.formula.nome.it }}</span
-                >
-                <span class="tavolo__info">
-                  {{ rimanente(s.scadeIl) }}
-                  @if (s.dispositiviCollegati > 0) {
-                    · 📱 {{ s.dispositiviCollegati }}
-                  }
+                <span class="riga__testo">
+                  <strong>
+                    {{ s.formula.nome.it }} · {{ s.copertiAdulti + s.copertiBambini }} coperti
+                    @if (s.tavoli.length > 1) {
+                      <span class="riga__uniti">uniti {{ s.tavoli.join('+') }}</span>
+                    }
+                  </strong>
+                  <span class="riga__dettagli">
+                    <span>⏱ {{ rimanente(s.scadeIl) }}</span>
+                    @if (s.dispositiviCollegati > 0) {
+                      <span>📱 {{ s.dispositiviCollegati }}</span>
+                    }
+                    @if (s.pezziNelCarrello > 0) {
+                      <span>🛒 {{ s.pezziNelCarrello }}</span>
+                    }
+                  </span>
                 </span>
+                @if (s.giriInAttesa > 0) {
+                  <span class="riga__attesa" title="Giri in attesa di approvazione">{{ s.giriInAttesa }} giro</span>
+                }
               } @else {
-                <span class="tavolo__info">Libero · {{ t.posti }} posti</span>
+                <span class="riga__testo">
+                  <strong>Libero</strong>
+                  <span class="riga__dettagli">{{ t.posti }} posti · tocca per aprire</span>
+                </span>
               }
+              <span class="riga__freccia" aria-hidden="true">›</span>
             </button>
           </li>
+        } @empty {
+          <li class="vuoto">Nessun tavolo.</li>
         }
       </ul>
     } @else if (!errore()) {
@@ -50,31 +82,12 @@
       @if (pinMostrato(); as p) {
         <div class="pin" data-testid="pin">
           <p>PIN da comunicare al tavolo</p>
-          <p class="pin__cifre" aria-label="PIN {{ p.pin.split('').join(' ') }}">{{ p.pin }}</p>
-          <p class="pin__nota">Il PIN non verrà più mostrato: se serve, generane uno nuovo.</p>
+          <p class="pin__cifre" [attr.aria-label]="'PIN ' + p.pin.split('').join(' ')">{{ p.pin }}</p>
+          <p class="pin__nota">Il PIN non verrà più mostrato: se serve, generane uno nuovo dalla pagina del tavolo.</p>
         </div>
         <div class="azioni">
-          <button type="button" class="primario" (click)="chiudiDialogo()">Fatto</button>
-        </div>
-      } @else if (t.seduta; as s) {
-        <dl class="dettagli">
-          <dt>Formula</dt>
-          <dd>{{ s.formula.nome.it }}</dd>
-          <dt>Coperti</dt>
-          <dd>{{ s.copertiAdulti }} adulti, {{ s.copertiBambini }} bambini</dd>
-          <dt>Aperto alle</dt>
-          <dd>{{ orario(s.apertaIl) }}</dd>
-          <dt>Tempo rimasto</dt>
-          <dd>{{ rimanente(s.scadeIl) }}</dd>
-          <dt>Telefoni collegati</dt>
-          <dd>{{ s.dispositiviCollegati }}</dd>
-        </dl>
-        <div class="azioni">
-          <button type="button" class="secondario" [disabled]="lavoro()" (click)="nuovoPin()">Nuovo PIN</button>
-          @if (puoChiudere()) {
-            <button type="button" class="pericolo" [disabled]="lavoro()" (click)="chiudiTavolo()">Chiudi tavolo</button>
-          }
-          <button type="button" class="link" (click)="chiudiDialogo()">Annulla</button>
+          <button type="button" class="primario" (click)="vaiAlTavolo()">Vai al tavolo</button>
+          <button type="button" class="link" (click)="chiudiDialogo()">Fatto</button>
         </div>
       } @else {
         <form class="apertura" (submit)="$event.preventDefault(); apri()">
