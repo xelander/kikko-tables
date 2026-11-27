@@ -16,11 +16,12 @@ if (!adminPassword) {
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: resolveDatabaseUrl(process.env) }) });
 
 try {
-  const summary = await runSeed(prisma, { adminUsername, adminPassword });
+  const summary = await runSeed(prisma, { adminUsername, adminPassword, utentiDemo: !isProduction });
   console.log(
     `Seed completed: ${summary.formule} formulas, ${summary.categorie} categories, ` +
       `${summary.piatti} dishes, ${summary.tavoli} tables, admin "${adminUsername}" ` +
-      (summary.adminCreated ? 'created' : 'already present (password unchanged)'),
+      (summary.adminCreated ? 'created' : 'already present (password unchanged)') +
+      (isProduction ? '' : `, ${summary.utentiDemoCreati} demo staff created`),
   );
 } catch (error) {
   console.error('Seed failed:', error);

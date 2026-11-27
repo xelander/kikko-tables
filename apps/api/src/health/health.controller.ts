@@ -2,10 +2,12 @@ import { Controller, Get, HttpStatus, Res } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { HealthResponse } from '@kikko/shared';
 import type { Response } from 'express';
+import { Pubblico } from '../auth/decorators.js';
 import type { Env } from '../config/env.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 
 @Controller('health')
+@Pubblico()
 export class HealthController {
   constructor(
     private readonly prisma: PrismaService,

@@ -7,9 +7,13 @@ export function createTestPrisma(): PrismaClient {
   return new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
 }
 
-/** Empties every application table (keeps the migrations table). */
+/**
+ * Empties every application table (keeps the migrations table).
+ * Event seq is NOT restarted: like in production it only grows.
+ */
 export async function truncateAll(prisma: PrismaClient): Promise<void> {
   await prisma.$executeRawUnsafe(
-    'TRUNCATE "Piatto", "Categoria", "Formula", "Tavolo", "UtenteStaff", "Impostazioni" RESTART IDENTITY CASCADE',
+    'TRUNCATE "Evento", "TentativoPin", "RefreshToken", "DispositivoStaff", "DispositivoCliente", "SedutaTavolo", ' +
+      '"Seduta", "Piatto", "Categoria", "Formula", "Tavolo", "UtenteStaff", "Impostazioni" CASCADE',
   );
 }

@@ -1,0 +1,90 @@
+<main class="login">
+  <header class="login__header">
+    <img src="/assets/brand/logo.svg" alt="" width="56" height="56" />
+    <h1>Accesso staff</h1>
+    @if (dispositivo()?.registrato) {
+      <p class="login__device">Dispositivo: {{ dispositivo()?.nome }}</p>
+    }
+  </header>
+
+  @if (dispositivo() === null) {
+    <p class="login__loading">Caricamento…</p>
+  } @else if (dispositivo()?.registrato && !modoPassword()) {
+    @if (scelto(); as utente) {
+      <section class="pin" aria-labelledby="pin-titolo">
+        <h2 id="pin-titolo">Ciao {{ utente.nome }}, inserisci il tuo PIN</h2>
+        <div class="pin__punti" aria-hidden="true">
+          @for (i of [0, 1, 2, 3, 4, 5]; track i) {
+            <span
+              class="pin__punto"
+              [class.pin__punto--pieno]="i < pin().length"
+              [class.pin__punto--extra]="i >= 4"
+            ></span>
+          }
+        </div>
+        <span class="visually-hidden" aria-live="polite">{{ pin().length }} cifre inserite</span>
+        <div class="tastierino" role="group" aria-label="Tastierino numerico">
+          @for (c of cifre; track c) {
+            <button type="button" class="tasto" (click)="tasto(c)">{{ c }}</button>
+          }
+          <button type="button" class="tasto tasto--secondario" (click)="scegli(null)">Indietro</button>
+          <button type="button" class="tasto" (click)="tasto('0')">0</button>
+          <button type="button" class="tasto tasto--secondario" (click)="cancella()" aria-label="Cancella">⌫</button>
+        </div>
+        <button type="button" class="primario" [disabled]="pin().length < 4 || invio()" (click)="entraConPin()">
+          Entra
+        </button>
+      </section>
+    } @else {
+      <section aria-labelledby="chi-titolo">
+        <h2 id="chi-titolo">Chi sei?</h2>
+        <ul class="utenti">
+          @for (u of dispositivo()?.utenti; track u.id) {
+            <li>
+              <button type="button" class="utente" (click)="scegli(u)">
+                <span class="utente__iniziale" aria-hidden="true">{{ u.nome.charAt(0) }}</span>
+                {{ u.nome }}
+              </button>
+            </li>
+          } @empty {
+            <li class="login__vuoto">Nessun utente con PIN: accedi con username e password.</li>
+          }
+        </ul>
+      </section>
+    }
+    <button type="button" class="link" (click)="modoPassword.set(true)">Accedi con username e password</button>
+  } @else {
+    <form class="form" (ngSubmit)="entraConPassword()">
+      <label>
+        Username
+        <input
+          name="username"
+          autocomplete="username"
+          autocapitalize="none"
+          required
+          [ngModel]="username()"
+          (ngModelChange)="username.set($event)"
+        />
+      </label>
+      <label>
+        Password
+        <input
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          required
+          [ngModel]="password()"
+          (ngModelChange)="password.set($event)"
+        />
+      </label>
+      <button type="submit" class="primario" [disabled]="invio()">Entra</button>
+    </form>
+    @if (dispositivo()?.registrato) {
+      <button type="button" class="link" (click)="modoPassword.set(false)">Accedi con il PIN</button>
+    }
+  }
+
+  @if (errore(); as e) {
+    <p class="errore" role="alert">{{ e }}</p>
+  }
+</main>

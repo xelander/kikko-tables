@@ -1,0 +1,42 @@
+import type { EventoDto, TipoEvento } from '@kikko/shared';
+
+/**
+ * What customers may see of each event of their own session, field by field (whitelist).
+ * Types not listed here are never sent to customers. Staff ids and internal data never leave the server.
+ */
+const CAMPI_CLIENTE: Partial<Record<TipoEvento, readonly string[]>> = {
+  DISPOSITIVO_UNITO: ['dispositivoId', 'soprannome', 'emoji'],
+  CARRELLO_MODIFICATO: ['piattoId', 'quantita', 'dispositivoId'],
+  GIRO_INVIATO: ['giroId', 'numero'],
+  GIRO_APPROVATO: ['giroId', 'numero'],
+  GIRO_RIFIUTATO: ['giroId', 'numero', 'motivo'],
+  TEMPO_SCADUTO: [],
+  TEMPO_ESTESO: ['minuti', 'scadeIl'],
+  TAVOLI_UNITI: ['tavoli'],
+  TAVOLO_SPOSTATO: ['tavoloNumero'],
+  TAVOLO_CHIUSO: [],
+};
+
+export const TIPI_VISIBILI_CLIENTE = Object.keys(CAMPI_CLIENTE) as TipoEvento[];
+
+/**
+ * Returns the version of an event that a customer of session `sedutaId` may receive, or null.
+ * Customers only receive events of their own session; the actor is reduced to its role
+ * (plus the device id when the actor is another customer of the same table).
+ */
+export function perCliente(evento: EventoDto, sedutaId: string): EventoDto | null {
+  if (evento.sedutaId !== sedutaId) return null;
+  const campi = CAMPI_CLIENTE[evento.tipo];
+  if (!campi) return null;
+  const payload = Object.fromEntries(campi.filter((c) => c in evento.payload).map((c) => [c, evento.payload[c]]));
+  return {
+    seq: evento.seq,
+    ts: evento.ts,
+    tipo: evento.tipo,
+    attore:
+      evento.attore.ruolo === 'CLIENTE' ? { ruolo: 'CLIENTE', id: evento.attore.id } : { ruolo: evento.attore.ruolo },
+    sedutaId: evento.sedutaId,
+    tavoloId: evento.tavoloId,
+    payload,
+  };
+}

@@ -1,0 +1,245 @@
+:host {
+  display: block;
+}
+
+.pagina {
+  padding: var(--space-4);
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.riepilogo {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.mappa {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: var(--space-3);
+}
+
+.tavolo {
+  width: 100%;
+  min-height: 6.5rem;
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  text-align: start;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-base) var(--easing-standard),
+    background-color var(--duration-base) var(--easing-standard);
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &[data-stato='aperto'] {
+    border-color: var(--color-success);
+    background: var(--color-success-bg);
+  }
+
+  &[data-stato='quasi-scaduto'] {
+    border-color: var(--color-warning);
+    background: var(--color-warning-bg);
+  }
+
+  &[data-stato='scaduto'] {
+    border-color: var(--color-danger);
+    background: var(--color-danger-bg);
+  }
+}
+
+.tavolo__numero {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.tavolo__info {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.caricamento {
+  color: var(--color-text-muted);
+}
+
+.dialogo {
+  width: min(26rem, calc(100vw - 2rem));
+  padding: var(--space-5);
+  border: 0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+
+  &::backdrop {
+    background: rgb(0 0 0 / 0.4);
+  }
+
+  h2 {
+    margin-bottom: var(--space-4);
+  }
+}
+
+.pin {
+  text-align: center;
+
+  p {
+    margin: 0;
+  }
+}
+
+.pin__cifre {
+  margin: var(--space-3) 0 !important;
+  font-size: 3.5rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.3em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pin__nota {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.dettagli {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin: 0 0 var(--space-4);
+
+  dt {
+    color: var(--color-text-muted);
+  }
+
+  dd {
+    margin: 0;
+    font-weight: var(--font-weight-semibold);
+  }
+}
+
+.apertura {
+  display: grid;
+  gap: var(--space-4);
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-2);
+}
+
+.contatore {
+  display: grid;
+  grid-template-columns: var(--touch-target) 1fr var(--touch-target);
+  align-items: center;
+  text-align: center;
+
+  legend {
+    grid-column: 1 / -1;
+  }
+
+  button {
+    height: var(--touch-target);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    font-size: var(--font-size-lg);
+    cursor: pointer;
+  }
+
+  output {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+.formule {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.formula {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+
+  &:has(input:checked) {
+    border-color: var(--color-primary);
+    background: var(--color-surface-muted);
+  }
+}
+
+.azioni {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+%bottone {
+  min-height: var(--touch-target);
+  border-radius: var(--radius-pill);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.primario {
+  @extend %bottone;
+  border: 0;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.secondario {
+  @extend %bottone;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.pericolo {
+  @extend %bottone;
+  border: 1px solid var(--color-danger);
+  background: var(--color-surface);
+  color: var(--color-danger);
+}
+
+.link {
+  @extend %bottone;
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+}
+
+.errore {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}

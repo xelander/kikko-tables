@@ -41,6 +41,19 @@ export default defineConfig(
       '@angular-eslint/component-selector': ['error', { type: 'element', prefix: 'app', style: 'kebab-case' }],
       '@angular-eslint/directive-selector': ['error', { type: 'attribute', prefix: 'app', style: 'camelCase' }],
       '@angular-eslint/prefer-on-push-component-change-detection': 'error',
+      // The main entry of @kikko/shared includes Zod: the browser imports values from '@kikko/shared/browser'.
+      '@typescript-eslint/no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: '@kikko/shared',
+              message: "Import values from '@kikko/shared/browser' (types from '@kikko/shared' are fine).",
+              allowTypeImports: true,
+            },
+          ],
+        },
+      ],
     },
   },
   {

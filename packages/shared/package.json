@@ -11,6 +11,10 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./browser": {
+      "types": "./dist/browser.d.ts",
+      "default": "./dist/browser.js"
+    },
     "./seed/*.json": "./seed/*.json",
     "./package.json": "./package.json"
   },
@@ -29,5 +33,6 @@
   },
   "devDependencies": {
     "vitest": "^5.1.2"
-  }
+  },
+  "sideEffects": false
 }

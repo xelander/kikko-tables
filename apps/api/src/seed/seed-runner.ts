@@ -21,7 +21,16 @@ export function loadDemoMenu(): Menu {
 export interface SeedOptions {
   adminUsername: string;
   adminPassword: string;
+  /** Development only: also create demo staff (a waiter and a manager) with known passwords and PINs. */
+  utentiDemo?: boolean;
 }
+
+/** Demo staff for development and tests. Never created in production. */
+export const UTENTI_DEMO = [
+  { username: 'mario', nome: 'Mario', ruolo: 'CAMERIERE', password: 'mario', pin: '1234' },
+  { username: 'capo', nome: 'Capo sala', ruolo: 'CAPO', password: 'capo', pin: '0000' },
+  { username: 'monitor', nome: 'Monitor', ruolo: 'MONITOR', password: 'monitor', pin: null },
+] as const;
 
 export interface SeedSummary {
   formule: number;
@@ -29,6 +38,7 @@ export interface SeedSummary {
   piatti: number;
   tavoli: number;
   adminCreated: boolean;
+  utentiDemoCreati: number;
 }
 
 /**
@@ -42,6 +52,17 @@ export async function runSeed(prisma: PrismaClient, options: SeedOptions): Promi
   const menu = loadDemoMenu();
   const tavoli = generaTavoliDemo();
   const passwordHash = await hash(options.adminPassword, { type: 2 /* argon2id */ });
+  const demo = options.utentiDemo
+    ? await Promise.all(
+        UTENTI_DEMO.map(async (u) => ({
+          username: u.username,
+          nome: u.nome,
+          ruolo: u.ruolo,
+          passwordHash: await hash(u.password, { type: 2 }),
+          pinHash: u.pin ? await hash(u.pin, { type: 2 }) : null,
+        })),
+      )
+    : [];
 
   return prisma.$transaction(
     async (tx) => {
@@ -109,7 +130,17 @@ export async function runSeed(prisma: PrismaClient, options: SeedOptions): Promi
         });
       }
 
+      let utentiDemoCreati = 0;
+      for (const u of demo) {
+        const esistente = await tx.utenteStaff.findUnique({ where: { username: u.username } });
+        if (!esistente) {
+          await tx.utenteStaff.create({ data: u });
+          utentiDemoCreati++;
+        }
+      }
+
       return {
+        utentiDemoCreati,
         formule: config.formule.length,
         categorie: menu.categorie.length,
         piatti: menu.piatti.length,

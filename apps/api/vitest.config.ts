@@ -8,7 +8,12 @@ export default defineConfig({
     include: ['src/**/*.spec.ts', 'test/**/*.spec.ts'],
     environment: 'node',
     globalSetup: ['test/global-setup.ts'],
-    env: { NODE_ENV: 'test', DATABASE_URL: TEST_DATABASE_URL },
+    env: {
+      NODE_ENV: 'test',
+      DATABASE_URL: TEST_DATABASE_URL,
+      THROTTLE_PUBLIC_LIMIT: '10000',
+      THROTTLE_DEFAULT_LIMIT: '10000',
+    },
     // Integration tests share one database: run files sequentially.
     fileParallelism: false,
     testTimeout: 20_000,

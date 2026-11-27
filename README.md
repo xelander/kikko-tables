@@ -4,7 +4,7 @@ Sistema di ordinazione al tavolo per un ristorante all you can eat: un'unica web
 (cliente, cameriere, cassa, amministratore, monitor) e un'API NestJS con PostgreSQL.
 Il brief completo è in [`CLAUDE.md`](CLAUDE.md), le decisioni prese in [`docs/decisioni.md`](docs/decisioni.md).
 
-**Stato:** F0 – Base (monorepo, database, seed, health check, CI).
+**Stato:** F1 – Dominio e tempo reale (sedute, PIN, accessi staff e cliente, registro eventi, WebSocket con recupero degli eventi persi).
 
 ## Struttura
 
@@ -49,9 +49,30 @@ npm run db:seed
 npm run dev
 ```
 
-- Web: <http://localhost:4200> (la home mostra lo stato dell'API)
+- Web: <http://localhost:4200> (la home mostra lo stato dell'API e i link alle aree)
 - API: <http://localhost:3000/api/health>
-- Admin di sviluppo creato dal seed: utente `admin`, password `admin` (il login arriva in F1)
+
+### Utenti di sviluppo
+
+Il seed (fuori da produzione) crea questi utenti. Le password sono uguali allo username.
+
+| Utente    | Ruolo     | PIN personale | Note                                                       |
+| --------- | --------- | ------------- | ---------------------------------------------------------- |
+| `admin`   | ADMIN     | –             | Può fare tutto                                             |
+| `capo`    | CAPO      | `0000`        | Può chiudere i tavoli e registrare i dispositivi condivisi |
+| `mario`   | CAMERIERE | `1234`        | Apre i tavoli e vede il PIN                                |
+| `monitor` | MONITOR   | –             | Solo lettura                                               |
+
+### Provare il flusso F1
+
+1. Apri <http://localhost:4200/staff/cameriere> ed entra con `mario` / `mario`.
+2. Tocca un tavolo libero, scegli coperti e formula, poi "Apri tavolo": compare il PIN.
+3. Da un altro browser (o in incognito) apri `http://localhost:4200/t/tavolo-01` (per il tavolo 1) e inserisci il PIN.
+4. Il cameriere vede comparire il telefono sul tavolo in tempo reale. Con `capo` puoi chiudere il tavolo: il telefono del
+   cliente mostra subito la schermata di chiusura.
+
+**Dispositivo condiviso del locale:** entra come `capo` sul tablet, tocca "Rendi condiviso" e dai un nome.
+Da quel momento la pagina di accesso di quel tablet mostra i nomi dello staff e chiede solo il PIN personale.
 
 `npm run dev` avvia insieme, in modalità watch, `packages/shared`, l'API e il web.
 Il dev server Angular gira le chiamate `/api` e `/socket.io` all'API (`apps/web/proxy.conf.json`).
@@ -100,6 +121,27 @@ L'utente deve poter creare database (`CREATEDB`) perché i test di integrazione 
 
 Per i test e2e su una macchina dove Chromium è già installato si può indicare il binario con
 `PLAYWRIGHT_CHROMIUM_EXECUTABLE=/percorso/chrome`; altrimenti `npx playwright install chromium`.
+
+## API (F1)
+
+Tutte sotto `/api`. Lo staff manda `Authorization: Bearer <accessToken>`; i clienti sono riconosciuti dal cookie.
+
+| Metodo e percorso                                           | Chi                   | Cosa fa                                                   |
+| ----------------------------------------------------------- | --------------------- | --------------------------------------------------------- |
+| `POST /auth/login`                                          | pubblico              | Login personale; imposta il cookie di refresh             |
+| `POST /auth/pin`                                            | dispositivo condiviso | Login con PIN personale                                   |
+| `POST /auth/refresh` · `POST /auth/logout` · `GET /auth/me` | staff                 | Rinnovo (token ruotato), uscita, utente corrente          |
+| `GET /auth/dispositivo` · `POST /auth/dispositivo`          | pubblico · CAPO       | Stato del dispositivo condiviso · registrazione           |
+| `GET /tavoli`                                               | CAMERIERE, MONITOR    | Tavoli con lo stato della seduta                          |
+| `GET /formule`                                              | CAMERIERE             | Formule attive e quella proposta per l'orario attuale     |
+| `POST /tavoli/:id/apri`                                     | CAMERIERE             | Apre il tavolo: seduta con copia della formula e PIN      |
+| `POST /sedute/:id/pin`                                      | CAMERIERE             | Nuovo PIN                                                 |
+| `POST /sedute/:id/chiudi`                                   | CAPO                  | Chiusura minima: libera il tavolo e disconnette i clienti |
+| `GET /t/:slug` · `POST /t/:slug/join`                       | cliente               | Stato del tavolo dal QR · ingresso con il PIN             |
+
+WebSocket (Socket.IO su `/socket.io`): alla connessione il client manda `sync` con l'ultimo `seq` ricevuto e riceve
+gli eventi persi (o `snapshot_required`); poi riceve `evento` in tempo reale e `sessione_terminata` alla chiusura.
+I ruoli seguono una gerarchia: ADMIN può tutto, CAPO può quello che fa il CAMERIERE.
 
 ## CI
 

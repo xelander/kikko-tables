@@ -27,21 +27,17 @@ test.describe('F0 smoke', () => {
 
     await page.getByRole('link', { name: /Cliente/ }).click();
     await expect(page).toHaveURL(/\/t\/tavolo-01$/);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Tavolo tavolo-01');
     await expect(page).toHaveTitle('Il tuo tavolo');
     expect(loadedScripts.length).toBeGreaterThan(scriptsOnHome);
   });
 
-  test('deep links to each area work', async ({ page }) => {
-    for (const [path, heading] of [
-      ['/staff/cameriere', 'Cameriere'],
-      ['/staff/cassa', 'Cassa'],
-      ['/admin', 'Amministratore'],
-      ['/monitor', 'Monitor'],
-      ['/pagina-inesistente', 'Pagina non trovata'],
-    ] as const) {
+  test('deep links to staff areas ask for login, other pages load directly', async ({ page }) => {
+    for (const path of ['/staff/cameriere', '/staff/cassa', '/admin', '/monitor']) {
       await page.goto(path);
-      await expect(page.getByRole('heading', { level: 1 })).toHaveText(heading);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText('Accesso staff');
+      await expect(page).toHaveURL(new RegExp(`/staff/login\\?torna=${encodeURIComponent(path)}$`));
     }
+    await page.goto('/pagina-inesistente');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Pagina non trovata');
   });
 });

@@ -1,4 +1,4 @@
-// Schema Prisma – F0: solo i modelli di configurazione.
+// Schema Prisma – F0 configurazione, F1 sedute, accessi e registro eventi.
 // I nomi del dominio seguono il vocabolario del brief (CLAUDE.md §12).
 // Importi in centesimi di euro (Int) per evitare errori di arrotondamento.
 
@@ -36,6 +36,43 @@ enum RuoloStaff {
   CAPO
   ADMIN
   MONITOR
+}
+
+enum StatoSeduta {
+  APERTA
+  CHIUSA
+}
+
+/// Chi ha compiuto un'azione registrata nel registro eventi.
+enum RuoloAttore {
+  CLIENTE
+  CAMERIERE
+  CAPO
+  ADMIN
+  MONITOR
+  SISTEMA
+}
+
+/// Tipi di evento (CLAUDE.md §7). Allineato a TIPI_EVENTO in @kikko/shared.
+enum TipoEvento {
+  TAVOLO_APERTO
+  PIN_RIGENERATO
+  PIN_ERRATO
+  DISPOSITIVO_UNITO
+  CARRELLO_MODIFICATO
+  GIRO_INVIATO
+  GIRO_APPROVATO
+  GIRO_RIFIUTATO
+  PIATTO_ESAURITO
+  PIATTO_RIPRISTINATO
+  TEMPO_SCADUTO
+  TEMPO_ESTESO
+  TAVOLI_UNITI
+  TAVOLO_SPOSTATO
+  PRECONTO_GENERATO
+  TAVOLO_CHIUSO
+  CONFIG_MODIFICATA
+  CLIENT_RICONNESSO
 }
 
 /// Impostazioni globali del locale: una sola riga (id = 1).
@@ -101,16 +138,20 @@ model Piatto {
 }
 
 model Tavolo {
-  id        String   @id @default(uuid()) @db.Uuid
-  numero    Int      @unique
-  slugQr    String   @unique
-  posti     Int
+  id               String         @id @default(uuid()) @db.Uuid
+  numero           Int            @unique
+  slugQr           String         @unique
+  posti            Int
   /// Posizione nella mappa dei tavoli (unità di griglia).
-  posX      Int      @default(0)
-  posY      Int      @default(0)
-  attivo    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  posX             Int            @default(0)
+  posY             Int            @default(0)
+  attivo           Boolean        @default(true)
+  /// Seduta aperta in questo momento sul tavolo (al massimo una).
+  sedutaCorrenteId String?        @db.Uuid
+  sedutaCorrente   Seduta?        @relation("SedutaCorrente", fields: [sedutaCorrenteId], references: [id], onDelete: SetNull)
+  sedute           SedutaTavolo[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
 }
 
 model UtenteStaff {
@@ -119,7 +160,124 @@ model UtenteStaff {
   nome         String
   ruolo        RuoloStaff
   passwordHash String
+  /// Hash argon2id del PIN personale, usato sui dispositivi condivisi del locale.
+  pinHash      String?
   attivo       Boolean    @default(true)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
+
+  refreshToken RefreshToken[]
+  seduteAperte Seduta[]       @relation("ApertaDa")
+  seduteChiuse Seduta[]       @relation("ChiusaDa")
+}
+
+/// Dispositivo del locale (tablet cassa, telefono di servizio) su cui lo staff entra con il PIN personale.
+model DispositivoStaff {
+  id            String         @id @default(uuid()) @db.Uuid
+  nome          String
+  /// SHA-256 del token di dispositivo (cookie httpOnly di lunga durata).
+  tokenHash     String         @unique
+  registratoDa  String         @db.Uuid
+  creatoIl      DateTime       @default(now())
+  ultimoAccesso DateTime       @default(now())
+  revocatoIl    DateTime?
+  refreshToken  RefreshToken[]
+}
+
+/// Refresh token dello staff, ruotato a ogni uso. Un riuso di un token già ruotato revoca l'intera famiglia.
+model RefreshToken {
+  id                 String            @id @default(uuid()) @db.Uuid
+  /// SHA-256 del token: il valore in chiaro esiste solo nel cookie.
+  tokenHash          String            @unique
+  famiglia           String            @db.Uuid
+  utenteId           String            @db.Uuid
+  utente             UtenteStaff       @relation(fields: [utenteId], references: [id], onDelete: Cascade)
+  dispositivoStaffId String?           @db.Uuid
+  dispositivoStaff   DispositivoStaff? @relation(fields: [dispositivoStaffId], references: [id], onDelete: Cascade)
+  creatoIl           DateTime          @default(now())
+  scadeIl            DateTime
+  usatoIl            DateTime?
+  revocatoIl         DateTime?
+
+  @@index([famiglia])
+}
+
+/// Apertura di uno o più tavoli: dal momento in cui il cameriere apre al conto.
+model Seduta {
+  id              String               @id @default(uuid()) @db.Uuid
+  stato           StatoSeduta          @default(APERTA)
+  formulaId       String               @db.Uuid
+  /// Copia della formula al momento dell'apertura (CLAUDE.md §4): le modifiche successive non la toccano.
+  formulaSnapshot Json
+  copertiAdulti   Int
+  copertiBambini  Int
+  /// HMAC-SHA256 del PIN con il segreto del server.
+  pinHash         String
+  pinGeneratoIl   DateTime             @default(now())
+  apertaIl        DateTime             @default(now())
+  apertaDaId      String               @db.Uuid
+  apertaDa        UtenteStaff          @relation("ApertaDa", fields: [apertaDaId], references: [id])
+  chiusaIl        DateTime?
+  chiusaDaId      String?              @db.Uuid
+  chiusaDa        UtenteStaff?         @relation("ChiusaDa", fields: [chiusaDaId], references: [id])
+  minutiExtra     Int                  @default(0)
+  tavoli          SedutaTavolo[]
+  tavoliCorrenti  Tavolo[]             @relation("SedutaCorrente")
+  dispositivi     DispositivoCliente[]
+
+  @@index([stato])
+}
+
+/// Tavoli occupati da una seduta (più di uno quando i tavoli vengono uniti, F3).
+model SedutaTavolo {
+  sedutaId String    @db.Uuid
+  seduta   Seduta    @relation(fields: [sedutaId], references: [id], onDelete: Cascade)
+  tavoloId String    @db.Uuid
+  tavolo   Tavolo    @relation(fields: [tavoloId], references: [id])
+  dalIl    DateTime  @default(now())
+  alIl     DateTime?
+
+  @@id([sedutaId, tavoloId])
+  @@index([tavoloId])
+}
+
+/// Smartphone di un cliente entrato con il PIN.
+model DispositivoCliente {
+  id            String    @id @default(uuid()) @db.Uuid
+  sedutaId      String    @db.Uuid
+  seduta        Seduta    @relation(fields: [sedutaId], references: [id], onDelete: Cascade)
+  /// SHA-256 del token di dispositivo (cookie httpOnly).
+  tokenHash     String    @unique
+  soprannome    String
+  emoji         String
+  creatoIl      DateTime  @default(now())
+  ultimoAccesso DateTime  @default(now())
+  revocatoIl    DateTime?
+
+  @@index([sedutaId])
+}
+
+/// Contatore anti-forza bruta per una chiave (dispositivo/IP, tavolo, PIN staff).
+model TentativoPin {
+  chiave       String    @id
+  falliti      Int       @default(0)
+  blocchi      Int       @default(0)
+  bloccatoFino DateTime?
+  aggiornatoIl DateTime  @updatedAt
+}
+
+/// Registro eventi (CLAUDE.md §7). `seq` è progressivo e segue l'ordine di commit.
+model Evento {
+  seq                BigInt      @id @default(autoincrement())
+  ts                 DateTime    @default(now())
+  tipo               TipoEvento
+  attoreRuolo        RuoloAttore
+  attoreId           String?     @db.Uuid
+  dispositivoStaffId String?     @db.Uuid
+  sedutaId           String?     @db.Uuid
+  tavoloId           String?     @db.Uuid
+  payload            Json        @default("{}")
+
+  @@index([sedutaId, seq])
+  @@index([tipo, seq])
 }

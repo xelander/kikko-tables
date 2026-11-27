@@ -29,7 +29,14 @@ describe('runSeed', () => {
 
   it('loads the default configuration, demo menu, 24 tables and the admin', async () => {
     const summary = await runSeed(prisma, { adminUsername: 'admin', adminPassword: 'secret-1' });
-    expect(summary).toEqual({ formule: 3, categorie: 9, piatti: 34, tavoli: 24, adminCreated: true });
+    expect(summary).toEqual({
+      formule: 3,
+      categorie: 9,
+      piatti: 34,
+      tavoli: 24,
+      adminCreated: true,
+      utentiDemoCreati: 0,
+    });
     expect(await counts(prisma)).toEqual({
       impostazioni: 1,
       formule: 3,
