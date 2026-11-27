@@ -12,6 +12,19 @@ import { CassaApi } from './cassa.api';
 import { Suono } from './suono';
 
 export const CHIAVE_SUONI = 'kk_cassa_suoni';
+/** Dishes already typed into the cash register, per round (this tablet only). */
+export const CHIAVE_CARICATI = 'kk_cassa_caricati';
+
+type Caricati = Readonly<Record<string, readonly string[]>>;
+
+function caricatiSalvati(): Caricati {
+  try {
+    const v = JSON.parse(archivio.leggi(CHIAVE_CARICATI) ?? '{}') as unknown;
+    return v && typeof v === 'object' && !Array.isArray(v) ? (v as Caricati) : {};
+  } catch {
+    return {};
+  }
+}
 
 /** Events that change the rounds queue. */
 const TIPI_CODA = new Set<string>([
@@ -53,6 +66,11 @@ export class CassaStore {
   /** Sounds wanted (remembered on this device); audio still needs one tap after each reload. */
   readonly suoni = signal(archivio.leggi(CHIAVE_SUONI) === '1');
   readonly audioPronto = signal(this.suono.pronto);
+  /**
+   * "Loaded" marks: the manager types each round into the restaurant's own cash register by hand and ticks the
+   * dishes already typed. Only a working aid: kept on this tablet (it survives a reload), never sent to the server.
+   */
+  readonly caricati = signal<Caricati>(caricatiSalvati());
   /** Rounds being approved or rejected: hidden at once (optimistic), shown again if the request fails. */
   private readonly inLavorazione = signal<ReadonlySet<string>>(new Set());
   /** Difference between the server clock and this device's clock (ms). */
@@ -132,6 +150,7 @@ export class CassaStore {
       this.scarto = Date.parse(coda.ora) - Date.now();
       this.ora.set(Date.now());
       this.coda.set(coda);
+      this.dimenticaCaricati(new Set(coda.inAttesa.map((g) => g.id)));
     } catch (error) {
       if (!this.coda()) this.errore.set(messaggioErroreStaff(error));
     }
@@ -171,6 +190,34 @@ export class CassaStore {
         return n;
       });
     }
+  }
+
+  caricato(giroId: string, piattoId: string): boolean {
+    return this.caricati()[giroId]?.includes(piattoId) ?? false;
+  }
+
+  /** How many dish lines of the round are marked as loaded. */
+  quantiCaricati(g: GiroCassaDto): number {
+    const segnati = this.caricati()[g.id] ?? [];
+    return g.voci.filter((v) => segnati.includes(v.piattoId)).length;
+  }
+
+  segnaCaricato(giroId: string, piattoId: string): void {
+    const attuali = this.caricati()[giroId] ?? [];
+    const nuovi = attuali.includes(piattoId) ? attuali.filter((id) => id !== piattoId) : [...attuali, piattoId];
+    this.salvaCaricati({ ...this.caricati(), [giroId]: nuovi });
+  }
+
+  /** Marks of rounds no longer waiting are not needed any more. */
+  private dimenticaCaricati(inAttesa: ReadonlySet<string>): void {
+    const attuali = this.caricati();
+    if (Object.keys(attuali).every((id) => inAttesa.has(id))) return;
+    this.salvaCaricati(Object.fromEntries(Object.entries(attuali).filter(([id]) => inAttesa.has(id))));
+  }
+
+  private salvaCaricati(caricati: Caricati): void {
+    this.caricati.set(caricati);
+    archivio.scrivi(CHIAVE_CARICATI, JSON.stringify(caricati));
   }
 
   /** Must be called from a tap: browsers only allow audio after a user gesture. */

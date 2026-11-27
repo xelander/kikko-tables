@@ -4,57 +4,123 @@
   }
 
   @if (store.coda()) {
-    <h1 class="titolo">
-      Giri da approvare
-      <span class="titolo__n">{{ store.inAttesa().length }}</span>
-    </h1>
+    @if (aperto(); as g) {
+      <!-- Detail of the round to type into the cash register -->
+      <section class="dettaglio" data-testid="dettaglio-giro" aria-labelledby="dettaglio-titolo">
+        <div class="dettaglio__barra">
+          <button type="button" class="bottone" (click)="tornaAllaCoda()">‹ Tutti i giri</button>
+          <span class="dettaglio__n">{{ store.inAttesa().length }} in attesa</span>
+        </div>
+        <header class="giro__testa">
+          <h1 id="dettaglio-titolo" class="giro__tavolo dettaglio__tavolo">Tavolo {{ g.tavoli.join('+') }}</h1>
+          <span class="giro__attesa" [class.giro__attesa--lunga]="store.attesaLunga(g)">⏱ {{ attesa(g) }}</span>
+        </header>
+        <p class="giro__info">
+          Giro {{ g.numero }} · {{ g.formula }} · {{ g.coperti }} coperti
+          @if (g.inviatoDa; as d) {
+            · {{ d.emoji }} {{ d.soprannome }}
+          }
+        </p>
+        <p class="progresso" data-testid="progresso-caricati">
+          Caricati <strong>{{ store.quantiCaricati(g) }}</strong> di {{ g.voci.length }}
+          @if (store.quantiCaricati(g) === g.voci.length) {
+            <span class="progresso__ok">✓ tutto in cassa</span>
+          }
+        </p>
+        <ul class="carico" aria-label="Piatti del giro: tocca un piatto quando lo hai caricato in cassa">
+          @for (v of g.voci; track v.piattoId) {
+            @let fatto = store.caricato(g.id, v.piattoId);
+            <li>
+              <button
+                type="button"
+                class="carico__riga"
+                [class.carico__riga--fatto]="fatto"
+                [attr.aria-pressed]="fatto"
+                [attr.data-testid]="'carica-' + v.piattoId"
+                (click)="store.segnaCaricato(g.id, v.piattoId)"
+              >
+                <span class="carico__q">{{ v.quantita }} ×</span>
+                <span class="carico__nome">
+                  {{ store.nome(v.piattoId) }}
+                  @if (!v.inFormula) {
+                    <span class="etichetta">extra</span>
+                  }
+                </span>
+                <span class="carico__stato">{{ fatto ? '✓ Caricato' : 'Caricato?' }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+        <div class="giro__azioni dettaglio__azioni">
+          <button type="button" class="bottone bottone--pericolo" (click)="apriRifiuto(g)">Rifiuta</button>
+          <button type="button" class="bottone bottone--ok approva" (click)="approva(g)">✓ Approva</button>
+        </div>
 
-    <ul class="coda" aria-label="Giri in attesa" data-testid="coda-giri">
-      @for (g of store.inAttesa(); track g.id) {
-        <li class="giro" [class.giro--lungo]="store.attesaLunga(g)" [attr.data-testid]="'giro-' + g.tavoli.join('-')">
-          <header class="giro__testa">
-            <span class="giro__tavolo">Tavolo {{ g.tavoli.join('+') }}</span>
-            <span class="giro__attesa" [attr.title]="'Inviato alle ' + orario(g.inviatoIl)">
-              ⏱ {{ store.minutiAttesa(g) < 1 ? 'adesso' : 'da ' + store.minutiAttesa(g) + ' min' }}
-            </span>
-          </header>
-          <p class="giro__info">
-            Giro {{ g.numero }} · {{ g.formula }} · {{ g.coperti }} coperti
-            @if (g.inviatoDa; as d) {
-              · {{ d.emoji }} {{ d.soprannome }}
+        @if (altri().length) {
+          <nav class="altri" aria-label="Altri giri in attesa">
+            <span>Poi:</span>
+            @for (a of altri(); track a.id) {
+              <button type="button" class="bottone altro" [class.altro--lungo]="store.attesaLunga(a)" (click)="apri(a)">
+                Tavolo {{ a.tavoli.join('+') }} · {{ attesa(a) }}
+              </button>
             }
-          </p>
-          <p class="giro__totali">
-            @if (pezzi(g) > 0) {
-              <strong>{{ pezzi(g) }} piatti</strong>
-            }
-            @if (extra(g) > 0) {
-              <span class="etichetta">{{ extra(g) }} extra</span>
-            }
-            @if (g.soloExtra) {
-              <span class="etichetta">solo extra</span>
-            }
-          </p>
-          <ul class="voci">
-            @for (v of g.voci; track v.piattoId) {
-              <li class="voce" [class.voce--extra]="!v.inFormula">
-                <span class="voce__q">{{ v.quantita }} ×</span>
-                <span>{{ store.nome(v.piattoId) }}</span>
-                @if (!v.inFormula) {
-                  <span class="etichetta">extra</span>
-                }
-              </li>
-            }
-          </ul>
-          <div class="giro__azioni">
-            <button type="button" class="bottone bottone--pericolo" (click)="apriRifiuto(g)">Rifiuta</button>
-            <button type="button" class="bottone bottone--ok approva" (click)="approva(g)">✓ Approva</button>
-          </div>
-        </li>
-      } @empty {
-        <li class="vuoto" data-testid="coda-vuota">Nessun giro in attesa ✓</li>
-      }
-    </ul>
+          </nav>
+        }
+      </section>
+    } @else {
+      <h1 class="titolo">
+        Giri da approvare
+        <span class="titolo__n">{{ store.inAttesa().length }}</span>
+      </h1>
+
+      <ul class="coda" aria-label="Giri in attesa" data-testid="coda-giri">
+        @for (g of store.inAttesa(); track g.id) {
+          <li class="giro" [class.giro--lungo]="store.attesaLunga(g)" [attr.data-testid]="'giro-' + g.tavoli.join('-')">
+            <header class="giro__testa">
+              <span class="giro__tavolo">Tavolo {{ g.tavoli.join('+') }}</span>
+              <span class="giro__attesa" [attr.title]="'Inviato alle ' + orario(g.inviatoIl)">⏱ {{ attesa(g) }}</span>
+            </header>
+            <p class="giro__info">
+              Giro {{ g.numero }} · {{ g.formula }} · {{ g.coperti }} coperti
+              @if (g.inviatoDa; as d) {
+                · {{ d.emoji }} {{ d.soprannome }}
+              }
+            </p>
+            <p class="giro__totali">
+              @if (pezzi(g) > 0) {
+                <strong>{{ pezzi(g) }} piatti</strong>
+              }
+              @if (extra(g) > 0) {
+                <span class="etichetta">{{ extra(g) }} extra</span>
+              }
+              @if (g.soloExtra) {
+                <span class="etichetta">solo extra</span>
+              }
+              @if (store.quantiCaricati(g) > 0) {
+                <span class="etichetta etichetta--ok">caricati {{ store.quantiCaricati(g) }}/{{ g.voci.length }}</span>
+              }
+            </p>
+            <ul class="voci">
+              @for (v of g.voci; track v.piattoId) {
+                <li class="voce" [class.voce--extra]="!v.inFormula">
+                  <span class="voce__q">{{ v.quantita }} ×</span>
+                  <span>{{ store.nome(v.piattoId) }}</span>
+                  @if (!v.inFormula) {
+                    <span class="etichetta">extra</span>
+                  }
+                </li>
+              }
+            </ul>
+            <div class="giro__azioni">
+              <button type="button" class="bottone" (click)="apri(g)">Apri dettaglio</button>
+              <button type="button" class="bottone bottone--ok approva" (click)="approva(g)">✓ Approva</button>
+            </div>
+          </li>
+        } @empty {
+          <li class="vuoto" data-testid="coda-vuota">Nessun giro in attesa ✓</li>
+        }
+      </ul>
+    }
 
     @if (store.recenti().length) {
       <section class="recenti" aria-labelledby="recenti-titolo">

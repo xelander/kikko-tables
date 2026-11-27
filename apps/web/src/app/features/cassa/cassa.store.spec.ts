@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import type { EventoDto } from '@kikko/shared';
 import { RealtimeService } from '../../core/realtime/realtime.service';
 import { RealtimeFinto, menuProva } from '../../testing/fakes';
-import { CHIAVE_SUONI, CassaStore } from './cassa.store';
+import { CHIAVE_CARICATI, CHIAVE_SUONI, CassaStore } from './cassa.store';
 import { codaProva, giroProva, tavoloAperto } from './prova-cassa';
 import { Suono } from './suono';
 
@@ -128,6 +128,25 @@ describe('CassaStore', () => {
     ]);
     expect(store.sedute()).toHaveLength(2);
     expect(store.scaduti().map((t) => t.seduta!.tavoli)).toEqual([[7, 8]]);
+  });
+
+  it('keeps the "loaded" ticks on this tablet and forgets them once the round is handled', async () => {
+    localStorage.setItem(CHIAVE_CARICATI, JSON.stringify({ vecchio: ['p-bao'], g1: ['p-acqua'] }));
+    const store = await crea();
+    // Rounds no longer waiting are dropped at once.
+    expect(store.caricati()).toEqual({ g1: ['p-acqua'] });
+    store.segnaCaricato('g1', 'p-salmone');
+    expect(store.quantiCaricati(giroProva())).toBe(2);
+    expect(store.caricato('g1', 'p-salmone')).toBe(true);
+    expect(JSON.parse(localStorage.getItem(CHIAVE_CARICATI)!)).toEqual({ g1: ['p-acqua', 'p-salmone'] });
+
+    realtime.eventi$.next(evento('GIRO_APPROVATO'));
+    await vi.advanceTimersByTimeAsync(200);
+    http.expectOne('/api/cassa/giri').flush(codaProva([]));
+    http.expectOne('/api/tavoli').flush([tavoloAperto(4)]);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(store.caricati()).toEqual({});
+    expect(localStorage.getItem(CHIAVE_CARICATI)).toBe('{}');
   });
 
   it('highlights a round waiting for 5 minutes or more', async () => {

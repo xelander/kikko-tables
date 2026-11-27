@@ -101,10 +101,11 @@ Il menù è quello reale del ristorante (155 piatti, trascritti dal PDF della ce
 
 1. Apri un tavolo e collega un telefono (flussi F2 e F3), poi entra su `/staff/cassa` con `capo` / `capo`: il capo
    arriva direttamente in cassa e passa dalla Sala alla Cassa con i link in alto.
-2. **Giri**: ogni giro inviato compare subito, dal più vecchio, con tavolo, piatti, extra e da quanto aspetta (in rosso
-   dopo 5 minuti). "🔕 Attiva suoni" fa suonare il tablet a ogni nuovo giro; dopo un riavvio basta un tocco sullo schermo
-   per riattivarli. "Approva" o "Rifiuta" con un motivo rapido o scritto: il telefono vede subito l'esito con
-   un'animazione, e un giro rifiutato non conta né per i limiti né per l'attesa.
+2. **Giri**: quando arriva un giro si apre da solo il suo dettaglio (tavolo, piatti, extra, da quanto aspetta). Mentre
+   lo ricopi sulla cassa del locale tocca ogni piatto per segnarlo "Caricato"; poi "Approva" o "Rifiuta" con un motivo
+   rapido o scritto, e si apre il giro successivo. Il telefono vede subito l'esito con un'animazione; un giro rifiutato
+   non conta né per i limiti né per l'attesa. "🔕 Attiva suoni" fa suonare il tablet a ogni nuovo giro (dopo un riavvio
+   basta un tocco sullo schermo per riattivarli).
 3. **Esauriti**: l'interruttore di un piatto lo segna esaurito su tutti i menù aperti, all'istante.
 4. **Tavoli**: tempo rimasto di ogni tavolo (scaduti in cima, con allarme), "+10′ +15′ +30′", "Estendi tempo a tutti"
    (per esempio dopo un blackout), "Pre-conto" stampabile (rotolo da 80 mm o A4, "documento non fiscale") e "Chiudi

@@ -230,3 +230,148 @@
     resize: vertical;
   }
 }
+
+.etichetta--ok {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+// ---------- Detail of a round (typed into the cash register by hand) ----------
+
+.dettaglio {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  border-top: 6px solid var(--color-brand-sea);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  animation: arriva var(--duration-slow) var(--easing-emphasized);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dettaglio {
+    animation: none;
+  }
+}
+
+.dettaglio__barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dettaglio__n {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-semibold);
+}
+
+.dettaglio__tavolo {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+}
+
+.giro__attesa--lunga {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+.progresso {
+  margin: 0;
+  font-size: var(--font-size-md);
+}
+
+.progresso__ok {
+  margin-left: var(--space-2);
+  color: var(--color-success);
+  font-weight: var(--font-weight-bold);
+}
+
+.carico {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.carico__riga {
+  width: 100%;
+  min-height: 3.5rem;
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-lg);
+  text-align: start;
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard);
+}
+
+.carico__riga--fatto {
+  border-color: var(--color-success);
+  background: var(--color-success-bg);
+
+  .carico__nome {
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+  }
+
+  .carico__stato {
+    background: var(--color-success);
+    border-color: var(--color-success);
+    color: #fff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carico__riga {
+    transition: none;
+  }
+}
+
+.carico__q {
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.carico__stato {
+  min-width: 8.5rem;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+}
+
+.dettaglio__azioni .bottone {
+  min-height: 3.5rem;
+  font-size: var(--font-size-lg);
+}
+
+.altri {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.altro--lungo {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}

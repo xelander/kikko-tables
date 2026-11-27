@@ -391,6 +391,18 @@ tavolo bloccato da troppi tentativi si sblocca da solo allo scadere del blocco (
   "suoni attivi" resta salvata sul tablet e, dopo un riavvio, il primo tocco sullo schermo li riattiva (lo dice un
   avviso). Suonano a ogni nuovo giro e, con un suono diverso, a ogni "tempo scaduto".
 
+### Dettaglio del giro e "Caricato" (richiesta del committente)
+
+- Il capo ricopia ogni giro a mano sulla cassa del locale (sistema proprietario di un'altra azienda: nessuna
+  integrazione). Per aiutarlo, quando arriva un giro si apre da solo il **dettaglio** del più vecchio in attesa (anche
+  alla riapertura della cassa) e ogni piatto ha il comando **"Caricato"**: si tocca la riga quando il piatto è stato
+  battuto in cassa, con il conto "Caricati N di M".
+- Le spunte sono solo un aiuto del momento: restano sul tablet (`localStorage`, sopravvivono a un ricaricamento), non
+  vanno al server né agli altri tablet e spariscono quando il giro è gestito. Non bloccano nulla: si può approvare anche
+  senza spuntare tutto.
+- Dopo "Approva" o "Rifiuta" si apre da solo il giro successivo; "‹ Tutti i giri" torna alla coda. Se un giro arriva
+  mentre è aperto un altro dettaglio, aspetta in coda ("Poi: Tavolo 9 · da 2 min").
+
 ### Piatti esauriti
 
 - `PIATTO_ESAURITO` / `PIATTO_RIPRISTINATO` non appartengono a una seduta: tutti i telefoni dei clienti entrano anche

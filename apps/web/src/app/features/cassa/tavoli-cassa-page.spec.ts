@@ -42,7 +42,8 @@ describe('TavoliCassaPage', () => {
     expect(righe[0]!.getAttribute('data-stato')).toBe('scaduto');
     expect(righe[0]!.textContent).toContain('Tempo scaduto');
     expect(righe[0]!.textContent).toContain('1 giro in attesa');
-    expect(righe[1]!.textContent).toContain('1 h 30 min');
+    // 90 minutes left (rounded up: 1 h 30 or 1 h 31 depending on the milliseconds spent by the test).
+    expect(righe[1]!.textContent).toMatch(/1 h 3[01] min/);
     expect(righe[1]!.querySelector('a.bottone--primario')?.getAttribute('href')).toBe(
       '/staff/cassa/sedute/s4/preconto',
     );

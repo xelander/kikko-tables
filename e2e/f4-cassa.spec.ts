@@ -1,4 +1,4 @@
-import { type Page, expect, test } from '@playwright/test';
+import { type Locator, type Page, expect, test } from '@playwright/test';
 import { MOTIVI_RIFIUTO } from '@kikko/shared/browser';
 import { apriTavoloApi, liberaTavolo, telefonoAlTavolo } from './helpers.js';
 
@@ -12,7 +12,23 @@ async function tabletCassa(page: Page): Promise<void> {
   await page.getByLabel('Password').fill('capo');
   await page.getByRole('button', { name: 'Entra' }).click();
   await expect(page).toHaveURL(/\/staff\/cassa$/);
-  await expect(page.getByRole('heading', { level: 1, name: /Giri da approvare/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /^Giri/ })).toBeVisible();
+}
+
+/**
+ * Brings the round of table `n` into the detail view. Other tests run in parallel and may leave rounds waiting,
+ * and the detail opens by itself on the oldest one: go back to the queue and open the right one.
+ */
+async function apriGiro(page: Page, n: number): Promise<Locator> {
+  const dettaglio = page.getByTestId('dettaglio-giro');
+  const titolo = dettaglio.locator('h1');
+  await expect(async () => {
+    if ((await titolo.isVisible()) && (await titolo.textContent())?.trim() === `Tavolo ${n}`) return;
+    if (await titolo.isVisible()) await page.getByRole('button', { name: '‹ Tutti i giri' }).click();
+    await page.getByTestId(`giro-${n}`).getByRole('button', { name: 'Apri dettaglio' }).click({ timeout: 1_000 });
+    await expect(titolo).toHaveText(`Tavolo ${n}`, { timeout: 1_000 });
+  }).toPass({ timeout: 15_000 });
+  return dettaglio;
 }
 
 async function inviaGiro(tel: Page, piatto: string, volte = 1): Promise<void> {
@@ -38,22 +54,25 @@ test.describe('F4 – manager at the till', () => {
     await tabletCassa(page);
 
     await inviaGiro(tel.page, 'Nigiri salmone', 2);
-    const card = page.getByTestId('giro-10');
-    await expect(card).toContainText('Giro 1');
-    await expect(card).toContainText('2 ×');
-    await expect(card).toContainText('Nigiri salmone');
+    // The round opens in the detail: the manager ticks each dish while typing it into the cash register.
+    const giro = await apriGiro(page, 10);
+    await expect(giro).toContainText('Giro 1');
+    const salmone = giro.getByRole('button', { name: /Nigiri salmone/ });
+    await expect(salmone).toContainText('2 ×');
+    await salmone.click();
+    await expect(salmone).toHaveAttribute('aria-pressed', 'true');
+    await expect(giro.getByTestId('progresso-caricati')).toContainText('tutto in cassa');
 
     // Rejected with a quick reason: the phone gets a notice with the reason, and can send again at once.
     const motivo = MOTIVI_RIFIUTO[1]!.it;
-    await card.getByRole('button', { name: 'Rifiuta' }).click();
+    await giro.getByRole('button', { name: 'Rifiuta', exact: true }).click();
     await page.getByRole('button', { name: motivo }).click();
     await page.getByRole('button', { name: 'Rifiuta giro' }).click();
-    await expect(page.getByTestId('giro-10')).toHaveCount(0);
     await expect(tel.page.getByTestId('notifica-giro')).toContainText('Giro 1 non accettato');
     await expect(tel.page.getByTestId('notifica-giro')).toContainText(motivo);
 
     await inviaGiro(tel.page, 'Nigiri salmone', 1);
-    await page.getByTestId('giro-10').getByRole('button', { name: 'Approva' }).click();
+    await (await apriGiro(page, 10)).getByRole('button', { name: 'Approva' }).click();
     await expect(tel.page.getByTestId('notifica-giro')).toContainText('Giro 2 confermato');
     await expect(page.locator('.recenti')).toContainText('Tavolo 10 · giro 2 · approvato da Capo sala');
 
@@ -90,8 +109,8 @@ test.describe('F4 – manager at the till', () => {
     await inviaGiro(tel.page, 'Cola 33 cl', 2);
 
     await tabletCassa(page);
-    await page.getByTestId('giro-12').getByRole('button', { name: 'Approva' }).click();
-    await expect(page.getByTestId('giro-12')).toHaveCount(0);
+    await (await apriGiro(page, 12)).getByRole('button', { name: 'Approva' }).click();
+    await expect(tel.page.getByTestId('notifica-giro')).toContainText('confermato');
 
     await page.getByRole('link', { name: 'Tavoli' }).click();
     const riga = page.getByTestId('cassa-tavolo-12');
