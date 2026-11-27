@@ -22,11 +22,11 @@ import { messaggioErroreStaff } from './errori';
 import { TavoliApi } from './tavoli.api';
 import { tempoRimanente } from './tempo';
 
-type Dialogo = 'pin' | 'coperti' | 'sposta' | 'unisci';
+type Dialogo = 'coperti' | 'sposta' | 'unisci';
 
 const STATI_GIRO: Record<string, string> = { INVIATO: 'In attesa', APPROVATO: 'Approvato', RIFIUTATO: 'Rifiutato' };
 
-/** Waiter: an open table. Order for it, new PIN, covers, move, join or merge tables, close (manager). */
+/** Waiter: an open table. Always-visible PIN, order for it, covers, move, join or merge tables, close (manager). */
 @Component({
   selector: 'app-seduta-page',
   imports: [StaffShell, RouterLink],
@@ -51,7 +51,6 @@ export class SedutaPage {
   protected readonly lavoro = signal(false);
   protected readonly ora = signal(Date.now());
   protected readonly dialogo = signal<Dialogo | null>(null);
-  protected readonly pin = signal<string | null>(null);
   protected readonly adulti = signal(0);
   protected readonly bambini = signal(0);
   protected readonly daTavoloId = signal<string | null>(null);
@@ -142,20 +141,10 @@ export class SedutaPage {
   protected chiudiDialogo(): void {
     this.finestra()?.nativeElement.close();
     this.dialogo.set(null);
-    this.pin.set(null);
   }
 
   protected cambia(quale: 'adulti' | 'bambini', delta: number): void {
     (quale === 'adulti' ? this.adulti : this.bambini).update((v) => Math.max(0, Math.min(50, v + delta)));
-  }
-
-  protected async nuovoPin(): Promise<void> {
-    await this.esegui(async () => {
-      const r = await this.api.rigeneraPin(this.sedutaId());
-      this.pin.set(r.pin);
-      this.dialogo.set('pin');
-      this.finestra()?.nativeElement.showModal();
-    }, false);
   }
 
   protected async salvaCoperti(): Promise<void> {

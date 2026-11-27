@@ -256,8 +256,10 @@ model Seduta {
   formulaSnapshot Json
   copertiAdulti   Int
   copertiBambini  Int
-  /// HMAC-SHA256 del PIN con il segreto del server.
+  /// HMAC-SHA256 del PIN con il segreto del server (usato per il controllo).
   pinHash         String
+  /// PIN cifrato (AES-256-GCM, legato alla seduta) per mostrarlo sempre al cameriere. Mai inviato ai clienti.
+  pinCifrato      String?
   pinGeneratoIl   DateTime             @default(now())
   apertaIl        DateTime             @default(now())
   apertaDaId      String               @db.Uuid

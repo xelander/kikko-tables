@@ -26,12 +26,18 @@
         </div>
       </section>
 
+      <p class="pin-tavolo" data-testid="pin-tavolo">
+        <span>PIN del tavolo</span>
+        <strong [attr.aria-label]="s.pin ? 'PIN ' + s.pin.split('').join(' ') : 'PIN non disponibile'">{{
+          s.pin ?? '—'
+        }}</strong>
+      </p>
+
       <a class="ordina" [routerLink]="['/staff/cameriere/sedute', s.sedutaId, 'ordina']" data-testid="ordina">
         🧑‍🍳 Ordina per il tavolo
       </a>
 
       <div class="azioni">
-        <button type="button" class="azione" [disabled]="lavoro()" (click)="nuovoPin()">🔑 Nuovo PIN</button>
         <button type="button" class="azione" (click)="apriDialogo('sposta')">↔ Sposta</button>
         <button type="button" class="azione" (click)="apriDialogo('unisci')">➕ Unisci</button>
         @if (puoChiudere()) {
@@ -108,14 +114,8 @@
     }
   </main>
 
-  <dialog #finestra class="dialogo" (close)="dialogo.set(null); pin.set(null)">
+  <dialog #finestra class="dialogo" (close)="dialogo.set(null)">
     @switch (dialogo()) {
-      @case ('pin') {
-        <h2>Nuovo PIN</h2>
-        <p class="pin" data-testid="pin">{{ pin() }}</p>
-        <p class="nota">I telefoni già al tavolo restano collegati. Il PIN precedente non funziona più.</p>
-        <button type="button" class="primario" (click)="chiudiDialogo()">Fatto</button>
-      }
       @case ('coperti') {
         <h2>Coperti</h2>
         <fieldset class="contatore">
@@ -190,8 +190,6 @@
     @if (errore() && dialogo()) {
       <p class="errore" role="alert">{{ errore() }}</p>
     }
-    @if (dialogo() !== 'pin') {
-      <button type="button" class="link" (click)="chiudiDialogo()">Annulla</button>
-    }
+    <button type="button" class="link" (click)="chiudiDialogo()">Annulla</button>
   </dialog>
 </app-staff-shell>

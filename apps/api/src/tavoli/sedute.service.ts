@@ -14,7 +14,7 @@ import {
 import { giroDto } from '../sala/sala.service.js';
 import { randomUUID } from 'node:crypto';
 import type { Attore } from '../common/attore.js';
-import { generaPin, hmacPin } from '../common/crypto.js';
+import { cifraPin, decifraPin, generaPin, hmacPin } from '../common/crypto.js';
 import type { Env } from '../config/env.js';
 import { EventiService, type Tx } from '../eventi/eventi.service.js';
 import { formulaDaRiga } from '../formule/formule.mapper.js';
@@ -31,7 +31,7 @@ const includeSeduta = {
 
 type SedutaConDispositivi = Prisma.SedutaGetPayload<{ include: typeof includeSeduta }>;
 
-export function riepilogoSeduta(s: SedutaConDispositivi, ora = new Date()): SedutaRiepilogo {
+export function riepilogoSeduta(s: SedutaConDispositivi, ora = new Date(), pin: string | null = null): SedutaRiepilogo {
   const formula = s.formulaSnapshot as unknown as FormulaSnapshot;
   const scadeIl = calcolaScadenza(s.apertaIl, formula.durataMaxMinuti, s.minutiExtra);
   return {
@@ -43,6 +43,7 @@ export function riepilogoSeduta(s: SedutaConDispositivi, ora = new Date()): Sedu
     copertiBambini: s.copertiBambini,
     formula: { id: formula.id, codice: formula.codice, nome: formula.nome },
     dispositiviCollegati: s.dispositivi.length,
+    pin,
     tavoli: s.tavoli.map((t) => t.tavolo.numero).sort((a, b) => a - b),
     giriInAttesa: s.giri.filter((g) => g.stato === 'INVIATO').length,
     pezziNelCarrello: s.carrello.reduce((t, v) => t + v.quantita, 0),
@@ -85,7 +86,7 @@ export class SeduteService {
       posti: t.posti,
       posX: t.posX,
       posY: t.posY,
-      seduta: t.sedutaCorrente ? riepilogoSeduta(t.sedutaCorrente, ora) : null,
+      seduta: t.sedutaCorrente ? this.riepilogo(t.sedutaCorrente, ora) : null,
     }));
   }
 
@@ -108,6 +109,7 @@ export class SeduteService {
           copertiAdulti: richiesta.copertiAdulti,
           copertiBambini: richiesta.copertiBambini,
           pinHash: hmacPin(this.segretoPin, sedutaId, pin),
+          pinCifrato: cifraPin(this.segretoPin, sedutaId, pin),
           apertaDaId: attore.id!,
           tavoli: { create: { tavoloId } },
         },
@@ -134,7 +136,7 @@ export class SeduteService {
       });
       return creata;
     });
-    return { seduta: riepilogoSeduta(seduta), tavoloId, pin };
+    return { seduta: this.riepilogo(seduta), tavoloId, pin };
   }
 
   /** New PIN for an open session. Devices already at the table keep their access. */
@@ -149,14 +151,18 @@ export class SeduteService {
       );
       const aggiornata = await tx.seduta.update({
         where: { id: esistente.id },
-        data: { pinHash: hmacPin(this.segretoPin, sedutaId, pin), pinGeneratoIl: new Date() },
+        data: {
+          pinHash: hmacPin(this.segretoPin, sedutaId, pin),
+          pinCifrato: cifraPin(this.segretoPin, sedutaId, pin),
+          pinGeneratoIl: new Date(),
+        },
         include: includeSeduta,
       });
       const tavoloId = tavoli[0]?.tavoloId ?? null;
       await registro.registra({ tipo: 'PIN_RIGENERATO', attore, sedutaId, tavoloId });
       return { seduta: aggiornata, tavoloId };
     });
-    return { seduta: riepilogoSeduta(seduta), tavoloId: tavoloId ?? '', pin };
+    return { seduta: this.riepilogo(seduta), tavoloId: tavoloId ?? '', pin };
   }
 
   /**
@@ -186,6 +192,11 @@ export class SeduteService {
         payload: { tavoli: tavoli.map((t) => t.tavolo.numero) },
       });
     });
+  }
+
+  /** Summary of a session for staff, with the PIN decrypted (staff only, never sent to customers). */
+  private riepilogo(s: SedutaConDispositivi, ora = new Date()): SedutaRiepilogo {
+    return riepilogoSeduta(s, ora, decifraPin(this.segretoPin, s.id, s.pinCifrato));
   }
 
   /** Everything the waiter needs about an open table. */
@@ -223,6 +234,7 @@ export class SeduteService {
       minutiExtra: seduta.minutiExtra,
       scadeIl: calcolaScadenza(seduta.apertaIl, formula.durataMaxMinuti, seduta.minutiExtra).toISOString(),
       pinGeneratoIl: seduta.pinGeneratoIl.toISOString(),
+      pin: decifraPin(this.segretoPin, seduta.id, seduta.pinCifrato),
       dispositivi: seduta.dispositivi.map((d) => ({
         id: d.id,
         soprannome: d.soprannome,
@@ -249,7 +261,7 @@ export class SeduteService {
       });
       return aggiornata;
     });
-    return riepilogoSeduta(seduta);
+    return this.riepilogo(seduta);
   }
 
   /** Moves the session from one of its tables to a free table. Phones already at the table stay in. */
@@ -285,7 +297,7 @@ export class SeduteService {
       });
       return aggiornata;
     });
-    return riepilogoSeduta(seduta);
+    return this.riepilogo(seduta);
   }
 
   /** Adds a free table to an open session: the QR codes of all its tables lead to the same session. */
@@ -304,7 +316,7 @@ export class SeduteService {
       });
       return aggiornata;
     });
-    return riepilogoSeduta(seduta);
+    return this.riepilogo(seduta);
   }
 
   /**
@@ -370,7 +382,7 @@ export class SeduteService {
       });
       return aggiornata;
     });
-    return riepilogoSeduta(seduta);
+    return this.riepilogo(seduta);
   }
 
   /** Takes a free, active table for the session (conditional update: safe with concurrent requests). */

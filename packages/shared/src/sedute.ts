@@ -83,6 +83,8 @@ export interface SedutaRiepilogo {
   formula: { id: string; codice: string; nome: { it: string; en: string } };
   /** Customer phones joined (the staff ordering device is not counted). */
   dispositiviCollegati: number;
+  /** The table PIN, always visible to staff (null for sessions opened before it was stored). Never sent to customers. */
+  pin: string | null;
   /** Numbers of every table of the session (more than one when tables are joined). */
   tavoli: number[];
   /** Rounds sent and waiting for approval. */

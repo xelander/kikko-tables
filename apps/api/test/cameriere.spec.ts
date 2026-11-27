@@ -175,6 +175,25 @@ describe('waiter app: ordering for the table, covers, moving and joining tables'
       expect(d.dispositivi).toEqual([expect.objectContaining({ staff: false, emoji: '🐼' })]);
     });
 
+    it('always shows the PIN to staff, never to customers, and never stores it in clear', async () => {
+      const aperta = await apri(2);
+      const anna = await clienteAlTavolo(server, 2, aperta.pin);
+      const riga = (await elencoTavoli(server, mario)).find((t) => t.numero === 2)!;
+      expect(riga.seduta?.pin).toBe(aperta.pin);
+      const d = (await request(server).get(`/api/sedute/${aperta.seduta.id}`).set(staff()).expect(200))
+        .body as SedutaDettaglioDto;
+      expect(d.pin).toBe(aperta.pin);
+
+      const riga2 = await prisma.seduta.findUniqueOrThrow({ where: { id: aperta.seduta.id } });
+      expect(riga2.pinCifrato).not.toContain(aperta.pin);
+      expect(riga2.pinHash).not.toContain(aperta.pin);
+
+      const vistaCliente = await request(server).get('/api/cliente/seduta').set('Cookie', anna);
+      expect(JSON.stringify(vistaCliente.body)).not.toMatch(/"pin/);
+      const statoCliente = await request(server).get('/api/t/tavolo-02').set('Cookie', anna);
+      expect(JSON.stringify(statoCliente.body)).not.toMatch(/"pin/);
+    });
+
     it('changes the covers: the round limit follows, the formula copy does not change', async () => {
       const aperta = await apri(8, 1);
       const anna = await clienteAlTavolo(server, 8, aperta.pin);

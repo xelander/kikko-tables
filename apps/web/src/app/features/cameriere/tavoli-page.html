@@ -41,6 +41,9 @@
                     }
                   </strong>
                   <span class="riga__dettagli">
+                    @if (s.pin) {
+                      <span class="riga__pin">🔑 {{ s.pin }}</span>
+                    }
                     <span>⏱ {{ rimanente(s.scadeIl) }}</span>
                     @if (s.dispositiviCollegati > 0) {
                       <span>📱 {{ s.dispositiviCollegati }}</span>
@@ -83,7 +86,7 @@
         <div class="pin" data-testid="pin">
           <p>PIN da comunicare al tavolo</p>
           <p class="pin__cifre" [attr.aria-label]="'PIN ' + p.pin.split('').join(' ')">{{ p.pin }}</p>
-          <p class="pin__nota">Il PIN non verrà più mostrato: se serve, generane uno nuovo dalla pagina del tavolo.</p>
+          <p class="pin__nota">Il PIN resta sempre visibile nella lista e nella pagina del tavolo.</p>
         </div>
         <div class="azioni">
           <button type="button" class="primario" (click)="vaiAlTavolo()">Vai al tavolo</button>

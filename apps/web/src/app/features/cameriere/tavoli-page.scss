@@ -136,6 +136,12 @@
   color: var(--color-text-muted);
 }
 
+.riga__pin {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
 .riga__attesa {
   flex: none;
   padding: 2px var(--space-2);

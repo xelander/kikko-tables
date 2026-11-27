@@ -308,8 +308,11 @@ cameriere (F3), modifica del menù e delle foto dall'admin (F5), PWA e cache off
 - **Lista invece della mappa della sala**: i camerieri usano il telefono, dove una mappa sarebbe scomoda. La lista si
   filtra per aperti, liberi e "giro in attesa" e si cerca per numero. Le posizioni dei tavoli restano nel database per il
   monitor (F6).
-- **Tavolo e PIN** li gestiscono cameriere e capo: il PIN si genera da solo all'apertura (già così da F1) e si può
-  rigenerare dalla pagina del tavolo. Non si può rivedere, perché il server ne salva solo l'impronta.
+- **Tavolo e PIN** li gestiscono cameriere e capo: il PIN si genera da solo all'apertura e resta valido per tutta la
+  seduta, per tutti i telefoni che arrivano.
+- **PIN sempre visibile al cameriere, niente "Nuovo PIN"** (decisione successiva, stesso giorno): il PIN si vede nella
+  lista dei tavoli e, in grande, nella pagina del tavolo. Il pulsante "Nuovo PIN" è stato tolto dall'app; l'endpoint
+  `POST /sedute/:id/pin` resta per i casi di emergenza (per esempio un PIN finito nelle mani sbagliate).
 - **Unione di due tavoli già aperti**: sì, solo con la stessa formula. **Separazione**: no, si chiude e si riapre.
 - **Coperti** modificabili da cameriere e capo.
 
@@ -349,3 +352,13 @@ all'apertura. Nuovo tipo di evento `COPERTI_MODIFICATI`, visibile ai clienti (so
 Alcune modifiche alla documentazione di F1 e F2 fatte con script non erano state applicate, perché la formattazione
 automatica aveva cambiato le tabelle: le variabili d'ambiente e le API mancanti sono state aggiunte al README in F3.
 Da qui in poi le modifiche ai file esistenti si fanno solo con sostituzioni verificate.
+
+### PIN cifrato (deroga al §5)
+
+Il brief chiede di salvare solo l'hash del PIN; per mostrarlo sempre al cameriere il server ne conserva anche una copia
+cifrata (`Seduta.pinCifrato`, AES-256-GCM con l'id della seduta come dato associato, chiave derivata da
+`PIN_HMAC_SECRET`). Il controllo dei PIN usa sempre e solo l'HMAC. La copia cifrata compare solo nelle API staff
+(lista e dettaglio dei tavoli), mai in quelle dei clienti, e un test lo verifica. Il rischio aggiunto è basso: il PIN
+vale una sola seduta, cambia a ogni apertura e i tentativi sbagliati restano bloccati. Cambiare `PIN_HMAC_SECRET` rende
+illeggibili i PIN dei tavoli già aperti (la lista mostra "—"). Sblocco di un tavolo bloccato da troppi tentativi: si
+sblocca da solo allo scadere del blocco (da 60 s fino a un'ora); se servisse prima, si potrà aggiungere un pulsante in F4.

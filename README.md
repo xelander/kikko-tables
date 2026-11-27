@@ -86,8 +86,9 @@ Il seed (fuori da produzione) crea questi utenti. Le password sono uguali allo u
 
 1. Entra in `/staff/cameriere` con `mario` / `mario`: la lista dei tavoli si filtra per aperti, liberi e "giro in
    attesa" e si cerca per numero.
-2. Tocca un tavolo libero per aprirlo: compare il PIN, poi "Vai al tavolo".
-3. Dalla pagina del tavolo: "Ordina per il tavolo" (stesso menù del cliente, le aggiunte compaiono con 🧑‍🍳), nuovo PIN,
+2. Tocca un tavolo libero per aprirlo: compare il PIN, poi "Vai al tavolo". Il PIN resta sempre visibile nella lista e
+   nella pagina del tavolo, e vale per tutti i telefoni che arrivano dopo.
+3. Dalla pagina del tavolo: "Ordina per il tavolo" (stesso menù del cliente, le aggiunte compaiono con 🧑‍🍳),
    coperti, "Sposta" su un tavolo libero, "Unisci" con un tavolo libero o con un tavolo aperto con la stessa formula.
    I telefoni dei clienti seguono spostamenti e unioni in tempo reale.
 
@@ -166,7 +167,7 @@ Tutte sotto `/api`. Lo staff manda `Authorization: Bearer <accessToken>`; i clie
 | `GET /tavoli`                                                                           | CAMERIERE, MONITOR    | Tavoli con lo stato della seduta                                                                     |
 | `GET /formule`                                                                          | CAMERIERE             | Formule attive e quella proposta per l'orario attuale                                                |
 | `POST /tavoli/:id/apri`                                                                 | CAMERIERE             | Apre il tavolo: seduta con copia della formula e PIN                                                 |
-| `POST /sedute/:id/pin`                                                                  | CAMERIERE             | Nuovo PIN                                                                                            |
+| `POST /sedute/:id/pin`                                                                  | CAMERIERE             | Nuovo PIN: solo per emergenze, non c'è nell'app (il PIN è sempre visibile al cameriere)              |
 | `POST /sedute/:id/chiudi`                                                               | CAPO                  | Chiusura minima: libera il tavolo e disconnette i clienti                                            |
 | `GET /t/:slug` · `POST /t/:slug/join`                                                   | cliente               | Stato del tavolo dal QR · ingresso con il PIN                                                        |
 | `GET /menu`                                                                             | pubblico              | Menù it/en con foto e allergeni, senza prezzi alla carta (ETag, 304 se non cambia)                   |

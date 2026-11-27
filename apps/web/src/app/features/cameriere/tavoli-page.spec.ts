@@ -31,6 +31,7 @@ function aperto(numero: number, over: Partial<SedutaRiepilogo> = {}, ora = Date.
       copertiBambini: 1,
       formula: { id: 'f', codice: 'cena', nome: { it: 'Cena', en: 'Dinner' } },
       dispositiviCollegati: 2,
+      pin: '0427',
       tavoli: [numero],
       giriInAttesa: 0,
       pezziNelCarrello: 0,
@@ -116,6 +117,7 @@ describe('TavoliPage', () => {
     expect(riga.textContent).toContain('📱 2');
     expect(riga.textContent).toContain('🛒 3');
     expect(riga.textContent).toContain('1 giro');
+    expect(riga.textContent).toContain('🔑 0427');
 
     (
       Array.from(el.querySelectorAll('.filtro')).find((b) => b.textContent?.includes('Liberi')) as HTMLButtonElement

@@ -13,8 +13,11 @@ test.describe('F3 – waiter app', () => {
     await page.getByTestId('tavolo-20').click();
     await page.getByRole('button', { name: 'Apri tavolo' }).click();
     await expect(page.getByTestId('pin')).toBeVisible();
+    const pin = (await page.getByTestId('pin').locator('.pin__cifre').textContent())!.trim();
     await page.getByRole('button', { name: 'Vai al tavolo' }).click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Tavolo 20');
+    // the PIN stays visible on the table page
+    await expect(page.getByTestId('pin-tavolo')).toContainText(pin);
 
     await page.getByTestId('ordina').click();
     await expect(page.getByText('Ordine per conto del tavolo')).toBeVisible();

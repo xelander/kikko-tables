@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { generaPin, hmacPin, sha256, tokenCasuale, uguali } from './crypto.js';
+import { cifraPin, decifraPin, generaPin, hmacPin, sha256, tokenCasuale, uguali } from './crypto.js';
 
 describe('crypto helpers', () => {
   it('generates 4-digit PINs including leading zeros', () => {
@@ -26,5 +26,17 @@ describe('crypto helpers', () => {
     const t = tokenCasuale();
     expect(t).toMatch(/^[A-Za-z0-9_-]{43}$/);
     expect(tokenCasuale()).not.toBe(t);
+  });
+
+  it('encrypts the PIN for staff display, bound to the session and the secret', () => {
+    const segreto = 's'.repeat(32);
+    const cifrato = cifraPin(segreto, 'seduta-1', '0427');
+    expect(cifrato).not.toContain('0427');
+    expect(cifraPin(segreto, 'seduta-1', '0427')).not.toBe(cifrato); // random IV
+    expect(decifraPin(segreto, 'seduta-1', cifrato)).toBe('0427');
+    expect(decifraPin(segreto, 'seduta-2', cifrato)).toBeNull();
+    expect(decifraPin('t'.repeat(32), 'seduta-1', cifrato)).toBeNull();
+    expect(decifraPin(segreto, 'seduta-1', cifrato.slice(0, -2) + 'AA')).toBeNull();
+    expect(decifraPin(segreto, 'seduta-1', null)).toBeNull();
   });
 });

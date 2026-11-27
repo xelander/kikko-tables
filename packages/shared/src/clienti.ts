@@ -127,6 +127,8 @@ export interface SedutaDettaglioDto {
   minutiExtra: number;
   scadeIl: string;
   pinGeneratoIl: string;
+  /** The table PIN, always visible to staff. */
+  pin: string | null;
   /** Customer phones and staff ordering devices (with `staff: true`). */
   dispositivi: (DispositivoClienteDto & { staff: boolean })[];
   carrello: VoceCarrelloDto[];

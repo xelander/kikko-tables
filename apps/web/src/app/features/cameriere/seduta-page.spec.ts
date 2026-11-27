@@ -29,6 +29,7 @@ function dettaglio(over: Partial<SedutaDettaglioDto> = {}): SedutaDettaglioDto {
     minutiExtra: 0,
     scadeIl: new Date(ora.getTime() + 150 * 60_000).toISOString(),
     pinGeneratoIl: ora.toISOString(),
+    pin: '0427',
     dispositivi: [
       { id: 'd1', soprannome: 'Anna', emoji: '🐼', staff: false },
       { id: 'd2', soprannome: 'Mario', emoji: '🧑‍🍳', staff: true },
@@ -126,14 +127,10 @@ describe('SedutaPage', () => {
     expect(bottone(el, 'Chiudi tavolo')).toBeUndefined(); // waiters cannot close
   });
 
-  it('generates a new PIN', async () => {
+  it('always shows the PIN, and has no "new PIN" action any more', async () => {
     const el = await render();
-    bottone(el, 'Nuovo PIN').click();
-    await attendi();
-    http.expectOne('/api/sedute/s1/pin').flush({ pin: '5521', tavoloId: 't4', seduta: {} });
-    await attendi();
-    expect(el.querySelector('[data-testid="pin"]')?.textContent).toContain('5521');
-    http.expectOne('/api/sedute/s1').flush(dettaglio());
+    expect(el.querySelector('[data-testid="pin-tavolo"]')?.textContent).toContain('0427');
+    expect(bottone(el, 'Nuovo PIN')).toBeUndefined();
   });
 
   it('changes the covers', async () => {
@@ -185,6 +182,7 @@ describe('SedutaPage', () => {
       copertiAdulti: 2,
       copertiBambini: 0,
       dispositiviCollegati: 0,
+      pin: '1111',
       giriInAttesa: 0,
       pezziNelCarrello: 0,
       ultimoGiroIl: null,

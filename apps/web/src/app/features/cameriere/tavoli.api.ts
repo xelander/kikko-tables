@@ -28,10 +28,6 @@ export class TavoliApi {
     return firstValueFrom(this.http.post<SedutaConPin>(`/api/tavoli/${tavoloId}/apri`, richiesta));
   }
 
-  rigeneraPin(sedutaId: string): Promise<SedutaConPin> {
-    return firstValueFrom(this.http.post<SedutaConPin>(`/api/sedute/${sedutaId}/pin`, {}));
-  }
-
   dettaglio(sedutaId: string): Promise<SedutaDettaglioDto> {
     return firstValueFrom(this.http.get<SedutaDettaglioDto>(`/api/sedute/${sedutaId}`));
   }
