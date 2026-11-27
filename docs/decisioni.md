@@ -438,3 +438,16 @@ tavolo bloccato da troppi tentativi si sblocca da solo allo scadere del blocco (
 
 - Dopo il login il capo arriva in `/staff/cassa`; l'intestazione staff mostra per il capo (e l'admin) i link "Sala" e
   "Cassa". La cassa ha tre schede (Giri, Tavoli, Esauriti) con il numero dei giri in attesa e dei tavoli scaduti.
+
+## F5 – Amministratore
+
+### Decisioni del committente (2026-11-27)
+
+- **Libreria di componenti:** PrimeNG per l'area amministratore (tabelle e moduli). Si carica solo con l'area admin
+  (lazy loading) e non tocca l'app cliente, che resta su componenti propri di brand (§11).
+- **Ripristino della configurazione di default:** due pulsanti separati, entrambi con conferma.
+  - "Ripristina formule e regole": formule, gruppi di limiti e impostazioni globali dal seed versionato; il menù non
+    viene toccato.
+  - "Ricarica il menù di esempio": sovrascrive categorie e piatti con quelli del seed. Da usare con cautela, perché
+    cancella le modifiche fatte al menù.
+  - In entrambi i casi i tavoli già aperti non cambiano (conservano la copia della formula).
