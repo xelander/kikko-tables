@@ -16,7 +16,9 @@ export function puo(ruolo: RuoloStaff | undefined, richiesto: RuoloStaff): boole
 
 /** Page the user lands on after login, by role. */
 export function paginaIniziale(ruolo: RuoloStaff): string {
-  return ruolo === 'MONITOR' ? '/monitor' : '/staff/cameriere';
+  if (ruolo === 'MONITOR') return '/monitor';
+  // The manager starts at the till (rounds to approve); waiters and admins in the hall until F5.
+  return ruolo === 'CAPO' ? '/staff/cassa' : '/staff/cameriere';
 }
 
 /**

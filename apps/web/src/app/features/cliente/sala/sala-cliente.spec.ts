@@ -3,21 +3,20 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { TestBed } from '@angular/core/testing';
 import { I18nService } from '../../../core/i18n/i18n.service';
 import { RealtimeService } from '../../../core/realtime/realtime.service';
+import { MOTIVI_RIFIUTO } from '@kikko/shared/browser';
 import { RealtimeFinto, menuProva, sedutaProva } from '../../../testing/fakes';
 import { SalaCliente } from './sala-cliente';
 
 describe('SalaCliente', () => {
   let http: HttpTestingController;
+  let realtime: RealtimeFinto;
 
   beforeEach(() => {
     localStorage.clear();
+    realtime = new RealtimeFinto();
     TestBed.configureTestingModule({
       imports: [SalaCliente],
-      providers: [
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        { provide: RealtimeService, useValue: new RealtimeFinto() },
-      ],
+      providers: [provideHttpClient(), provideHttpClientTesting(), { provide: RealtimeService, useValue: realtime }],
     });
     http = TestBed.inject(HttpTestingController);
     TestBed.inject(I18nService).imposta('it');
@@ -67,6 +66,45 @@ describe('SalaCliente', () => {
     expect(piatti(el)).toEqual(['113 Bao bun']);
     expect(el.querySelector('.filtro')?.textContent).toContain('Filtri (1)');
     expect(JSON.parse(localStorage.getItem('kk_filtri')!).esclusi).toEqual(['FISH']);
+  });
+
+  it('greys out a dish as soon as the till marks it sold out', async () => {
+    const el = await render();
+    realtime.eventi$.next({
+      seq: 9,
+      ts: '',
+      tipo: 'PIATTO_ESAURITO',
+      attore: { ruolo: 'CAPO' },
+      sedutaId: null,
+      tavoloId: null,
+      payload: { piattoId: 'p-bao' },
+    });
+    TestBed.tick();
+    expect(el.querySelector('[aria-label="Aggiungi Bao bun"]')).toBeNull();
+    expect(el.textContent).toContain('Esaurito');
+  });
+
+  it('shows the rejection notice with the reason in the customer language', async () => {
+    const el = await render();
+    TestBed.inject(I18nService).imposta('en');
+    const motivo = MOTIVI_RIFIUTO[1]!;
+    realtime.eventi$.next({
+      seq: 9,
+      ts: '',
+      tipo: 'GIRO_RIFIUTATO',
+      attore: { ruolo: 'CAPO' },
+      sedutaId: 'seduta-1',
+      tavoloId: null,
+      payload: { giroId: 'g1', numero: 1, motivo: motivo.it },
+    });
+    http.expectOne('/api/cliente/seduta').flush(sedutaProva());
+    TestBed.tick();
+    const notifica = el.querySelector('[data-testid="notifica-giro"]')!;
+    expect(notifica.textContent).toContain('Round 1 not accepted');
+    expect(notifica.textContent).toContain(motivo.en);
+    (notifica.querySelector('button') as HTMLButtonElement).click();
+    TestBed.tick();
+    expect(el.querySelector('[data-testid="notifica-giro"]')).toBeNull();
   });
 
   it('disables "+" when the per-person limit is reached', async () => {

@@ -1,0 +1,92 @@
+// Shared by the till pages (component styles are encapsulated, so each page includes these rules).
+
+.pagina {
+  padding: var(--space-4);
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.bottone {
+  min-height: var(--touch-target);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.bottone--primario {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.bottone--ok {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: #fff;
+}
+
+.bottone--pericolo {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.dialogo {
+  width: min(32rem, calc(100vw - 2rem));
+  padding: var(--space-5);
+  border: 0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+
+  &::backdrop {
+    background: rgb(0 0 0 / 0.4);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-4);
+  }
+}
+
+.azioni {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.errore {
+  margin: var(--space-3) 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.messaggio {
+  margin: var(--space-3) 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.vuoto {
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  color: var(--color-text-muted);
+}

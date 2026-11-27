@@ -1,0 +1,232 @@
+@use 'comune';
+
+:host {
+  display: block;
+}
+
+.titolo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  font-size: var(--font-size-xl);
+}
+
+.titolo__n {
+  min-width: 2rem;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--font-size-md);
+  text-align: center;
+}
+
+.coda {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  // Tablet in landscape: two or three rounds side by side.
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  align-items: start;
+}
+
+.coda > .vuoto {
+  grid-column: 1 / -1;
+  font-size: var(--font-size-lg);
+}
+
+.giro {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  border-top: 6px solid var(--color-primary);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  // A new round slides in when it arrives (the element is created only then).
+  animation: arriva var(--duration-slow) var(--easing-emphasized);
+}
+
+.giro--lungo {
+  border-top-color: var(--color-danger);
+
+  .giro__attesa {
+    background: var(--color-danger);
+    color: #fff;
+  }
+}
+
+@keyframes arriva {
+  from {
+    opacity: 0;
+    transform: translateY(-0.75rem) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .giro {
+    animation: none;
+  }
+}
+
+.giro__testa {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.giro__tavolo {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.giro__attesa {
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.giro__info,
+.giro__totali {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.giro__totali {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  color: var(--color-text);
+}
+
+.etichetta {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.voci {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  display: grid;
+  gap: var(--space-1);
+}
+
+.voce {
+  display: flex;
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.voce__q {
+  min-width: 2.5rem;
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.giro__azioni {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-2);
+
+  .bottone {
+    min-height: 3.25rem;
+    font-size: var(--font-size-md);
+  }
+}
+
+.recenti {
+  margin-top: var(--space-6);
+
+  h2 {
+    font-size: var(--font-size-md);
+    color: var(--color-text-muted);
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  li {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: var(--font-size-sm);
+  }
+
+  li[data-stato='RIFIUTATO'] .recenti__stato {
+    color: var(--color-danger);
+  }
+
+  li[data-stato='APPROVATO'] .recenti__stato {
+    color: var(--color-success);
+  }
+}
+
+.recenti__stato {
+  font-weight: var(--font-weight-bold);
+  margin-right: var(--space-1);
+}
+
+.recenti__motivo {
+  color: var(--color-text-muted);
+}
+
+.nota {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.motivi {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.motivo {
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+
+  &[aria-pressed='true'] {
+    border-color: var(--color-primary);
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+  }
+}
+
+.campo {
+  display: grid;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+
+  textarea {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font: inherit;
+    font-size: 16px;
+    resize: vertical;
+  }
+}

@@ -208,6 +208,8 @@ describe('real-time gateway', () => {
     const seqs = staff.ricevuti.map((e) => e.seq);
     expect(seqs).toEqual([...seqs].sort((a, b) => a - b));
 
+    // Recorded right after the sync answer (setImmediate): wait for it instead of reading at once.
+    await attendi(async () => (await prisma.evento.count({ where: { tipo: 'CLIENT_RICONNESSO' } })) >= 1);
     const riconnessi = await prisma.evento.findMany({ where: { tipo: 'CLIENT_RICONNESSO' } });
     expect(riconnessi).toHaveLength(1);
     expect(riconnessi[0]).toMatchObject({ attoreId: mario.utente.id, payload: { eventiMancanti: 3 } });
@@ -253,6 +255,44 @@ describe('real-time gateway', () => {
     expect(cliente.ricevuti[0]!.sedutaId).toBe(a.seduta.id);
     // The cursor moves to the head of the log even though most events were not for this table.
     expect(cliente.ultimoSeq).toBe(Number((await prisma.evento.aggregate({ _max: { seq: true } }))._max.seq) - 1);
+  });
+
+  it('tells every customer at once when a dish is sold out, also after a reconnection', async () => {
+    const cena = await formulaCena(prisma);
+    const server = app.getHttpServer();
+    const capo = await login(server, 'capo');
+    const a = await apriTavolo(server, mario, (await tavolo(prisma, 1)).id, cena.id);
+    const b = await apriTavolo(server, mario, (await tavolo(prisma, 2)).id, cena.id);
+    const clienteA = client({ cookie: await clienteAlTavolo(1, a.pin) });
+    const clienteB = client({ cookie: await clienteAlTavolo(2, b.pin) });
+    await clienteA.connetti();
+    await clienteB.connetti();
+    await attendi(() => clienteA.ultimaSync !== null && clienteB.ultimaSync !== null);
+
+    const piatto = await prisma.piatto.findUniqueOrThrow({ where: { numero: '46' } });
+    const disponibilita = (disponibile: boolean) =>
+      request(server)
+        .patch(`/api/piatti/${piatto.id}/disponibilita`)
+        .set('Authorization', `Bearer ${capo.accessToken}`)
+        .send({ disponibile })
+        .expect(200);
+    await disponibilita(false);
+    await attendi(
+      () => clienteA.diTipo('PIATTO_ESAURITO').length === 1 && clienteB.diTipo('PIATTO_ESAURITO').length === 1,
+    );
+    expect(clienteA.diTipo('PIATTO_ESAURITO')[0]).toMatchObject({
+      sedutaId: null,
+      attore: { ruolo: 'CAPO' },
+      payload: { piattoId: piatto.id },
+    });
+    expect(clienteA.diTipo('PIATTO_ESAURITO')[0]!.attore).not.toHaveProperty('id');
+
+    // Offline while the dish comes back: recovered on reconnection.
+    clienteB.socket.disconnect();
+    await disponibilita(true);
+    await clienteB.connetti();
+    await attendi(() => clienteB.diTipo('PIATTO_RIPRISTINATO').length === 1);
+    expect(clienteB.diTipo('PIATTO_RIPRISTINATO')[0]!.payload).toEqual({ piattoId: piatto.id });
   });
 
   it('shares cart changes and sent rounds live with the other phones of the table', async () => {

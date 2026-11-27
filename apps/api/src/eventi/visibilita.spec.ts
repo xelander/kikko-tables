@@ -37,6 +37,22 @@ describe('perCliente', () => {
     expect(perCliente(chiuso, 'seduta-1')?.attore).not.toHaveProperty('id');
   });
 
+  it('sends menu-wide events (sold out / back) to every customer, with the dish id only', () => {
+    const esaurito: EventoDto = {
+      ...base,
+      tipo: 'PIATTO_ESAURITO',
+      attore: { ruolo: 'CAPO', id: 'utente-7', dispositivoStaffId: 'tablet-cassa' },
+      sedutaId: null,
+      tavoloId: null,
+      payload: { piattoId: 'p-1', nome: 'Bao', numero: '12' },
+    };
+    expect(perCliente(esaurito, 'seduta-1')).toMatchObject({ attore: { ruolo: 'CAPO' }, payload: { piattoId: 'p-1' } });
+    expect(perCliente(esaurito, 'seduta-1')?.payload).toEqual({ piattoId: 'p-1' });
+    expect(perCliente({ ...esaurito, tipo: 'PIATTO_RIPRISTINATO' }, 'seduta-2')).not.toBeNull();
+    // Only menu events: other events without a session stay staff-only.
+    expect(perCliente({ ...esaurito, tipo: 'CONFIG_MODIFICATA' }, 'seduta-1')).toBeNull();
+  });
+
   it.each(['TAVOLO_APERTO', 'PIN_RIGENERATO', 'PIN_ERRATO', 'CLIENT_RICONNESSO', 'PRECONTO_GENERATO'] as const)(
     'never sends %s to customers',
     (tipo) => {

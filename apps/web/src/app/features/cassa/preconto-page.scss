@@ -1,0 +1,187 @@
+// Not encapsulated (print rules): every class is prefixed with "preconto-" or "scontrino".
+
+app-preconto-page {
+  display: block;
+}
+
+.preconto-pagina {
+  padding: var(--space-4);
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.preconto-comandi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.preconto-spazio {
+  flex: 1;
+}
+
+.preconto-bottone {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.preconto-bottone--primario {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.preconto-errore,
+.preconto-avviso {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.preconto-errore {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.preconto-avviso {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.preconto-caricamento {
+  color: var(--color-text-muted);
+}
+
+// The receipt: monospaced, narrow like an 80 mm roll, black on white also on screen.
+.scontrino {
+  max-width: 76mm;
+  margin: 0 auto;
+  padding: 6mm 4mm;
+  background: #fff;
+  color: #000;
+  box-shadow: var(--shadow-md);
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.scontrino__testa {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding-bottom: 3mm;
+  border-bottom: 1px dashed #000;
+  text-align: center;
+}
+
+.scontrino__locale {
+  font-size: 16px;
+}
+
+.scontrino__tipo {
+  font-weight: bold;
+  letter-spacing: 0.15em;
+}
+
+.scontrino__fiscale {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.scontrino__dati {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1px 3mm;
+  margin: 3mm 0;
+
+  dd {
+    margin: 0;
+    text-align: right;
+  }
+}
+
+.scontrino__righe {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 1mm 0;
+    vertical-align: top;
+    text-align: left;
+  }
+
+  thead th {
+    border-top: 1px dashed #000;
+    border-bottom: 1px dashed #000;
+  }
+
+  .num {
+    text-align: right;
+    white-space: nowrap;
+    padding-left: 2mm;
+  }
+
+  tfoot th,
+  tfoot td {
+    border-top: 1px dashed #000;
+    padding-top: 2mm;
+    font-size: 15px;
+    font-weight: bold;
+  }
+}
+
+.scontrino__unitario {
+  display: block;
+  color: #444;
+  font-size: 11px;
+}
+
+.scontrino__piede {
+  margin-top: 4mm;
+  padding-top: 3mm;
+  border-top: 1px dashed #000;
+  text-align: center;
+  font-size: 11px;
+}
+
+@media print {
+  @page {
+    margin: 4mm;
+  }
+
+  // Only the receipt is printed.
+  body * {
+    visibility: hidden;
+  }
+
+  .scontrino,
+  .scontrino * {
+    visibility: visible;
+  }
+
+  .scontrino {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 72mm;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}

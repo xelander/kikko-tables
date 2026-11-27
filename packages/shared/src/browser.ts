@@ -8,3 +8,4 @@ export * from './formula.js';
 export * from './health.js';
 export * from './roles.js';
 export * from './regole.js';
+export * from './cassa.js';

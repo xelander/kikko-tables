@@ -20,14 +20,26 @@ const CAMPI_CLIENTE: Partial<Record<TipoEvento, readonly string[]>> = {
 
 export const TIPI_VISIBILI_CLIENTE = Object.keys(CAMPI_CLIENTE) as TipoEvento[];
 
+/** Events not tied to a session that every customer receives (the menu changed for everyone). */
+const CAMPI_CLIENTE_GLOBALI: Partial<Record<TipoEvento, readonly string[]>> = {
+  PIATTO_ESAURITO: ['piattoId'],
+  PIATTO_RIPRISTINATO: ['piattoId'],
+};
+
+export const TIPI_GLOBALI_CLIENTE = Object.keys(CAMPI_CLIENTE_GLOBALI) as TipoEvento[];
+
 /**
  * Returns the version of an event that a customer of session `sedutaId` may receive, or null.
- * Customers only receive events of their own session; the actor is reduced to its role
- * (plus the device id when the actor is another customer of the same table).
+ * Customers only receive events of their own session, plus menu-wide ones (a dish sold out);
+ * the actor is reduced to its role (plus the device id when the actor is another customer of the same table).
  */
 export function perCliente(evento: EventoDto, sedutaId: string): EventoDto | null {
-  if (evento.sedutaId !== sedutaId) return null;
-  const campi = CAMPI_CLIENTE[evento.tipo];
+  const campi =
+    evento.sedutaId === null
+      ? CAMPI_CLIENTE_GLOBALI[evento.tipo]
+      : evento.sedutaId === sedutaId
+        ? CAMPI_CLIENTE[evento.tipo]
+        : undefined;
   if (!campi) return null;
   const payload = Object.fromEntries(campi.filter((c) => c in evento.payload).map((c) => [c, evento.payload[c]]));
   return {

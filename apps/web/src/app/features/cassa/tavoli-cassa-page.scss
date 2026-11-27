@@ -1,0 +1,144 @@
+@use 'comune';
+
+:host {
+  display: block;
+}
+
+.intestazione {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+
+  h1 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+  }
+}
+
+.n {
+  color: var(--color-text-muted);
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tavolo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-left: 6px solid var(--color-success);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+
+  &[data-stato='quasi-scaduto'] {
+    border-left-color: var(--color-warning);
+
+    .tempo {
+      color: var(--color-warning);
+    }
+  }
+
+  &[data-stato='scaduto'] {
+    border-left-color: var(--color-danger);
+    background: var(--color-danger-bg);
+
+    .tempo {
+      color: var(--color-danger);
+      font-weight: var(--font-weight-bold);
+    }
+  }
+}
+
+.tavolo__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 14rem;
+}
+
+.tavolo__numero {
+  min-width: 3rem;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.tavolo__testo {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.tavolo__dettagli {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.attesa {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: var(--font-size-sm);
+}
+
+.tavolo__azioni {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.gruppo {
+  display: inline-flex;
+  gap: var(--space-1);
+}
+
+.minuti {
+  padding: 0 var(--space-3);
+}
+
+.nota {
+  color: var(--color-text-muted);
+}
+
+.scelte {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: end;
+
+  .bottone[aria-pressed='true'] {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: var(--color-bg);
+  }
+}
+
+.altro {
+  display: grid;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+
+  input {
+    width: 6rem;
+    min-height: var(--touch-target);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font: inherit;
+    font-size: 16px;
+  }
+}

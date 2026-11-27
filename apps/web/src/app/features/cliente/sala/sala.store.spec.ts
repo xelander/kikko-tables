@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import type { EventoDto } from '@kikko/shared';
 import { RealtimeService } from '../../../core/realtime/realtime.service';
 import { RealtimeFinto, menuProva, sedutaProva } from '../../../testing/fakes';
-import { RITARDO_INVIO_CARRELLO_MS, SalaStore } from './sala.store';
+import { DURATA_NOTIFICA_MS, RITARDO_INVIO_CARRELLO_MS, SalaStore } from './sala.store';
 
 const evento = (payload: Record<string, unknown>, tipo: EventoDto['tipo'] = 'CARRELLO_MODIFICATO'): EventoDto => ({
   seq: 1,
@@ -94,6 +94,34 @@ describe('SalaStore', () => {
     expect(store.seduta()?.tavoli).toEqual([9]);
   });
 
+  it('marks a dish sold out and back as soon as the till changes it, for every table', () => {
+    const disponibile = () => store.menu()!.piatti.find((p) => p.id === 'p-bao')!.disponibile;
+    realtime.eventi$.next({ ...evento({ piattoId: 'p-bao' }, 'PIATTO_ESAURITO'), sedutaId: null });
+    expect(disponibile()).toBe(false);
+    expect(store.disponibili('p-bao')).toBe(0);
+    realtime.eventi$.next({ ...evento({ piattoId: 'p-bao' }, 'PIATTO_RIPRISTINATO'), sedutaId: null });
+    expect(disponibile()).toBe(true);
+  });
+
+  it('shows a notice when the till approves or rejects a round, then hides it', async () => {
+    realtime.eventi$.next(evento({ giroId: 'g1', numero: 2 }, 'GIRO_APPROVATO'));
+    http.expectOne('/api/cliente/seduta').flush(sedutaProva());
+    expect(store.notifica()).toEqual({ tipo: 'APPROVATO', numero: 2, motivo: null });
+    await vi.advanceTimersByTimeAsync(DURATA_NOTIFICA_MS);
+    expect(store.notifica()).toBeNull();
+
+    realtime.eventi$.next(evento({ giroId: 'g2', numero: 3, motivo: 'Finito il salmone' }, 'GIRO_RIFIUTATO'));
+    http.expectOne('/api/cliente/seduta').flush(sedutaProva());
+    expect(store.notifica()).toEqual({ tipo: 'RIFIUTATO', numero: 3, motivo: 'Finito il salmone' });
+    store.chiudiNotifica();
+    expect(store.notifica()).toBeNull();
+  });
+
+  it('reloads the session when the time runs out', () => {
+    realtime.eventi$.next(evento({}, 'TEMPO_SCADUTO'));
+    http.expectOne('/api/cliente/seduta').flush(sedutaProva());
+  });
+
   it('reloads the session to learn the emoji of a new device in the cart', () => {
     realtime.eventi$.next(evento({ piattoId: 'p-salmone', quantita: 1, dispositivoId: 'cameriere' }));
     http.expectOne('/api/cliente/seduta').flush(sedutaProva());
@@ -153,6 +181,8 @@ describe('SalaStore', () => {
     realtime.ricarica$.next();
     await vi.advanceTimersByTimeAsync(0);
     http.expectOne('/api/cliente/seduta').flush(sedutaProva());
+    // The menu is reloaded too: sold-out changes may have been missed while offline.
+    http.expectOne('/api/menu').flush(menuProva());
     const secondo = http.expectOne('/api/cliente/giri');
     expect(secondo.request.body.chiaveIdempotenza).toBe(chiave);
     secondo.flush({

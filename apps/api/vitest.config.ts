@@ -15,6 +15,8 @@ export default defineConfig({
       DATABASE_URL: TEST_DATABASE_URL,
       THROTTLE_PUBLIC_LIMIT: '10000',
       THROTTLE_DEFAULT_LIMIT: '10000',
+      // Tests call the expiry check directly, at the instant they choose.
+      CONTROLLO_SCADENZE_SECONDI: '0',
       MEDIA_DIR: join(tmpdir(), 'kikko-test-media'),
     },
     // Integration tests share one database: run files sequentially.

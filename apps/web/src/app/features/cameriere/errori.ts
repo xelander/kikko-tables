@@ -7,6 +7,10 @@ const MESSAGGI: Record<string, string> = {
   FORMULE_DIVERSE: 'Si possono unire solo tavoli con la stessa formula.',
   TAVOLO_NON_DELLA_SEDUTA: 'Il tavolo da spostare non appartiene a questa seduta.',
   DATI_NON_VALIDI: 'Dati non validi.',
+  GIRO_GIA_GESTITO: 'Questo giro è già stato gestito da un collega.',
+  GIRO_INESISTENTE: 'Giro non trovato.',
+  SEDUTA_INESISTENTE: 'Tavolo non trovato.',
+  PIATTO_INESISTENTE: 'Piatto non trovato.',
 };
 
 /** Italian message for a failed staff action. */

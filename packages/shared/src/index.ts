@@ -10,3 +10,5 @@ export * from './schemas/tables.js';
 export * from './sedute.js';
 export * from './clienti.js';
 export * from './regole.js';
+export * from './cassa.js';
+export * from './cassa-schemi.js';

@@ -1,0 +1,99 @@
+<main class="pagina">
+  <div class="intestazione">
+    <h1>
+      Tavoli aperti <span class="n">{{ store.sedute().length }}</span>
+    </h1>
+    <button
+      type="button"
+      class="bottone"
+      data-testid="estendi-tutti"
+      [disabled]="lavoro() || store.sedute().length === 0"
+      (click)="apriTutti()"
+    >
+      ⏱ Estendi tempo a tutti
+    </button>
+  </div>
+
+  @if (messaggio(); as m) {
+    <p class="messaggio" role="status">{{ m }}</p>
+  }
+  @if (errore(); as e) {
+    <p class="errore" role="alert">{{ e }}</p>
+  }
+
+  @if (store.tavoli()) {
+    <ul class="lista" aria-label="Tavoli aperti">
+      @for (t of ordinati(); track t.seduta!.id) {
+        @let s = t.seduta!;
+        @let stato = statoTempo(t);
+        <li class="tavolo" [attr.data-stato]="stato" [attr.data-testid]="'cassa-tavolo-' + s.tavoli.join('-')">
+          <div class="tavolo__info">
+            <span class="tavolo__numero">{{ s.tavoli.join('+') }}</span>
+            <span class="tavolo__testo">
+              <strong>{{ s.formula.nome.it }} · {{ s.copertiAdulti + s.copertiBambini }} coperti</strong>
+              <span class="tavolo__dettagli">
+                <span class="tempo" data-testid="tempo">
+                  @if (stato === 'scaduto') {
+                    ⏰ Tempo scaduto
+                  } @else {
+                    ⏱ {{ rimanente(t) }}
+                  }
+                </span>
+                @if (s.giriInAttesa > 0) {
+                  <span class="attesa">{{ s.giriInAttesa }} giro in attesa</span>
+                }
+              </span>
+            </span>
+          </div>
+          <div class="tavolo__azioni">
+            <span class="gruppo" role="group" [attr.aria-label]="'Minuti extra al tavolo ' + s.tavoli.join('+')">
+              @for (m of rapidi; track m) {
+                <button type="button" class="bottone minuti" [disabled]="lavoro()" (click)="estendi(t, m)">
+                  +{{ m }}′
+                </button>
+              }
+            </span>
+            <a class="bottone bottone--primario" [routerLink]="['/staff/cassa/sedute', s.id, 'preconto']">Pre-conto</a>
+            <a class="bottone" [routerLink]="['/staff/cameriere/sedute', s.id]">Dettaglio</a>
+          </div>
+        </li>
+      } @empty {
+        <li class="vuoto">Nessun tavolo aperto.</li>
+      }
+    </ul>
+  } @else {
+    <p class="vuoto">Caricamento tavoli…</p>
+  }
+</main>
+
+<dialog #finestra class="dialogo" aria-labelledby="tutti-titolo">
+  <h2 id="tutti-titolo">Estendi il tempo a tutti i tavoli aperti</h2>
+  <p class="nota">
+    Per recuperare il tempo perso, per esempio dopo un'interruzione di corrente o di rete. Vale per i
+    {{ store.sedute().length }} tavoli aperti adesso.
+  </p>
+  <div class="scelte" role="group" aria-label="Minuti">
+    @for (m of rapidi; track m) {
+      <button type="button" class="bottone" [attr.aria-pressed]="minutiTutti() === m" (click)="minutiTutti.set(m)">
+        {{ m }} min
+      </button>
+    }
+    <label class="altro">
+      <span>Altro</span>
+      <input
+        type="number"
+        inputmode="numeric"
+        min="1"
+        [max]="max"
+        [value]="minutiTutti()"
+        (input)="impostaMinuti($any($event.target).value)"
+      />
+    </label>
+  </div>
+  <div class="azioni">
+    <button type="button" class="bottone" (click)="chiudiTutti()">Annulla</button>
+    <button type="button" class="bottone bottone--primario" (click)="estendiTutti()">
+      Aggiungi {{ minutiTutti() }} min a tutti
+    </button>
+  </div>
+</dialog>

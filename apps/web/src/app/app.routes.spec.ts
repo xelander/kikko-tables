@@ -51,7 +51,6 @@ describe('app routes', () => {
   );
 
   it.each([
-    ['/staff/cassa', 'Cassa', 'F4'],
     ['/admin', 'Amministratore', 'F5'],
     ['/monitor', 'Monitor', 'F6'],
     ['/non-esiste', 'Pagina non trovata', '404'],
@@ -62,6 +61,20 @@ describe('app routes', () => {
     const el = harness.routeNativeElement as HTMLElement;
     expect(el.querySelector('h1')?.textContent).toBe(heading);
     expect(el.textContent).toContain(phase);
+  });
+
+  it('opens the till (rounds queue) for the manager, with its tabs', async () => {
+    sessione = sessioneProva('CAPO');
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/staff/cassa');
+    const el = harness.fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('app-cassa-layout app-giri-page')).not.toBeNull();
+    expect(Array.from(el.querySelectorAll('.schede a')).map((a) => a.textContent?.trim())).toEqual([
+      'Giri',
+      'Tavoli',
+      'Esauriti',
+    ]);
+    TestBed.inject(HttpTestingController).match(() => true);
   });
 
   it('redirects a waiter away from areas of other roles', async () => {

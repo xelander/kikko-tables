@@ -525,3 +525,63 @@
     background-position: -200% 0;
   }
 }
+
+// "Round confirmed / not accepted" notice from the till (CLAUDE.md §11: arrival of an approved round).
+.notifica {
+  position: fixed;
+  top: max(var(--space-3), env(safe-area-inset-top));
+  left: 50%;
+  z-index: 30;
+  width: min(30rem, calc(100vw - 2 * var(--space-3)));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--color-success);
+  color: #fff;
+  box-shadow: var(--shadow-lg);
+  animation: notifica-entra var(--duration-slow) var(--easing-emphasized);
+}
+
+.notifica--rifiutato {
+  background: var(--color-danger);
+}
+
+.notifica__icona {
+  font-size: 1.75rem;
+  animation: festa var(--duration-slow) var(--easing-emphasized) 2;
+}
+
+.notifica__testo {
+  flex: 1;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.notifica__chiudi {
+  flex: none;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 0.2);
+  color: inherit;
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+}
+
+@keyframes notifica-entra {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notifica,
+  .notifica__icona {
+    animation: none;
+  }
+}

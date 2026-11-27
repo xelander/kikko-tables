@@ -31,6 +31,16 @@ export const INTERVALLO_RIPROVA_GIRO_MS = 5_000;
 
 export type StatoInvio = 'pronto' | 'invio' | 'in-coda' | 'inviato';
 
+/** How long the "round approved / rejected" notice stays on screen. */
+export const DURATA_NOTIFICA_MS = 8_000;
+
+/** The till approved or rejected a round of this table (shown as an animated notice). */
+export interface NotificaGiro {
+  tipo: 'APPROVATO' | 'RIFIUTATO';
+  numero: number;
+  motivo: string | null;
+}
+
 interface Modifica {
   quantita: number;
   timer: ReturnType<typeof setTimeout> | null;
@@ -59,6 +69,8 @@ export class SalaStore {
   readonly errore = signal<string | null>(null);
   readonly statoInvio = signal<StatoInvio>('pronto');
   readonly erroriGiro = signal<ErroreRegola[]>([]);
+  readonly notifica = signal<NotificaGiro | null>(null);
+  private timerNotifica: ReturnType<typeof setTimeout> | undefined;
   /** Difference between the server clock and this device's clock (ms). */
   private readonly scarto = signal(0);
   readonly ora = signal(Date.now());
@@ -152,6 +164,7 @@ export class SalaStore {
     inject(DestroyRef).onDestroy(() => {
       clearInterval(orologio);
       clearInterval(this.riprova);
+      clearTimeout(this.timerNotifica);
       globalThis.removeEventListener?.('online', online);
       for (const m of this.modifiche.values()) if (m.timer) clearTimeout(m.timer);
     });
@@ -159,6 +172,12 @@ export class SalaStore {
     this.realtime.ricarica$.pipe(takeUntilDestroyed()).subscribe(() => {
       void this.caricaSeduta();
       void this.riprovaGiro();
+      // Sold-out changes may have been missed while offline.
+      if (this.menu())
+        void this.api.menu().then(
+          (m) => this.menu.set(m),
+          () => undefined,
+        );
     });
   }
 
@@ -315,6 +334,17 @@ export class SalaStore {
     return inVolo;
   }
 
+  chiudiNotifica(): void {
+    clearTimeout(this.timerNotifica);
+    this.notifica.set(null);
+  }
+
+  private mostraNotifica(n: NotificaGiro): void {
+    clearTimeout(this.timerNotifica);
+    this.notifica.set(n);
+    this.timerNotifica = setTimeout(() => this.notifica.set(null), DURATA_NOTIFICA_MS);
+  }
+
   private applicaEvento(e: EventoDto): void {
     // Staff receive the events of every table: keep only this session's.
     const seduta = this.seduta();
@@ -334,9 +364,27 @@ export class SalaStore {
         if (!seduta.dispositivi.some((d) => d.id === dispositivoId)) void this.caricaSeduta().catch(() => undefined);
         break;
       }
-      case 'GIRO_INVIATO':
+      case 'PIATTO_ESAURITO':
+      case 'PIATTO_RIPRISTINATO': {
+        // Menu-wide: the dish is shown as sold out (or available again) at once, without reloading.
+        const piattoId = String(e.payload['piattoId']);
+        const disponibile = e.tipo === 'PIATTO_RIPRISTINATO';
+        this.menu.update((m) =>
+          m ? { ...m, piatti: m.piatti.map((p) => (p.id === piattoId ? { ...p, disponibile } : p)) } : m,
+        );
+        break;
+      }
       case 'GIRO_APPROVATO':
       case 'GIRO_RIFIUTATO':
+        this.mostraNotifica({
+          tipo: e.tipo === 'GIRO_APPROVATO' ? 'APPROVATO' : 'RIFIUTATO',
+          numero: Number(e.payload['numero']),
+          motivo: typeof e.payload['motivo'] === 'string' ? e.payload['motivo'] : null,
+        });
+        void this.caricaSeduta().catch(() => undefined);
+        break;
+      case 'GIRO_INVIATO':
+      case 'TEMPO_SCADUTO':
       case 'TEMPO_ESTESO':
       case 'DISPOSITIVO_UNITO':
       case 'COPERTI_MODIFICATI':

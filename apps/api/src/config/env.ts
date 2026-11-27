@@ -36,6 +36,8 @@ const EnvSchema = z.object({
   THROTTLE_DEFAULT_LIMIT: z.coerce.number().int().min(1).default(300),
   /** Directory of dish photos, served under /media. */
   MEDIA_DIR: z.string().min(1),
+  /** How often the server looks for sessions past their maximum duration (seconds). 0 disables the check. */
+  CONTROLLO_SCADENZE_SECONDI: z.coerce.number().int().min(0).max(3600).default(30),
 });
 
 export type Env = Omit<z.infer<typeof EnvSchema>, 'COOKIE_SECURE'> & { COOKIE_SECURE: boolean };

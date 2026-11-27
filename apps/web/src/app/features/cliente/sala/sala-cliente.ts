@@ -9,7 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 import type { Allergene, CategoriaMenuDto, PiattoMenuDto } from '@kikko/shared';
-import { ALLERGENI } from '@kikko/shared/browser';
+import { ALLERGENI, traduciMotivo } from '@kikko/shared/browser';
 import { I18nService, LINGUE, type Lingua } from '../../../core/i18n/i18n.service';
 import { ConnessioneBanner } from '../../../core/realtime/connessione-banner';
 import { archivio } from '../../../core/storage';
@@ -58,6 +58,11 @@ export class SalaCliente {
   protected readonly testiSala = computed(() => TESTI_SALA[this.lingua()]);
   protected readonly lingue = LINGUE;
   protected readonly allergeni = ALLERGENI;
+
+  /** A rejection reason in the customer's language (quick reasons are translated, free text is shown as typed). */
+  protected motivo(testo: string): string {
+    return traduciMotivo(testo, this.lingua());
+  }
 
   protected readonly sezione = signal<'MENU' | 'BEVANDE'>('MENU');
   protected readonly filtri = signal<Filtri>(filtriSalvati());

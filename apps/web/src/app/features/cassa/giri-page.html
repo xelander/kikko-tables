@@ -1,0 +1,112 @@
+<main class="pagina">
+  @if (store.errore(); as e) {
+    <p class="errore" role="alert">{{ e }}</p>
+  }
+
+  @if (store.coda()) {
+    <h1 class="titolo">
+      Giri da approvare
+      <span class="titolo__n">{{ store.inAttesa().length }}</span>
+    </h1>
+
+    <ul class="coda" aria-label="Giri in attesa" data-testid="coda-giri">
+      @for (g of store.inAttesa(); track g.id) {
+        <li class="giro" [class.giro--lungo]="store.attesaLunga(g)" [attr.data-testid]="'giro-' + g.tavoli.join('-')">
+          <header class="giro__testa">
+            <span class="giro__tavolo">Tavolo {{ g.tavoli.join('+') }}</span>
+            <span class="giro__attesa" [attr.title]="'Inviato alle ' + orario(g.inviatoIl)">
+              ⏱ {{ store.minutiAttesa(g) < 1 ? 'adesso' : 'da ' + store.minutiAttesa(g) + ' min' }}
+            </span>
+          </header>
+          <p class="giro__info">
+            Giro {{ g.numero }} · {{ g.formula }} · {{ g.coperti }} coperti
+            @if (g.inviatoDa; as d) {
+              · {{ d.emoji }} {{ d.soprannome }}
+            }
+          </p>
+          <p class="giro__totali">
+            @if (pezzi(g) > 0) {
+              <strong>{{ pezzi(g) }} piatti</strong>
+            }
+            @if (extra(g) > 0) {
+              <span class="etichetta">{{ extra(g) }} extra</span>
+            }
+            @if (g.soloExtra) {
+              <span class="etichetta">solo extra</span>
+            }
+          </p>
+          <ul class="voci">
+            @for (v of g.voci; track v.piattoId) {
+              <li class="voce" [class.voce--extra]="!v.inFormula">
+                <span class="voce__q">{{ v.quantita }} ×</span>
+                <span>{{ store.nome(v.piattoId) }}</span>
+                @if (!v.inFormula) {
+                  <span class="etichetta">extra</span>
+                }
+              </li>
+            }
+          </ul>
+          <div class="giro__azioni">
+            <button type="button" class="bottone bottone--pericolo" (click)="apriRifiuto(g)">Rifiuta</button>
+            <button type="button" class="bottone bottone--ok approva" (click)="approva(g)">✓ Approva</button>
+          </div>
+        </li>
+      } @empty {
+        <li class="vuoto" data-testid="coda-vuota">Nessun giro in attesa ✓</li>
+      }
+    </ul>
+
+    @if (store.recenti().length) {
+      <section class="recenti" aria-labelledby="recenti-titolo">
+        <h2 id="recenti-titolo">Gestiti di recente</h2>
+        <ul>
+          @for (g of store.recenti(); track g.id) {
+            <li [attr.data-stato]="g.stato">
+              <span class="recenti__stato">{{ g.stato === 'APPROVATO' ? '✓' : '✗' }}</span>
+              Tavolo {{ g.tavoli.join('+') }} · giro {{ g.numero }} ·
+              {{ g.stato === 'APPROVATO' ? 'approvato' : 'rifiutato' }}
+              @if (g.gestitoDa) {
+                da {{ g.gestitoDa }}
+              }
+              alle {{ orario(g.gestitoIl) }}
+              @if (g.motivoRifiuto) {
+                <span class="recenti__motivo">“{{ g.motivoRifiuto }}”</span>
+              }
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  } @else if (!store.errore()) {
+    <p class="vuoto">Caricamento giri…</p>
+  }
+</main>
+
+<dialog #finestra class="dialogo" (close)="daRifiutare.set(null)" aria-labelledby="rifiuto-titolo">
+  @if (daRifiutare(); as g) {
+    <h2 id="rifiuto-titolo">Rifiuta il giro {{ g.numero }} del tavolo {{ g.tavoli.join('+') }}</h2>
+    <p class="nota">Il tavolo vedrà il motivo. Il giro rifiutato non conta per i limiti né per l'attesa.</p>
+    <div class="motivi" role="group" aria-label="Motivi rapidi">
+      @for (m of motivi; track m.it) {
+        <button type="button" class="motivo" [attr.aria-pressed]="motivo() === m.it" (click)="motivo.set(m.it)">
+          {{ m.it }}
+        </button>
+      }
+    </div>
+    <label class="campo">
+      <span>Oppure scrivi il motivo</span>
+      <textarea rows="2" maxlength="200" [value]="motivo()" (input)="motivo.set($any($event.target).value)"></textarea>
+    </label>
+    <div class="azioni">
+      <button type="button" class="bottone" (click)="chiudiRifiuto()">Annulla</button>
+      <button
+        type="button"
+        class="bottone bottone--primario"
+        [disabled]="!motivoValido() || invio()"
+        (click)="rifiuta()"
+      >
+        Rifiuta giro
+      </button>
+    </div>
+  }
+</dialog>

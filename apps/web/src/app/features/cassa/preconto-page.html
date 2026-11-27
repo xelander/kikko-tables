@@ -1,0 +1,86 @@
+<main class="preconto-pagina">
+  <div class="preconto-comandi">
+    <a class="preconto-bottone" routerLink="/staff/cassa/tavoli">‹ Tavoli</a>
+    <span class="preconto-spazio"></span>
+    @if (preconto()) {
+      <button type="button" class="preconto-bottone" (click)="stampa()">🖨 Stampa</button>
+      <button
+        type="button"
+        class="preconto-bottone preconto-bottone--primario"
+        [disabled]="lavoro()"
+        (click)="chiudi()"
+      >
+        Chiudi tavolo
+      </button>
+    }
+  </div>
+
+  @if (errore(); as e) {
+    <p class="preconto-errore" role="alert">{{ e }}</p>
+  }
+
+  @if (preconto(); as p) {
+    @if (p.giriInAttesa > 0) {
+      <p class="preconto-avviso" role="status">
+        {{ p.giriInAttesa === 1 ? '1 giro è' : p.giriInAttesa + ' giri sono' }} ancora in attesa di approvazione: gli
+        eventuali extra non sono nel totale.
+      </p>
+    }
+
+    <article class="scontrino" data-testid="preconto" aria-label="Pre-conto">
+      <header class="scontrino__testa">
+        <strong class="scontrino__locale">{{ p.nomeLocale }}</strong>
+        <span class="scontrino__tipo">PRE-CONTO</span>
+        <span class="scontrino__fiscale">Documento non fiscale</span>
+      </header>
+      <dl class="scontrino__dati">
+        <dt>Tavolo</dt>
+        <dd>{{ p.tavoli.join('+') }}</dd>
+        <dt>Formula</dt>
+        <dd>{{ p.formula }}</dd>
+        <dt>Coperti</dt>
+        <dd>
+          {{ p.copertiAdulti }} adulti
+          @if (p.copertiBambini > 0) {
+            + {{ p.copertiBambini }} bambini
+          }
+        </dd>
+        <dt>Data</dt>
+        <dd>{{ data(p.generatoIl) }}</dd>
+      </dl>
+      <table class="scontrino__righe">
+        <caption class="visually-hidden">
+          Voci del pre-conto
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Descrizione</th>
+            <th scope="col" class="num">Q.tà</th>
+            <th scope="col" class="num">Importo</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of p.righe; track $index) {
+            <tr [attr.data-tipo]="r.tipo">
+              <td>
+                {{ r.descrizione }}
+                <span class="scontrino__unitario">{{ euro(r.prezzoUnitarioCent) }} cad.</span>
+              </td>
+              <td class="num">{{ r.quantita }}</td>
+              <td class="num">{{ euro(r.totaleCent) }}</td>
+            </tr>
+          }
+        </tbody>
+        <tfoot>
+          <tr>
+            <th scope="row" colspan="2">Totale</th>
+            <td class="num" data-testid="totale">{{ euro(p.totaleCent) }}</td>
+          </tr>
+        </tfoot>
+      </table>
+      <footer class="scontrino__piede">Documento non fiscale. Lo scontrino viene emesso dalla cassa.</footer>
+    </article>
+  } @else if (!errore()) {
+    <p class="preconto-caricamento">Preparazione del pre-conto…</p>
+  }
+</main>

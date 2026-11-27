@@ -1,18 +1,27 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { puo } from '../../core/auth/staff.guard';
 import { StaffAuthService } from '../../core/auth/staff-auth.service';
 import { ConnessioneBanner } from '../../core/realtime/connessione-banner';
 import { RealtimeService } from '../../core/realtime/realtime.service';
 
-/** Header shared by staff pages: who is logged in, device registration, logout and connection banner. */
+/**
+ * Header shared by staff pages: who is logged in, links between areas (manager: hall ↔ till),
+ * device registration, logout and connection banner.
+ */
 @Component({
   selector: 'app-staff-shell',
-  imports: [ConnessioneBanner],
+  imports: [ConnessioneBanner, RouterLink, RouterLinkActive],
   template: `
     <app-connessione-banner />
     <header class="barra">
       <strong class="barra__titolo">{{ titolo() }}</strong>
+      @if (aree()) {
+        <nav class="barra__aree" aria-label="Aree">
+          <a routerLink="/staff/cameriere" routerLinkActive="attiva" ariaCurrentWhenActive="page">Sala</a>
+          <a routerLink="/staff/cassa" routerLinkActive="attiva" ariaCurrentWhenActive="page">Cassa</a>
+        </nav>
+      }
       <span class="barra__utente">
         {{ auth.utente()?.nome }}
         @if (auth.sessione()?.dispositivo; as d) {
@@ -45,6 +54,26 @@ import { RealtimeService } from '../../core/realtime/realtime.service';
     .barra__titolo {
       font-size: var(--font-size-lg);
     }
+    .barra__aree {
+      display: flex;
+      gap: var(--space-1);
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.5rem;
+        padding: 0 var(--space-3);
+        border-radius: var(--radius-pill);
+        color: var(--color-text);
+        font-weight: var(--font-weight-semibold);
+        text-decoration: none;
+      }
+
+      a.attiva {
+        background: var(--color-text);
+        color: var(--color-bg);
+      }
+    }
     .barra__utente {
       flex: 1;
       color: var(--color-text-muted);
@@ -73,9 +102,11 @@ export class StaffShell {
   private readonly realtime = inject(RealtimeService);
   private readonly router = inject(Router);
 
-  readonly titolo = signal('Sala');
+  readonly titolo = input('Sala');
   protected readonly messaggio = signal<string | null>(null);
   private readonly registrato = signal(false);
+  /** Managers work both in the hall and at the till. */
+  protected readonly aree = computed(() => puo(this.auth.utente()?.ruolo, 'CAPO'));
   protected readonly puoRegistrare = computed(
     () => puo(this.auth.utente()?.ruolo, 'CAPO') && !this.auth.sessione()?.dispositivo && !this.registrato(),
   );

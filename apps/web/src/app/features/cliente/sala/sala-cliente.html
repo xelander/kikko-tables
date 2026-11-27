@@ -5,6 +5,27 @@
   [testoRipristinato]="lingua() === 'it' ? 'Ripristinato' : 'Back online'"
 />
 
+@if (store.notifica(); as n) {
+  <div
+    class="notifica"
+    [class.notifica--rifiutato]="n.tipo === 'RIFIUTATO'"
+    role="status"
+    aria-live="polite"
+    data-testid="notifica-giro"
+  >
+    <span class="notifica__icona" aria-hidden="true">{{ n.tipo === 'APPROVATO' ? '🎉' : '✋' }}</span>
+    <span class="notifica__testo">
+      <strong>{{ n.tipo === 'APPROVATO' ? t.giroApprovato(n.numero) : t.giroRifiutato(n.numero) }}</strong>
+      @if (n.motivo) {
+        <span>{{ motivo(n.motivo) }}</span>
+      }
+    </span>
+    <button type="button" class="notifica__chiudi" [attr.aria-label]="t.chiudiAvviso" (click)="store.chiudiNotifica()">
+      ×
+    </button>
+  </div>
+}
+
 <div class="sala">
   <header class="testata">
     @if (staff) {
@@ -322,7 +343,7 @@
             }
             <span class="giro__stato">{{ t.statoGiro[g.stato] }}</span>
             @if (g.motivoRifiuto) {
-              <span class="giro__motivo">{{ g.motivoRifiuto }}</span>
+              <span class="giro__motivo">{{ motivo(g.motivoRifiuto) }}</span>
             }
           </li>
         }

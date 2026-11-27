@@ -24,7 +24,7 @@ import { ClienteService } from '../cliente/cliente.service.js';
 import type { Attore } from '../common/attore.js';
 import { COOKIE } from '../common/cookies.js';
 import { EventiService } from '../eventi/eventi.service.js';
-import { TIPI_VISIBILI_CLIENTE, perCliente } from '../eventi/visibilita.js';
+import { TIPI_GLOBALI_CLIENTE, TIPI_VISIBILI_CLIENTE, perCliente } from '../eventi/visibilita.js';
 
 /** Who is on the other side of a socket, set by the handshake middleware. */
 export type IdentitaSocket =
@@ -39,6 +39,8 @@ export const stanza = {
   seduta: (id: string) => `seduta:${id}`,
   staff: (ruolo: RuoloStaff) => `staff:${ruolo}`,
   monitor: 'monitor',
+  /** Every customer phone: menu-wide events (a dish sold out). */
+  clienti: 'clienti',
 } as const;
 
 const STANZE_STAFF = (['CAMERIERE', 'CAPO', 'ADMIN', 'MONITOR'] as const).map(stanza.staff);
@@ -96,7 +98,14 @@ export class RealtimeGateway implements OnGatewayInit, OnModuleDestroy {
     if (ultimoSeq === null || ultimoSeq >= testa) return { esito: 'eventi', eventi: [], ultimoSeq: testa };
 
     const filtro =
-      identita.tipo === 'cliente' ? { sedutaId: identita.sedutaId, tipo: { in: TIPI_VISIBILI_CLIENTE } } : {};
+      identita.tipo === 'cliente'
+        ? {
+            OR: [
+              { sedutaId: identita.sedutaId, tipo: { in: TIPI_VISIBILI_CLIENTE } },
+              { sedutaId: null, tipo: { in: TIPI_GLOBALI_CLIENTE } },
+            ],
+          }
+        : {};
     const grezzi = await this.eventi.dopo(ultimoSeq, MAX_EVENTI_RECUPERO + 1, {
       ...filtro,
       seq: { lte: BigInt(testa) },
@@ -143,13 +152,18 @@ export class RealtimeGateway implements OnGatewayInit, OnModuleDestroy {
       dispositivoId: cliente.dispositivo.id,
       sedutaId: cliente.seduta.id,
     };
-    await socket.join(stanza.seduta(cliente.seduta.id));
+    await socket.join([stanza.seduta(cliente.seduta.id), stanza.clienti]);
   }
 
   /** Sends a committed event to every room allowed to see it. */
   private diffondi(evento: EventoDto): void {
     this.server.to([...STANZE_STAFF, stanza.monitor]).emit(SOCKET.evento, evento);
-    if (!evento.sedutaId) return;
+    if (!evento.sedutaId) {
+      // Menu-wide events reach every customer; the room name is only used for the filter.
+      const globale = perCliente(evento, '');
+      if (globale) this.server.to(stanza.clienti).emit(SOCKET.evento, globale);
+      return;
+    }
     const versioneCliente = perCliente(evento, evento.sedutaId);
     const room = stanza.seduta(evento.sedutaId);
     if (versioneCliente) this.server.to(room).emit(SOCKET.evento, versioneCliente);

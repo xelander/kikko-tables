@@ -4,9 +4,10 @@ Sistema di ordinazione al tavolo per un ristorante all you can eat: un'unica web
 (cliente, cameriere, cassa, amministratore, monitor) e un'API NestJS con PostgreSQL.
 Il brief completo è in [`CLAUDE.md`](CLAUDE.md), le decisioni prese in [`docs/decisioni.md`](docs/decisioni.md).
 
-**Stato:** F3 – App cameriere (lista tavoli, pagina del tavolo, ordini per conto del tavolo, coperti, spostamento e
-unione dei tavoli). Prima: F2 app cliente (menù reale, carrello condiviso, regole AYCE, giri anche offline), F1 sedute,
-PIN, accessi e tempo reale, F0 base.
+**Stato:** F4 – App capo / cassa (coda dei giri da approvare o rifiutare con avviso sonoro, piatti esauriti in tempo
+reale, tempo extra e allarme "tempo scaduto", pre-conto non fiscale e chiusura). Prima: F3 app cameriere, F2 app
+cliente (menù reale, carrello condiviso, regole AYCE, giri anche offline), F1 sedute, PIN, accessi e tempo reale, F0
+base.
 
 ## Struttura
 
@@ -96,6 +97,19 @@ Il seed (fuori da produzione) crea questi utenti. Le password sono uguali allo u
 Il menù è quello reale del ristorante (155 piatti, trascritti dal PDF della cena) con foto, allergeni e limiti
 "massimo N volte" (per persona). Vedi [`packages/shared/seed/README.md`](packages/shared/seed/README.md).
 
+### Provare il flusso F4 (cassa)
+
+1. Apri un tavolo e collega un telefono (flussi F2 e F3), poi entra su `/staff/cassa` con `capo` / `capo`: il capo
+   arriva direttamente in cassa e passa dalla Sala alla Cassa con i link in alto.
+2. **Giri**: ogni giro inviato compare subito, dal più vecchio, con tavolo, piatti, extra e da quanto aspetta (in rosso
+   dopo 5 minuti). "🔕 Attiva suoni" fa suonare il tablet a ogni nuovo giro; dopo un riavvio basta un tocco sullo schermo
+   per riattivarli. "Approva" o "Rifiuta" con un motivo rapido o scritto: il telefono vede subito l'esito con
+   un'animazione, e un giro rifiutato non conta né per i limiti né per l'attesa.
+3. **Esauriti**: l'interruttore di un piatto lo segna esaurito su tutti i menù aperti, all'istante.
+4. **Tavoli**: tempo rimasto di ogni tavolo (scaduti in cima, con allarme), "+10′ +15′ +30′", "Estendi tempo a tutti"
+   (per esempio dopo un blackout), "Pre-conto" stampabile (rotolo da 80 mm o A4, "documento non fiscale") e "Chiudi
+   tavolo".
+
 **Dispositivo condiviso del locale:** entra come `capo` sul tablet, tocca "Rendi condiviso" e dai un nome.
 Da quel momento la pagina di accesso di quel tablet mostra i nomi dello staff e chiede solo il PIN personale.
 
@@ -121,6 +135,7 @@ Per cambiarli copia `apps/api/.env.example` in `apps/api/.env`.
 | `TRUST_PROXY`                                      | non impostato                                        | Es. `1` dietro Caddy, per leggere l'IP reale                                                                         |
 | `THROTTLE_PUBLIC_LIMIT` / `THROTTLE_DEFAULT_LIMIT` | `20` / `300`                                         | Richieste al minuto per dispositivo (o IP) su PIN e login / sul resto                                                |
 | `MEDIA_DIR`                                        | `apps/api/media`                                     | Foto dei piatti, servite su `/media`; il seed ci copia quelle del menù. In produzione è un volume incluso nei backup |
+| `CONTROLLO_SCADENZE_SECONDI`                       | `30`                                                 | Ogni quanto il server cerca i tavoli oltre la durata massima (evento `TEMPO_SCADUTO`); `0` lo disattiva (test)       |
 | `SEED_ADMIN_USERNAME` / `SEED_ADMIN_PASSWORD`      | `admin` / `admin`                                    | La password è obbligatoria in produzione                                                                             |
 
 Le variabili vengono validate all'avvio: se una non è valida l'API si ferma subito con un messaggio chiaro.
@@ -159,28 +174,33 @@ Per i test e2e su una macchina dove Chromium è già installato si può indicare
 
 Tutte sotto `/api`. Lo staff manda `Authorization: Bearer <accessToken>`; i clienti sono riconosciuti dal cookie.
 
-| Metodo e percorso                                                                       | Chi                   | Cosa fa                                                                                                     |
-| --------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `POST /auth/login`                                                                      | pubblico              | Login personale; imposta il cookie di refresh                                                               |
-| `POST /auth/pin`                                                                        | dispositivo condiviso | Login con PIN personale                                                                                     |
-| `POST /auth/refresh` · `POST /auth/logout` · `GET /auth/me`                             | staff                 | Rinnovo (token ruotato), uscita, utente corrente                                                            |
-| `GET /auth/dispositivo` · `POST /auth/dispositivo`                                      | pubblico · CAPO       | Stato del dispositivo condiviso · registrazione                                                             |
-| `GET /tavoli`                                                                           | CAMERIERE, MONITOR    | Tavoli con lo stato della seduta                                                                            |
-| `GET /formule`                                                                          | CAMERIERE             | Formule attive e quella proposta per l'orario attuale                                                       |
-| `POST /tavoli/:id/apri`                                                                 | CAMERIERE             | Apre il tavolo: seduta con copia della formula e PIN                                                        |
-| `POST /sedute/:id/pin`                                                                  | CAMERIERE             | Nuovo PIN (opzionale): il vecchio smette di funzionare, i telefoni già dentro restano, il tavolo si sblocca |
-| `POST /sedute/:id/chiudi`                                                               | CAPO                  | Chiusura minima: libera il tavolo e disconnette i clienti                                                   |
-| `GET /t/:slug` · `POST /t/:slug/join`                                                   | cliente               | Stato del tavolo dal QR · ingresso con il PIN                                                               |
-| `GET /menu`                                                                             | pubblico              | Menù it/en con foto e allergeni, senza prezzi alla carta (ETag, 304 se non cambia)                          |
-| `GET /cliente/seduta`                                                                   | cliente               | Formula, coperti, scadenza, telefoni, carrello e giri della propria seduta                                  |
-| `PUT /cliente/carrello/:piattoId`                                                       | cliente               | Quantità di un piatto per questo telefono (0 la toglie)                                                     |
-| `POST /cliente/giri`                                                                    | cliente               | Invia il carrello del tavolo con `chiaveIdempotenza`: 201 nuovo, 200 già inviato, 422 regole violate        |
-| `GET /sedute/:id`                                                                       | CAMERIERE, MONITOR    | Dettaglio del tavolo: coperti, formula, telefoni, carrello, giri                                            |
-| `GET /sedute/:id/sala` · `PUT /sedute/:id/carrello/:piattoId` · `POST /sedute/:id/giri` | CAMERIERE             | Ordine per conto del tavolo (stesse regole, autore il cameriere)                                            |
-| `PATCH /sedute/:id/coperti`                                                             | CAMERIERE             | Modifica dei coperti                                                                                        |
-| `POST /sedute/:id/sposta`                                                               | CAMERIERE             | Sposta la seduta da un suo tavolo a uno libero                                                              |
-| `POST /sedute/:id/tavoli`                                                               | CAMERIERE             | Aggiunge un tavolo libero alla seduta                                                                       |
-| `POST /sedute/:id/unisci`                                                               | CAMERIERE             | Unisce un'altra seduta aperta con la stessa formula                                                         |
+| Metodo e percorso                                                                       | Chi                   | Cosa fa                                                                                                       |
+| --------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `POST /auth/login`                                                                      | pubblico              | Login personale; imposta il cookie di refresh                                                                 |
+| `POST /auth/pin`                                                                        | dispositivo condiviso | Login con PIN personale                                                                                       |
+| `POST /auth/refresh` · `POST /auth/logout` · `GET /auth/me`                             | staff                 | Rinnovo (token ruotato), uscita, utente corrente                                                              |
+| `GET /auth/dispositivo` · `POST /auth/dispositivo`                                      | pubblico · CAPO       | Stato del dispositivo condiviso · registrazione                                                               |
+| `GET /tavoli`                                                                           | CAMERIERE, MONITOR    | Tavoli con lo stato della seduta                                                                              |
+| `GET /formule`                                                                          | CAMERIERE             | Formule attive e quella proposta per l'orario attuale                                                         |
+| `POST /tavoli/:id/apri`                                                                 | CAMERIERE             | Apre il tavolo: seduta con copia della formula e PIN                                                          |
+| `POST /sedute/:id/pin`                                                                  | CAMERIERE             | Nuovo PIN (opzionale): il vecchio smette di funzionare, i telefoni già dentro restano, il tavolo si sblocca   |
+| `POST /sedute/:id/chiudi`                                                               | CAPO                  | Chiude il tavolo: lo libera e disconnette i telefoni (i loro accessi non valgono più)                         |
+| `GET /t/:slug` · `POST /t/:slug/join`                                                   | cliente               | Stato del tavolo dal QR · ingresso con il PIN                                                                 |
+| `GET /menu`                                                                             | pubblico              | Menù it/en con foto e allergeni, senza prezzi alla carta (ETag, 304 se non cambia)                            |
+| `GET /cliente/seduta`                                                                   | cliente               | Formula, coperti, scadenza, telefoni, carrello e giri della propria seduta                                    |
+| `PUT /cliente/carrello/:piattoId`                                                       | cliente               | Quantità di un piatto per questo telefono (0 la toglie)                                                       |
+| `POST /cliente/giri`                                                                    | cliente               | Invia il carrello del tavolo con `chiaveIdempotenza`: 201 nuovo, 200 già inviato, 422 regole violate          |
+| `GET /sedute/:id`                                                                       | CAMERIERE, MONITOR    | Dettaglio del tavolo: coperti, formula, telefoni, carrello, giri                                              |
+| `GET /sedute/:id/sala` · `PUT /sedute/:id/carrello/:piattoId` · `POST /sedute/:id/giri` | CAMERIERE             | Ordine per conto del tavolo (stesse regole, autore il cameriere)                                              |
+| `PATCH /sedute/:id/coperti`                                                             | CAMERIERE             | Modifica dei coperti                                                                                          |
+| `POST /sedute/:id/sposta`                                                               | CAMERIERE             | Sposta la seduta da un suo tavolo a uno libero                                                                |
+| `POST /sedute/:id/tavoli`                                                               | CAMERIERE             | Aggiunge un tavolo libero alla seduta                                                                         |
+| `POST /sedute/:id/unisci`                                                               | CAMERIERE             | Unisce un'altra seduta aperta con la stessa formula                                                           |
+| `GET /cassa/giri`                                                                       | CAPO                  | Giri in attesa (dal più vecchio) e ultimi gestiti                                                             |
+| `POST /giri/:id/approva` · `POST /giri/:id/rifiuta`                                     | CAPO                  | Approva, o rifiuta con `motivo` (visibile al tavolo); 409 `GIRO_GIA_GESTITO` se un collega è stato più veloce |
+| `GET /cassa/piatti` · `PATCH /piatti/:id/disponibilita`                                 | CAPO                  | Elenco piatti · esaurito / di nuovo disponibile (aggiorna subito tutti i menù aperti)                         |
+| `POST /sedute/:id/tempo` · `POST /cassa/estendi-tutti`                                  | CAPO                  | Minuti extra a un tavolo · a tutti i tavoli aperti                                                            |
+| `POST /sedute/:id/preconto`                                                             | CAPO                  | Pre-conto non fiscale: formula × coperti + extra dei giri approvati (evento `PRECONTO_GENERATO`)              |
 
 WebSocket (Socket.IO su `/socket.io`): alla connessione il client manda `sync` con l'ultimo `seq` ricevuto e riceve
 gli eventi persi (o `snapshot_required`); poi riceve `evento` in tempo reale e `sessione_terminata` alla chiusura.

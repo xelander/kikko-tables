@@ -1,0 +1,120 @@
+@use 'comune';
+
+:host {
+  display: block;
+}
+
+.pagina {
+  max-width: 48rem;
+}
+
+h1 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-size-xl);
+}
+
+h2 {
+  margin: var(--space-5) 0 var(--space-2);
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+}
+
+.strumenti {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  background: var(--color-bg);
+
+  .bottone[aria-pressed='true'] {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: var(--color-bg);
+  }
+}
+
+.cerca {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font: inherit;
+  font-size: 16px;
+}
+
+.n {
+  opacity: 0.7;
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.piatto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.piatto--esaurito {
+  background: var(--color-danger-bg);
+
+  .piatto__nome {
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+  }
+}
+
+.piatto__numero {
+  display: inline-block;
+  min-width: 2.5rem;
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.etichetta {
+  margin-left: var(--space-1);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  font-size: var(--font-size-xs);
+}
+
+.interruttore {
+  flex: none;
+  min-width: 8.5rem;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-success);
+  color: #fff;
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--easing-standard);
+
+  &[aria-checked='false'] {
+    background: var(--color-danger);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interruttore {
+    transition: none;
+  }
+}

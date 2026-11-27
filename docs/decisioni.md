@@ -364,3 +364,65 @@ vale una sola seduta, cambia a ogni apertura e i tentativi sbagliati restano blo
 illeggibili i PIN dei tavoli già aperti (la lista mostra "—"): in quel caso "Nuovo PIN" ne genera uno leggibile. Un
 tavolo bloccato da troppi tentativi si sblocca da solo allo scadere del blocco (da 60 s fino a un'ora) oppure subito con
 "Nuovo PIN".
+
+## F4 – App capo / cassa
+
+### Decisioni del committente (2026-11-27)
+
+- **Penale per il cibo avanzato: non si gestisce** (§14.4 chiusa). Il pre-conto contiene solo formula × coperti ed
+  extra.
+
+### Coda dei giri
+
+- La cassa vede i giri `INVIATO` delle sedute aperte, dal più vecchio, e gli ultimi 10 gestiti nelle ultime 3 ore. Un
+  giro che aspetta da 5 minuti o più (`SOGLIA_GIRO_IN_ATTESA_MIN`, per ora costante; diventerà configurabile in F5) è
+  evidenziato in rosso.
+- Approvazione e rifiuto sono un aggiornamento condizionale (`WHERE stato = 'INVIATO'`): con due tablet sullo stesso
+  giro vince il primo, l'altro riceve 409 `GIRO_GIA_GESTITO`. Sul tablet il giro sparisce subito (aggiornamento
+  ottimistico) e ricompare se la richiesta fallisce.
+- Non si possono gestire i giri di un tavolo già chiuso (409 `SEDUTA_CHIUSA`): alla chiusura la cassa avvisa se ci sono
+  giri ancora in attesa.
+- **Motivi di rifiuto**: quattro motivi rapidi con testo italiano e inglese (`MOTIVI_RIFIUTO` in `packages/shared`) più
+  testo libero. Si salva il testo italiano; il telefono in inglese mostra la traduzione dei motivi rapidi e il testo
+  libero così com'è.
+- Un giro rifiutato **non** rimette i piatti nel carrello: il tavolo li riaggiunge se vuole. È l'opzione più semplice;
+  si può cambiare se in sala serve.
+- **Suoni**: generati con la Web Audio API (nessun file audio). I browser li permettono solo dopo un tocco: la scelta
+  "suoni attivi" resta salvata sul tablet e, dopo un riavvio, il primo tocco sullo schermo li riattiva (lo dice un
+  avviso). Suonano a ogni nuovo giro e, con un suono diverso, a ogni "tempo scaduto".
+
+### Piatti esauriti
+
+- `PIATTO_ESAURITO` / `PIATTO_RIPRISTINATO` non appartengono a una seduta: tutti i telefoni dei clienti entrano anche
+  nella stanza `clienti` e ricevono questi due eventi con il solo `piattoId`. Il recupero dopo una disconnessione (`sync`)
+  li include; dopo una fotografia completa il telefono ricarica anche il menù.
+- Come in F2 il piatto esaurito resta visibile in grigio con l'etichetta "Esaurito" e senza "+", invece di sparire: il
+  cliente capisce perché non lo trova più. Il server lo rifiuta comunque nei giri.
+
+### Tempo
+
+- Il server controlla ogni `CONTROLLO_SCADENZE_SECONDI` (30) le sedute aperte oltre `durataMaxMinuti + minutiExtra` e
+  registra `TEMPO_SCADUTO` **una sola volta** per seduta (`Seduta.scadutaNotificataIl`, aggiornamento condizionale). Il
+  primo controllo parte all'avvio, quindi dopo un riavvio del server gli allarmi si recuperano subito. La seduta non
+  viene chiusa (§4).
+- Minuti extra a un tavolo (+10, +15, +30) o a tutti i tavoli aperti (`TEMPO_ESTESO`, con `tutti: true`). Se la nuova
+  scadenza è nel futuro l'allarme si riarma.
+- "Estendi tempo a tutti" è nel brief un'azione dell'amministratore (§6): è disponibile da subito sul tablet cassa per
+  il capo (e quindi anche per l'admin), perché in caso di blackout è lì che serve. In F5 comparirà anche nell'area admin.
+
+### Pre-conto e chiusura
+
+- Calcolato sul server (`calcolaPreconto` in `packages/shared`, con test): prezzo adulto × adulti + prezzo bambino ×
+  bambini dalla **copia della formula** salvata all'apertura, più gli extra dei soli giri **approvati**, al prezzo copiato
+  al momento dell'invio (se il prezzo cambia tra un giro e l'altro escono due righe). I giri ancora in attesa non sono nel
+  totale e la pagina lo segnala.
+- Ogni pre-conto generato registra `PRECONTO_GENERATO` con il totale. Si può rigenerare anche dopo la chiusura
+  (ristampa).
+- Stampa con la stampa del browser: lo scontrino è impaginato per un rotolo da 80 mm (72 mm stampabili) e resta leggibile
+  su A4. In testa e in fondo "Documento non fiscale" (§9). Nome del locale e valuta vengono da `Impostazioni`.
+- La chiusura resta quella di F3 (libera i tavoli e revoca i telefoni), ora raggiungibile dal pre-conto.
+
+### Navigazione
+
+- Dopo il login il capo arriva in `/staff/cassa`; l'intestazione staff mostra per il capo (e l'admin) i link "Sala" e
+  "Cassa". La cassa ha tre schede (Giri, Tavoli, Esauriti) con il numero dei giri in attesa e dei tavoli scaduti.
