@@ -1,0 +1,52 @@
+{
+  "versione": 1,
+  "impostazioni": {
+    "nomeLocale": "Kikko",
+    "fusoOrario": "Europe/Rome",
+    "valuta": "EUR"
+  },
+  "formule": [
+    {
+      "codice": "pranzo-feriale",
+      "nome": { "it": "Pranzo feriale", "en": "Weekday lunch" },
+      "prezzoAdultoCent": 1590,
+      "prezzoBambinoCent": 990,
+      "fasce": [{ "giorni": [1, 2, 3, 4, 5], "da": "11:30", "a": "15:30" }],
+      "piattiPerPersonaPerGiro": 5,
+      "minutiTraGiri": 10,
+      "durataMaxMinuti": 120,
+      "maxGiri": null,
+      "attiva": true,
+      "ordine": 1
+    },
+    {
+      "codice": "cena",
+      "nome": { "it": "Cena", "en": "Dinner" },
+      "prezzoAdultoCent": 2590,
+      "prezzoBambinoCent": 1490,
+      "fasce": [{ "giorni": [1, 2, 3, 4, 5], "da": "18:00", "a": "24:00" }],
+      "piattiPerPersonaPerGiro": 6,
+      "minutiTraGiri": 10,
+      "durataMaxMinuti": 150,
+      "maxGiri": null,
+      "attiva": true,
+      "ordine": 2
+    },
+    {
+      "codice": "weekend",
+      "nome": { "it": "Weekend", "en": "Weekend" },
+      "prezzoAdultoCent": 2790,
+      "prezzoBambinoCent": 1590,
+      "fasce": [
+        { "giorni": [6, 7], "da": "11:30", "a": "15:30" },
+        { "giorni": [6, 7], "da": "18:00", "a": "24:00" }
+      ],
+      "piattiPerPersonaPerGiro": 6,
+      "minutiTraGiri": 12,
+      "durataMaxMinuti": 150,
+      "maxGiri": null,
+      "attiva": true,
+      "ordine": 3
+    }
+  ]
+}

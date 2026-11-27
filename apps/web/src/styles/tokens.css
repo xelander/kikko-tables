@@ -1,0 +1,85 @@
+/*
+ * DESIGN TOKEN DEL BRAND – unico file da modificare per cambiare l'aspetto dell'app.
+ * Colori, font, raggi, ombre e animazioni. I componenti usano solo queste variabili.
+ * Valori attuali: SEGNAPOSTO in attesa degli asset reali (vedi public/assets/brand/README.md).
+ */
+:root {
+  /* Colori di brand */
+  --color-primary: #c8102e;
+  --color-primary-strong: #9e0c24;
+  --color-on-primary: #ffffff;
+  --color-accent: #e0a526;
+  --color-on-accent: #1c1a17;
+
+  /* Superfici e testo */
+  --color-bg: #faf7f2;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1ece4;
+  --color-border: #e2dbd0;
+  --color-text: #1c1a17;
+  --color-text-muted: #5f5a52;
+
+  /* Stati */
+  --color-success: #1f7a4d;
+  --color-success-bg: #e3f3ea;
+  --color-warning: #8a5a00;
+  --color-warning-bg: #fdf1d8;
+  --color-danger: #b3261e;
+  --color-danger-bg: #fbe5e3;
+  --color-focus: #2563eb;
+
+  /* Tipografia */
+  --font-family-base: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-display: var(--font-family-base);
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.75rem;
+  --font-size-2xl: 2.25rem;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-base: 1.5;
+
+  /* Spaziature */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+
+  /* Raggi */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Ombre */
+  --shadow-sm: 0 1px 2px rgb(28 26 23 / 0.08);
+  --shadow-md: 0 4px 14px rgb(28 26 23 / 0.1);
+  --shadow-lg: 0 12px 32px rgb(28 26 23 / 0.14);
+
+  /* Dimensioni minime dei tocchi (accessibilità) */
+  --touch-target: 48px;
+
+  /* Animazioni */
+  --duration-fast: 120ms;
+  --duration-base: 220ms;
+  --duration-slow: 400ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --easing-emphasized: cubic-bezier(0.3, 0, 0, 1.3);
+
+  /* Logo */
+  --brand-logo-url: url('/assets/brand/logo.svg');
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}

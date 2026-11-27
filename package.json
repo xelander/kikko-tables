@@ -1,0 +1,47 @@
+{
+  "name": "kikko-tables",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Sistema tavoli e ordinazioni per ristorante all you can eat",
+  "type": "module",
+  "packageManager": "npm@10.9.9",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "workspaces": [
+    "packages/shared",
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "npm run build -w @kikko/shared && concurrently -k -n shared,api,web -c magenta,cyan,green \"npm run dev -w @kikko/shared\" \"npm run dev -w @kikko/api\" \"npm run dev -w @kikko/web\"",
+    "build": "npm run build --workspaces",
+    "pretypecheck": "npm run build -w @kikko/shared",
+    "typecheck": "npm run typecheck --workspaces && tsc -p e2e/tsconfig.json",
+    "pretest": "npm run build -w @kikko/shared",
+    "test": "npm run test --workspaces",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "e2e": "playwright test",
+    "db:migrate": "npm run db:migrate -w @kikko/api",
+    "db:deploy": "npm run db:deploy -w @kikko/api",
+    "db:seed": "npm run db:seed -w @kikko/api",
+    "db:reset": "npm run db:reset -w @kikko/api",
+    "check": "npm run lint && npm run format:check && npm run typecheck && npm run test && npm run build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "1.65.1",
+    "@types/node": "^22.20.7",
+    "angular-eslint": "^22.8.0",
+    "concurrently": "^10.0.7",
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.9",
+    "globals": "^17.14.0",
+    "prettier": "^3.10.1",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.74.0"
+  }
+}

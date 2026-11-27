@@ -1,0 +1,31 @@
+<main class="home">
+  <header class="home__header">
+    <img class="home__logo" src="/assets/brand/logo.svg" alt="" width="72" height="72" />
+    <h1>Kikko</h1>
+    <p class="home__subtitle">Sistema tavoli e ordinazioni</p>
+  </header>
+
+  <section class="status" [attr.data-status]="status()" aria-live="polite" data-testid="api-status">
+    <span class="status__dot" aria-hidden="true"></span>
+    <span class="status__label">{{ statusLabel() }}</span>
+    @if (version(); as v) {
+      <span class="status__version">v{{ v }}</span>
+    }
+    @if (status() === 'offline' || status() === 'degraded') {
+      <button type="button" class="status__retry" (click)="reload()">Riprova</button>
+    }
+  </section>
+
+  <nav aria-label="Aree dell'applicazione">
+    <ul class="areas">
+      @for (area of areas; track area.link) {
+        <li>
+          <a class="area" [routerLink]="area.link">
+            <span class="area__label">{{ area.label }}</span>
+            <span class="area__hint">{{ area.hint }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+</main>

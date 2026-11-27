@@ -1,0 +1,125 @@
+// Schema Prisma – F0: solo i modelli di configurazione.
+// I nomi del dominio seguono il vocabolario del brief (CLAUDE.md §12).
+// Importi in centesimi di euro (Int) per evitare errori di arrotondamento.
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// I 14 allergeni del Reg. UE 1169/2011 (Allegato II). Allineato a ALLERGENI in @kikko/shared.
+enum Allergene {
+  GLUTEN
+  CRUSTACEANS
+  EGGS
+  FISH
+  PEANUTS
+  SOY
+  MILK
+  NUTS
+  CELERY
+  MUSTARD
+  SESAME
+  SULPHITES
+  LUPIN
+  MOLLUSCS
+}
+
+enum RuoloStaff {
+  CAMERIERE
+  CAPO
+  ADMIN
+  MONITOR
+}
+
+/// Impostazioni globali del locale: una sola riga (id = 1).
+model Impostazioni {
+  id         Int      @id @default(1)
+  nomeLocale String
+  fusoOrario String
+  valuta     String
+  updatedAt  DateTime @updatedAt
+}
+
+model Formula {
+  id                      String   @id @default(uuid()) @db.Uuid
+  codice                  String   @unique
+  nomeIt                  String
+  nomeEn                  String
+  prezzoAdultoCent        Int
+  prezzoBambinoCent       Int
+  /// Fasce di validità: [{ giorni: number[] (1 = lunedì … 7 = domenica), da: "HH:mm", a: "HH:mm" }]
+  fasce                   Json
+  piattiPerPersonaPerGiro Int
+  minutiTraGiri           Int
+  durataMaxMinuti         Int
+  maxGiri                 Int?
+  attiva                  Boolean  @default(true)
+  ordine                  Int      @default(0)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+}
+
+model Categoria {
+  id        String   @id @default(uuid()) @db.Uuid
+  codice    String   @unique
+  nomeIt    String
+  nomeEn    String
+  ordine    Int      @default(0)
+  piatti    Piatto[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Piatto {
+  id              String      @id @default(uuid()) @db.Uuid
+  codice          String      @unique
+  nomeIt          String
+  nomeEn          String
+  descrizioneIt   String      @default("")
+  descrizioneEn   String      @default("")
+  categoriaId     String      @db.Uuid
+  categoria       Categoria   @relation(fields: [categoriaId], references: [id], onDelete: Restrict)
+  immagine        String?
+  allergeni       Allergene[]
+  inFormula       Boolean     @default(true)
+  prezzoExtraCent Int?
+  maxPerSeduta    Int?
+  maxPerGiro      Int?
+  disponibile     Boolean     @default(true)
+  ordine          Int         @default(0)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([categoriaId, ordine])
+}
+
+model Tavolo {
+  id        String   @id @default(uuid()) @db.Uuid
+  numero    Int      @unique
+  slugQr    String   @unique
+  posti     Int
+  /// Posizione nella mappa dei tavoli (unità di griglia).
+  posX      Int      @default(0)
+  posY      Int      @default(0)
+  attivo    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UtenteStaff {
+  id           String     @id @default(uuid()) @db.Uuid
+  username     String     @unique
+  nome         String
+  ruolo        RuoloStaff
+  passwordHash String
+  attivo       Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}

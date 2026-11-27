@@ -1,0 +1,33 @@
+{
+  "name": "@kikko/shared",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Tipi, DTO, schemi e regole condivise tra web e API",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./seed/*.json": "./seed/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "seed"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "vitest": "^5.1.2"
+  }
+}
