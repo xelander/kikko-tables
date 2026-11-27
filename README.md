@@ -4,7 +4,7 @@ Sistema di ordinazione al tavolo per un ristorante all you can eat: un'unica web
 (cliente, cameriere, cassa, amministratore, monitor) e un'API NestJS con PostgreSQL.
 Il brief completo è in [`CLAUDE.md`](CLAUDE.md), le decisioni prese in [`docs/decisioni.md`](docs/decisioni.md).
 
-**Stato:** F1 – Dominio e tempo reale (sedute, PIN, accessi staff e cliente, registro eventi, WebSocket con recupero degli eventi persi).
+**Stato:** F2 – App cliente (menù reale it/en con foto e allergeni, carrello condiviso in tempo reale, regole AYCE, invio dei giri anche offline).
 
 ## Struttura
 
@@ -71,6 +71,18 @@ Il seed (fuori da produzione) crea questi utenti. Le password sono uguali allo u
 4. Il cameriere vede comparire il telefono sul tavolo in tempo reale. Con `capo` puoi chiudere il tavolo: il telefono del
    cliente mostra subito la schermata di chiusura.
 
+### Provare il flusso F2 (ordinazione)
+
+1. Apri un tavolo come sopra, poi entra con il PIN da due finestre diverse (o due telefoni) sullo stesso tavolo.
+2. Aggiungi piatti dal menù: l'altro telefono vede subito le aggiunte con l'emoji di chi le ha fatte, e il contatore
+   "Questo giro: N/limite".
+3. Le bevande sono nella pagina "Bevande": extra a pagamento, non contano nel limite del giro.
+4. "Vedi ordine" → "Invia giro": il giro va "in attesa di conferma" (l'approvazione alla cassa arriva in F4) e parte il
+   conto alla rovescia per il giro successivo.
+
+Il menù è quello reale del ristorante (155 piatti, trascritti dal PDF della cena) con foto, allergeni e limiti
+"massimo N volte" (per persona). Vedi [`packages/shared/seed/README.md`](packages/shared/seed/README.md).
+
 **Dispositivo condiviso del locale:** entra come `capo` sul tablet, tocca "Rendi condiviso" e dai un nome.
 Da quel momento la pagina di accesso di quel tablet mostra i nomi dello staff e chiede solo il PIN personale.
 
@@ -122,7 +134,7 @@ L'utente deve poter creare database (`CREATEDB`) perché i test di integrazione 
 Per i test e2e su una macchina dove Chromium è già installato si può indicare il binario con
 `PLAYWRIGHT_CHROMIUM_EXECUTABLE=/percorso/chrome`; altrimenti `npx playwright install chromium`.
 
-## API (F1)
+## API
 
 Tutte sotto `/api`. Lo staff manda `Authorization: Bearer <accessToken>`; i clienti sono riconosciuti dal cookie.
 

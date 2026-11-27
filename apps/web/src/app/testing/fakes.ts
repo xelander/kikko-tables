@@ -1,5 +1,5 @@
 import { signal } from '@angular/core';
-import type { SessioneStaff } from '@kikko/shared';
+import type { EventoDto, MenuDto, SedutaClienteDto, SessioneStaff } from '@kikko/shared';
 import { Subject } from 'rxjs';
 import type { Socket } from 'socket.io-client';
 import type { StatoConnessione } from '../core/realtime/realtime.service';
@@ -16,7 +16,7 @@ export function sessioneProva(ruolo: SessioneStaff['utente']['ruolo'] = 'CAMERIE
 /** Minimal stand-in for RealtimeService. */
 export class RealtimeFinto {
   readonly stato = signal<StatoConnessione>('inattivo');
-  readonly eventi$ = new Subject<never>();
+  readonly eventi$ = new Subject<EventoDto>();
   readonly ricarica$ = new Subject<void>();
   readonly terminata$ = new Subject<{ motivo: 'TAVOLO_CHIUSO' }>();
   avviato: unknown = null;
@@ -66,4 +66,88 @@ export class SocketFinto {
   comeSocket(): Socket {
     return this as unknown as Socket;
   }
+}
+
+/** A small menu: two included dishes (one with a per-person limit) and a paid drink. */
+export function menuProva(): MenuDto {
+  const base = {
+    descrizione: { it: '', en: '' },
+    categoriaId: 'cat-sushi',
+    pezzi: 4,
+    immagine: null,
+    allergeni: [],
+    vegetariano: false,
+    piccante: false,
+    senzaGlutine: false,
+    inFormula: true,
+    prezzoExtraCent: null,
+    maxPerPersona: null,
+    maxPerGiro: null,
+    gruppoId: null,
+    disponibile: true,
+  };
+  return {
+    versione: 'v1',
+    categorie: [
+      { id: 'cat-sushi', codice: 'nigiri', nome: { it: 'Nigiri', en: 'Nigiri' }, sezione: 'MENU' },
+      { id: 'cat-bevande', codice: 'bevande', nome: { it: 'Bevande', en: 'Drinks' }, sezione: 'BEVANDE' },
+    ],
+    gruppi: [],
+    piatti: [
+      {
+        ...base,
+        id: 'p-salmone',
+        numero: '46',
+        nome: { it: 'Nigiri salmone', en: 'Salmon nigiri' },
+        allergeni: ['FISH'],
+      },
+      {
+        ...base,
+        id: 'p-bao',
+        numero: '113',
+        nome: { it: 'Bao bun', en: 'Bao bun' },
+        maxPerPersona: 1,
+        allergeni: ['SESAME', 'SOY'],
+      },
+      {
+        ...base,
+        id: 'p-acqua',
+        numero: null,
+        categoriaId: 'cat-bevande',
+        nome: { it: 'Acqua', en: 'Water' },
+        pezzi: null,
+        inFormula: false,
+        prezzoExtraCent: 250,
+      },
+    ],
+  };
+}
+
+export function sedutaProva(over: Partial<SedutaClienteDto> = {}): SedutaClienteDto {
+  const ora = new Date();
+  return {
+    sedutaId: 'seduta-1',
+    ora: ora.toISOString(),
+    tavoli: [4],
+    copertiAdulti: 2,
+    copertiBambini: 0,
+    formula: {
+      nome: { it: 'Cena', en: 'Dinner' },
+      piattiPerPersonaPerGiro: 3,
+      minutiTraGiri: 10,
+      durataMaxMinuti: 150,
+      maxGiri: null,
+    },
+    apertaIl: new Date(ora.getTime() - 5 * 60_000).toISOString(),
+    minutiExtra: 0,
+    scadeIl: new Date(ora.getTime() + 145 * 60_000).toISOString(),
+    io: { id: 'io', soprannome: 'Anna', emoji: '🐼' },
+    dispositivi: [
+      { id: 'io', soprannome: 'Anna', emoji: '🐼' },
+      { id: 'altro', soprannome: 'Luca', emoji: '🦊' },
+    ],
+    carrello: [],
+    giri: [],
+    ...over,
+  };
 }

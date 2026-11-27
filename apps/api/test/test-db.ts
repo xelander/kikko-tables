@@ -13,7 +13,7 @@ export function createTestPrisma(): PrismaClient {
  */
 export async function truncateAll(prisma: PrismaClient): Promise<void> {
   await prisma.$executeRawUnsafe(
-    'TRUNCATE "Evento", "TentativoPin", "RefreshToken", "DispositivoStaff", "DispositivoCliente", "SedutaTavolo", ' +
+    'TRUNCATE "VoceGiro", "Giro", "VoceCarrello", "GruppoLimite", "Evento", "TentativoPin", "RefreshToken", "DispositivoStaff", "DispositivoCliente", "SedutaTavolo", ' +
       '"Seduta", "Piatto", "Categoria", "Formula", "Tavolo", "UtenteStaff", "Impostazioni" CASCADE',
   );
 }

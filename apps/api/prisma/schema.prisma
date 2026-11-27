@@ -1,4 +1,4 @@
-// Schema Prisma – F0 configurazione, F1 sedute, accessi e registro eventi.
+// Schema Prisma – F0 configurazione, F1 sedute, accessi e registro eventi, F2 menù reale, carrello e giri.
 // I nomi del dominio seguono il vocabolario del brief (CLAUDE.md §12).
 // Importi in centesimi di euro (Int) per evitare errori di arrotondamento.
 
@@ -36,6 +36,17 @@ enum RuoloStaff {
   CAPO
   ADMIN
   MONITOR
+}
+
+enum SezioneMenu {
+  MENU
+  BEVANDE
+}
+
+enum StatoGiro {
+  INVIATO
+  APPROVATO
+  RIFIUTATO
 }
 
 enum StatoSeduta {
@@ -104,35 +115,68 @@ model Formula {
 }
 
 model Categoria {
-  id        String   @id @default(uuid()) @db.Uuid
-  codice    String   @unique
+  id        String      @id @default(uuid()) @db.Uuid
+  codice    String      @unique
   nomeIt    String
   nomeEn    String
-  ordine    Int      @default(0)
+  /// MENU: menù della formula; BEVANDE: pagina separata degli extra a pagamento.
+  sezione   SezioneMenu @default(MENU)
+  ordine    Int         @default(0)
   piatti    Piatto[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+/// Limite condiviso da più piatti ("massimo 4 volte in totale"), per persona.
+model GruppoLimite {
+  id            String   @id @default(uuid()) @db.Uuid
+  codice        String   @unique
+  nomeIt        String
+  nomeEn        String
+  maxPerPersona Int
+  piatti        Piatto[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Piatto {
-  id              String      @id @default(uuid()) @db.Uuid
-  codice          String      @unique
-  nomeIt          String
-  nomeEn          String
-  descrizioneIt   String      @default("")
-  descrizioneEn   String      @default("")
-  categoriaId     String      @db.Uuid
-  categoria       Categoria   @relation(fields: [categoriaId], references: [id], onDelete: Restrict)
-  immagine        String?
-  allergeni       Allergene[]
-  inFormula       Boolean     @default(true)
-  prezzoExtraCent Int?
-  maxPerSeduta    Int?
-  maxPerGiro      Int?
-  disponibile     Boolean     @default(true)
-  ordine          Int         @default(0)
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  id                String         @id @default(uuid()) @db.Uuid
+  codice            String         @unique
+  /// Numero stampato sul menù del locale (es. "8a").
+  numero            String?        @unique
+  nomeIt            String
+  nomeEn            String
+  descrizioneIt     String         @default("")
+  descrizioneEn     String         @default("")
+  categoriaId       String         @db.Uuid
+  categoria         Categoria      @relation(fields: [categoriaId], references: [id], onDelete: Restrict)
+  pezzi             Int?
+  /// Nome base dei file `{immagine}-480.webp` e `{immagine}-240.webp` in MEDIA_DIR/piatti.
+  immagine          String?
+  immagineLarghezza Int?
+  immagineAltezza   Int?
+  /// Anteprima sfocata (data URI) mostrata mentre la foto si carica.
+  immagineAnteprima String?
+  allergeni         Allergene[]
+  vegetariano       Boolean        @default(false)
+  piccante          Boolean        @default(false)
+  senzaGlutine      Boolean        @default(false)
+  inFormula         Boolean        @default(true)
+  prezzoExtraCent   Int?
+  /// Prezzo alla carta del menù stampato: solo per la dashboard admin, mai inviato ai clienti.
+  prezzoCartaCent   Int?
+  /// "Massimo N volte" per persona nell'intera seduta (limite = N × coperti).
+  maxPerPersona     Int?
+  /// Massimo N pezzi in un singolo giro, per tutto il tavolo.
+  maxPerGiro        Int?
+  gruppoLimiteId    String?        @db.Uuid
+  gruppoLimite      GruppoLimite?  @relation(fields: [gruppoLimiteId], references: [id], onDelete: SetNull)
+  disponibile       Boolean        @default(true)
+  ordine            Int            @default(0)
+  vociCarrello      VoceCarrello[]
+  vociGiro          VoceGiro[]
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
 
   @@index([categoriaId, ordine])
 }
@@ -224,6 +268,8 @@ model Seduta {
   tavoli          SedutaTavolo[]
   tavoliCorrenti  Tavolo[]             @relation("SedutaCorrente")
   dispositivi     DispositivoCliente[]
+  carrello        VoceCarrello[]
+  giri            Giro[]
 
   @@index([stato])
 }
@@ -243,18 +289,73 @@ model SedutaTavolo {
 
 /// Smartphone di un cliente entrato con il PIN.
 model DispositivoCliente {
-  id            String    @id @default(uuid()) @db.Uuid
-  sedutaId      String    @db.Uuid
-  seduta        Seduta    @relation(fields: [sedutaId], references: [id], onDelete: Cascade)
+  id            String         @id @default(uuid()) @db.Uuid
+  sedutaId      String         @db.Uuid
+  seduta        Seduta         @relation(fields: [sedutaId], references: [id], onDelete: Cascade)
   /// SHA-256 del token di dispositivo (cookie httpOnly).
-  tokenHash     String    @unique
+  tokenHash     String         @unique
   soprannome    String
   emoji         String
-  creatoIl      DateTime  @default(now())
-  ultimoAccesso DateTime  @default(now())
+  creatoIl      DateTime       @default(now())
+  ultimoAccesso DateTime       @default(now())
   revocatoIl    DateTime?
+  vociCarrello  VoceCarrello[]
+  giriInviati   Giro[]
 
   @@index([sedutaId])
+}
+
+/// Carrello condiviso del tavolo: una riga per piatto per dispositivo (ognuno modifica solo le proprie).
+model VoceCarrello {
+  id            String             @id @default(uuid()) @db.Uuid
+  sedutaId      String             @db.Uuid
+  seduta        Seduta             @relation(fields: [sedutaId], references: [id], onDelete: Cascade)
+  piattoId      String             @db.Uuid
+  piatto        Piatto             @relation(fields: [piattoId], references: [id], onDelete: Cascade)
+  dispositivoId String             @db.Uuid
+  dispositivo   DispositivoCliente @relation(fields: [dispositivoId], references: [id], onDelete: Cascade)
+  quantita      Int
+  aggiornatoIl  DateTime           @updatedAt
+
+  @@unique([sedutaId, piattoId, dispositivoId])
+}
+
+/// Ordinazione inviata dal tavolo, da approvare alla cassa (F4).
+model Giro {
+  id                String              @id @default(uuid()) @db.Uuid
+  sedutaId          String              @db.Uuid
+  seduta            Seduta              @relation(fields: [sedutaId], references: [id], onDelete: Cascade)
+  numero            Int
+  stato             StatoGiro           @default(INVIATO)
+  /// Generata dal dispositivo a ogni invio: ripetere la richiesta non crea un secondo giro.
+  chiaveIdempotenza String
+  /// Solo extra (bevande): non conta per il timer né per il numero di giri.
+  soloExtra         Boolean             @default(false)
+  inviatoIl         DateTime            @default(now())
+  inviatoDaId       String?             @db.Uuid
+  inviatoDa         DispositivoCliente? @relation(fields: [inviatoDaId], references: [id], onDelete: SetNull)
+  gestitoDaId       String?             @db.Uuid
+  gestitoIl         DateTime?
+  motivoRifiuto     String?
+  voci              VoceGiro[]
+
+  @@unique([sedutaId, chiaveIdempotenza])
+  @@unique([sedutaId, numero])
+  @@index([stato, inviatoIl])
+}
+
+model VoceGiro {
+  id              String  @id @default(uuid()) @db.Uuid
+  giroId          String  @db.Uuid
+  giro            Giro    @relation(fields: [giroId], references: [id], onDelete: Cascade)
+  piattoId        String  @db.Uuid
+  piatto          Piatto  @relation(fields: [piattoId], references: [id], onDelete: Restrict)
+  quantita        Int
+  /// Copie al momento dell'invio, per il pre-conto (F4).
+  inFormula       Boolean
+  prezzoExtraCent Int?
+
+  @@index([giroId])
 }
 
 /// Contatore anti-forza bruta per una chiave (dispositivo/IP, tavolo, PIN staff).

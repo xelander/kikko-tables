@@ -255,6 +255,33 @@ describe('real-time gateway', () => {
     expect(cliente.ultimoSeq).toBe(Number((await prisma.evento.aggregate({ _max: { seq: true } }))._max.seq) - 1);
   });
 
+  it('shares cart changes and sent rounds live with the other phones of the table', async () => {
+    const cena = await formulaCena(prisma);
+    const server = app.getHttpServer();
+    const a = await apriTavolo(server, mario, (await tavolo(prisma, 2)).id, cena.id);
+    const annaCookie = await clienteAlTavolo(2, a.pin);
+    const luca = client({ cookie: await clienteAlTavolo(2, a.pin) });
+    await luca.connetti();
+    await attendi(() => luca.ultimaSync !== null);
+
+    const piatto = await prisma.piatto.findUniqueOrThrow({ where: { numero: '46' } });
+    await request(server)
+      .put(`/api/cliente/carrello/${piatto.id}`)
+      .set('Cookie', annaCookie)
+      .send({ quantita: 3 })
+      .expect(200);
+    await attendi(() => luca.diTipo('CARRELLO_MODIFICATO').length === 1);
+    expect(luca.diTipo('CARRELLO_MODIFICATO')[0]!.payload).toMatchObject({ piattoId: piatto.id, quantita: 3 });
+
+    await request(server)
+      .post('/api/cliente/giri')
+      .set('Cookie', annaCookie)
+      .send({ chiaveIdempotenza: crypto.randomUUID() })
+      .expect(201);
+    await attendi(() => luca.diTipo('GIRO_INVIATO').length === 1);
+    expect(Object.keys(luca.diTipo('GIRO_INVIATO')[0]!.payload).sort()).toEqual(['giroId', 'numero']);
+  });
+
   it('closing the table ends the customer session and refuses reconnection', async () => {
     const cena = await formulaCena(prisma);
     const server = app.getHttpServer();

@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
 import { DefaultConfigSchema, MenuSchema, generaTavoliDemo, type DefaultConfig, type Menu } from '@kikko/shared';
 import { hash } from 'argon2';
@@ -14,8 +15,28 @@ export function loadDefaultConfig(): DefaultConfig {
   return DefaultConfigSchema.parse(readSharedSeed('default-config.json'));
 }
 
-export function loadDemoMenu(): Menu {
-  return MenuSchema.parse(readSharedSeed('menu-demo.json'));
+/** The restaurant menu (transcribed from the printed menu) plus demo drinks. */
+export function loadMenu(): Menu {
+  return MenuSchema.parse(readSharedSeed('menu-kikko.json'));
+}
+
+/** Directory with the seed photos shipped in @kikko/shared. */
+export function cartellaFotoSeed(): string {
+  return join(dirname(require.resolve('@kikko/shared/seed/menu-kikko.json')), 'media', 'piatti');
+}
+
+/** Copies the seed photos to `${mediaDir}/piatti`, keeping files that already exist (e.g. uploaded later). */
+export function copiaFotoSeed(mediaDir: string): number {
+  const origine = cartellaFotoSeed();
+  const destinazione = join(mediaDir, 'piatti');
+  mkdirSync(destinazione, { recursive: true });
+  let copiate = 0;
+  for (const file of readdirSync(origine)) {
+    if (!file.endsWith('.webp') || existsSync(join(destinazione, file))) continue;
+    copyFileSync(join(origine, file), join(destinazione, file));
+    copiate++;
+  }
+  return copiate;
 }
 
 export interface SeedOptions {
@@ -23,6 +44,8 @@ export interface SeedOptions {
   adminPassword: string;
   /** Development only: also create demo staff (a waiter and a manager) with known passwords and PINs. */
   utentiDemo?: boolean;
+  /** Where dish photos are served from (MEDIA_DIR). If set, the seed photos are copied there. */
+  mediaDir?: string;
 }
 
 /** Demo staff for development and tests. Never created in production. */
@@ -39,6 +62,7 @@ export interface SeedSummary {
   tavoli: number;
   adminCreated: boolean;
   utentiDemoCreati: number;
+  fotoCopiate: number;
 }
 
 /**
@@ -49,7 +73,8 @@ export interface SeedSummary {
  */
 export async function runSeed(prisma: PrismaClient, options: SeedOptions): Promise<SeedSummary> {
   const config = loadDefaultConfig();
-  const menu = loadDemoMenu();
+  const menu = loadMenu();
+  const fotoCopiate = options.mediaDir ? copiaFotoSeed(options.mediaDir) : 0;
   const tavoli = generaTavoliDemo();
   const passwordHash = await hash(options.adminPassword, { type: 2 /* argon2id */ });
   const demo = options.utentiDemo
@@ -88,13 +113,24 @@ export async function runSeed(prisma: PrismaClient, options: SeedOptions): Promi
 
       const categoriaIds = new Map<string, string>();
       for (const c of menu.categorie) {
-        const data = { nomeIt: c.nome.it, nomeEn: c.nome.en, ordine: c.ordine };
+        const data = { nomeIt: c.nome.it, nomeEn: c.nome.en, sezione: c.sezione, ordine: c.ordine };
         const row = await tx.categoria.upsert({
           where: { codice: c.codice },
           create: { codice: c.codice, ...data },
           update: data,
         });
         categoriaIds.set(c.codice, row.id);
+      }
+
+      const gruppoIds = new Map<string, string>();
+      for (const g of menu.gruppi) {
+        const data = { nomeIt: g.nome.it, nomeEn: g.nome.en, maxPerPersona: g.maxPerPersona };
+        const row = await tx.gruppoLimite.upsert({
+          where: { codice: g.codice },
+          create: { codice: g.codice, ...data },
+          update: data,
+        });
+        gruppoIds.set(g.codice, row.id);
       }
 
       for (const p of menu.piatti) {
@@ -106,17 +142,37 @@ export async function runSeed(prisma: PrismaClient, options: SeedOptions): Promi
           descrizioneIt: p.descrizione.it,
           descrizioneEn: p.descrizione.en,
           categoriaId,
-          immagine: p.immagine,
+          numero: p.numero,
+          pezzi: p.pezzi,
+          immagine: p.immagine?.file ?? null,
+          immagineLarghezza: p.immagine?.larghezza ?? null,
+          immagineAltezza: p.immagine?.altezza ?? null,
+          immagineAnteprima: p.immagine?.anteprima ?? null,
           allergeni: p.allergeni,
+          vegetariano: p.vegetariano,
+          piccante: p.piccante,
+          senzaGlutine: p.senzaGlutine,
           inFormula: p.inFormula,
           prezzoExtraCent: p.prezzoExtraCent,
-          maxPerSeduta: p.maxPerSeduta,
+          prezzoCartaCent: p.prezzoCartaCent,
+          maxPerPersona: p.maxPerPersona,
           maxPerGiro: p.maxPerGiro,
+          gruppoLimiteId: p.gruppo ? (gruppoIds.get(p.gruppo) ?? null) : null,
           disponibile: p.disponibile,
           ordine: p.ordine,
         };
         await tx.piatto.upsert({ where: { codice: p.codice }, create: { codice: p.codice, ...data }, update: data });
       }
+
+      // Restoring the defaults also removes menu items that are not in the seed any more,
+      // unless they were already ordered (kept for the history, made unavailable).
+      const codiciPiatti = menu.piatti.map((p) => p.codice);
+      await tx.piatto.deleteMany({ where: { codice: { notIn: codiciPiatti }, vociGiro: { none: {} } } });
+      await tx.piatto.updateMany({ where: { codice: { notIn: codiciPiatti } }, data: { disponibile: false } });
+      await tx.categoria.deleteMany({
+        where: { codice: { notIn: menu.categorie.map((c) => c.codice) }, piatti: { none: {} } },
+      });
+      await tx.gruppoLimite.deleteMany({ where: { codice: { notIn: menu.gruppi.map((g) => g.codice) } } });
 
       for (const t of tavoli) {
         const data = { slugQr: t.slugQr, posti: t.posti, posX: t.posX, posY: t.posY };
@@ -140,6 +196,7 @@ export async function runSeed(prisma: PrismaClient, options: SeedOptions): Promi
       }
 
       return {
+        fotoCopiate,
         utentiDemoCreati,
         formule: config.formule.length,
         categorie: menu.categorie.length,

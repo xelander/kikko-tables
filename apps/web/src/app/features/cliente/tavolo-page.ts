@@ -6,6 +6,7 @@ import { I18nService, LINGUE, type Lingua } from '../../core/i18n/i18n.service';
 import { ConnessioneBanner } from '../../core/realtime/connessione-banner';
 import { RealtimeService } from '../../core/realtime/realtime.service';
 import { ClienteApi } from './cliente.api';
+import { SalaCliente } from './sala/sala-cliente';
 import { TESTI } from './testi';
 
 type Vista =
@@ -24,7 +25,7 @@ const ATTESA_NON_ATTIVO_MS = 15_000;
  */
 @Component({
   selector: 'app-tavolo-page',
-  imports: [ConnessioneBanner],
+  imports: [ConnessioneBanner, SalaCliente],
   templateUrl: './tavolo-page.html',
   styleUrl: './tavolo-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -47,6 +48,11 @@ export class TavoloPage {
   protected readonly bloccatoFino = signal(0);
   protected readonly ora = signal(Date.now());
 
+  /** Joined: the ordering screen takes the whole page. */
+  protected readonly connesso = computed(() => {
+    const v = this.vista();
+    return v.tipo === 'stato' && v.stato.stato === 'CONNESSO';
+  });
   protected readonly secondiBlocco = computed(() => Math.max(0, Math.ceil((this.bloccatoFino() - this.ora()) / 1000)));
   protected readonly minutiRimasti = computed(() => {
     const v = this.vista();

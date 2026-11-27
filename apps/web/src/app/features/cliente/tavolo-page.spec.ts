@@ -109,15 +109,18 @@ describe('TavoloPage (customer)', () => {
     http.expectOne('/api/t/tavolo-07').flush(connesso);
     await stabile(f);
 
-    expect(el.querySelector('[data-testid="connesso"]')?.textContent).toContain('Sei al tavolo 7');
-    expect(el.textContent).toContain('Cena');
+    expect(el.querySelector('app-sala-cliente')).not.toBeNull();
     expect(realtime.avviato).toEqual({ modo: 'cliente', chiave: 'seduta-1' });
+    http.match('/api/menu');
+    http.match('/api/cliente/seduta');
   });
 
   it('shows the goodbye screen when the table is closed', async () => {
     const f = render();
     http.expectOne('/api/t/tavolo-07').flush(connesso);
     const el = await stabile(f);
+    http.match('/api/menu');
+    http.match('/api/cliente/seduta');
     realtime.terminata$.next({ motivo: 'TAVOLO_CHIUSO' });
     TestBed.tick();
     expect(el.querySelector('[data-testid="tavolo-chiuso"]')?.textContent).toContain('Grazie e a presto!');

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Logo segnaposto">
-  <circle cx="60" cy="60" r="56" fill="#c8102e"/>
-  <circle cx="60" cy="60" r="44" fill="none" stroke="#e0a526" stroke-width="4"/>
-  <text x="60" y="74" text-anchor="middle" font-family="system-ui, sans-serif" font-size="40" font-weight="700" fill="#fff">K</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Kikko">
+  <circle cx="60" cy="60" r="58" fill="#9d1c23"/>
+  <circle cx="60" cy="60" r="47" fill="none" stroke="#f6f3e5" stroke-width="3"/>
+  <text x="60" y="70" text-anchor="middle" font-family="Lexend Variable, system-ui, sans-serif" font-size="28" font-weight="700" letter-spacing="2" fill="#f6f3e5">KIKKO</text>
 </svg>

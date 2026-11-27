@@ -34,14 +34,15 @@ test.describe('F1 – tables, PIN and live updates', () => {
     await cliente.goto('/t/tavolo-03');
     await expect(cliente.getByRole('heading', { name: 'Inserisci il PIN del tavolo' })).toBeVisible();
     await inserisciPin(cliente, pin);
-    await expect(cliente.getByTestId('connesso')).toContainText('Sei al tavolo 3');
+    await expect(cliente.getByText('Tavolo 3', { exact: true })).toBeVisible();
+    await expect(cliente.getByTestId('contatore-giro')).toBeVisible();
 
     // The waiter sees the phone appear live, without reloading.
     await expect(page.getByTestId('tavolo-3')).toContainText('📱 1');
 
     // Reloading the phone keeps it at the table (no PIN again).
     await cliente.reload();
-    await expect(cliente.getByTestId('connesso')).toBeVisible();
+    await expect(cliente.getByTestId('contatore-giro')).toBeVisible();
 
     // Closing the table ends the session on the phone.
     await page.getByTestId('tavolo-3').click();

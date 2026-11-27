@@ -23,7 +23,20 @@ export async function avviaApp(opzioni: { porta?: number } = {}): Promise<INestA
 /** Empty database + default config, demo menu, 24 tables, admin/admin and demo staff (mario, capo, monitor). */
 export async function preparaDatabase(prisma: PrismaClient): Promise<void> {
   await truncateAll(prisma);
-  await runSeed(prisma, { adminUsername: 'admin', adminPassword: 'admin', utentiDemo: true });
+  await runSeed(prisma, {
+    adminUsername: 'admin',
+    adminPassword: 'admin',
+    utentiDemo: true,
+    mediaDir: process.env['MEDIA_DIR'],
+  });
+}
+
+/** Opens a table and joins it with a new customer device; returns the device cookie. */
+export async function clienteAlTavolo(server: Server, numero: number, pin: string): Promise<string> {
+  const slug = `tavolo-${String(numero).padStart(2, '0')}`;
+  const res = await request(server).post(`/api/t/${slug}/join`).send({ pin });
+  expect(res.status, JSON.stringify(res.body)).toBe(200);
+  return cookieDa(res, 'kk_ct')!;
 }
 
 export async function login(server: Server, username: string, password = username): Promise<SessioneStaff> {

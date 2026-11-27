@@ -15,6 +15,8 @@ describe('validateEnv', () => {
       SHARED_DEVICE_SESSION_TTL_HOURS: 14,
       COOKIE_SECURE: false,
     });
+    expect(validateEnv({}).MEDIA_DIR).toMatch(/media$/);
+    expect(validateEnv({ MEDIA_DIR: '/srv/media' }).MEDIA_DIR).toBe('/srv/media');
     expect(validateEnv({}).JWT_SECRET.length).toBeGreaterThanOrEqual(32);
   });
 

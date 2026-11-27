@@ -224,3 +224,79 @@ uguale allo username. In produzione non vengono creati.
 
 Allarme e evento `TEMPO_SCADUTO` (F4/F6: per ora la scadenza è solo calcolata e mostrata), revoca dei dispositivi staff
 da interfaccia (F5), gestione degli utenti e dei PIN da interfaccia (F5), stato delle connessioni staff sul monitor (F6).
+
+## F2 – App cliente
+
+### Decisioni del committente (2026-11-27)
+
+- **"Massimo N volte" è per persona**: con 4 coperti e "Bao bun massimo 1 volta" il tavolo può ordinare 4 bao in tutta
+  la seduta. Il campo del brief `maxPerSeduta` è diventato `maxPerPersona` (migrazione con `RENAME COLUMN`, nessun dato
+  perso). `maxPerGiro` resta un limite assoluto per tavolo e per giro.
+- **Limiti di gruppo**: "massimo 4 volte in totale" (sashimi, carpacci in salsa ponzu) è un nuovo tipo di regola,
+  `GruppoLimite.maxPerPersona`, anch'esso moltiplicato per i coperti.
+- **Prezzi alla carta**: salvati (`prezzoCartaCent`) per la futura dashboard admin, mai inviati ai clienti (l'API del
+  menù non li espone e un test lo verifica).
+- **Foto**: quelle ritagliate dal PDF del menù, in WebP 240/480 px con anteprima sfocata incorporata nel menù.
+- **Font**: Lexend (licenza OFL), simile al Marva del menù stampato. È ospitato dall'app (pacchetto `@fontsource`) e non
+  caricato da Google Fonts: niente richieste a server terzi (GDPR) e funziona offline.
+- **Stesso menù per tutte le formule**. **Bevande** in una pagina a parte, tutte extra a pagamento, inventate per la POC.
+
+### Regole AYCE in `packages/shared/src/regole.ts`
+
+Funzioni pure usate sia dal server (che decide sempre) sia dal client (che le usa solo per guidare il cliente):
+limite del giro, limiti per giro, per persona e di gruppo, attesa tra i giri, numero massimo di giri, scadenza, piatti
+non disponibili. Sono coperte da test unitari esaustivi in `regole.spec.ts`.
+
+- **Giri rifiutati**: non contano né per i limiti né per il timer.
+- **Giri di soli extra** (es. solo bevande): si possono inviare in qualsiasi momento, non fanno partire il timer e non
+  contano nei giri. Non sono previsti dal brief, ma senza questa regola un tavolo dovrebbe aspettare 10 minuti per
+  un'acqua.
+- **Dopo la scadenza** non si può inviare nulla, neanche le bevande, come chiede il brief ("non può più inviare giri").
+- I limiti per persona usano tutti i coperti, bambini compresi.
+
+### Carrello condiviso
+
+Una riga per piatto **per dispositivo**: ogni telefono modifica solo le proprie quantità, tutti vedono tutto con l'emoji
+di chi ha aggiunto. Così non ci sono conflitti tra telefoni che toccano lo stesso piatto nello stesso istante.
+
+- Il client applica subito le proprie modifiche (aggiornamento ottimistico), raggruppa i tocchi ravvicinati (250 ms) e,
+  se il server non salva, torna al valore del server.
+- Ogni modifica genera `CARRELLO_MODIFICATO`; gli altri telefoni aggiornano il carrello dal payload dell'evento.
+
+### Invio del giro
+
+- Qualsiasi telefono del tavolo invia **tutto il carrello del tavolo**. Il server rivalida tutte le regole in una
+  transazione `Serializable` (ripetuta in caso di conflitto) e svuota il carrello.
+- **Idempotenza**: il telefono genera una `chiaveIdempotenza` (UUID) e la salva in `localStorage` finché il server non
+  risponde. Ripetere la richiesta (doppio tocco, rete caduta, ricarica della pagina) restituisce lo stesso giro; un
+  vincolo unico `(sedutaId, chiaveIdempotenza)` lo garantisce anche con richieste simultanee.
+- **Offline**: se la rete manca il giro resta "in coda" e riparte da solo quando torna la connessione (evento `online`,
+  riconnessione del WebSocket o ogni 5 secondi).
+- Due telefoni che inviano insieme: uno solo riesce, l'altro riceve l'errore delle regole (carrello vuoto o attesa).
+- Il giro resta `INVIATO` ("in attesa di conferma") fino a F4. Ogni voce copia `inFormula` e il prezzo extra, per il
+  pre-conto.
+- Gli orari (prossimo giro, scadenza) vengono dal server; il client corregge la differenza tra il suo orologio e quello
+  del server.
+
+### Limite di richieste per dispositivo
+
+In sala tutti i clienti escono dallo stesso IP del Wi-Fi: un limite per IP rallenterebbe l'intero locale durante il
+servizio. I clienti vengono contati per cookie di dispositivo, tutti gli altri per IP.
+
+### Menù per il cliente
+
+`GET /api/menu` è pubblico e cambia raramente: risponde con un `ETag` e `Cache-Control: no-cache`, così il browser lo
+rivalida e riceve `304` se non è cambiato. Le foto stanno in `MEDIA_DIR` (servite su `/media` con cache di un giorno)
+e il seed ci copia quelle del menù.
+
+### Interfaccia del cliente
+
+Mobile first, colori e forme del menù stampato (acqua, rosso, crema, verde scuro), schede dei piatti con foto, numero
+del menù, pezzi e indicatori, "massimo N a persona", chi l'ha già nel carrello. Il pulsante "+" si disattiva quando una
+regola lo impedisce. Filtri "escludi allergeni", vegetariani e senza glutine, ricordati sul telefono. Animazioni leggere
+(contatori, aggiunta, invio) che rispettano `prefers-reduced-motion`.
+
+### Da fare nelle fasi successive
+
+Approvazione e rifiuto dei giri alla cassa e piatti esauriti in tempo reale (F4), ordini per conto del cliente dal
+cameriere (F3), modifica del menù e delle foto dall'admin (F5), PWA e cache offline del menù (F8).

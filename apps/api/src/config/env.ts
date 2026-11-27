@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { resolveDatabaseUrl } from './database-url.js';
+import { resolveMediaDir } from './media-dir.js';
 
 /** Development-only secrets: production must provide its own (validated below). */
 const DEV_JWT_SECRET = 'dev-only-jwt-secret-change-me-0123456789abcdef';
@@ -31,8 +32,10 @@ const EnvSchema = z.object({
   TRUST_PROXY: z.string().optional(),
   /** Requests per minute per IP on public endpoints (PIN entry, login). */
   THROTTLE_PUBLIC_LIMIT: z.coerce.number().int().min(1).default(20),
-  /** Requests per minute per IP on every other endpoint. */
+  /** Requests per minute per client (device cookie, else IP) on every other endpoint. */
   THROTTLE_DEFAULT_LIMIT: z.coerce.number().int().min(1).default(300),
+  /** Directory of dish photos, served under /media. */
+  MEDIA_DIR: z.string().min(1),
 });
 
 export type Env = Omit<z.infer<typeof EnvSchema>, 'COOKIE_SECURE'> & { COOKIE_SECURE: boolean };
@@ -61,6 +64,7 @@ export function validateEnv(raw: Record<string, unknown>): Env {
     DATABASE_URL: databaseUrl,
     JWT_SECRET: strings['JWT_SECRET'] || DEV_JWT_SECRET,
     PIN_HMAC_SECRET: strings['PIN_HMAC_SECRET'] || DEV_PIN_SECRET,
+    MEDIA_DIR: resolveMediaDir(strings),
   });
   if (!result.success) {
     const details = result.error.issues.map((i) => `- ${i.path.join('.')}: ${i.message}`).join('\n');

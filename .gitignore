@@ -38,3 +38,6 @@ Thumbs.db
 
 # Generated Prisma client
 apps/api/src/generated/
+
+# Dish photos (MEDIA_DIR, filled by the seed and by uploads)
+apps/api/media/

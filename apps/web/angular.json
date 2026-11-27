@@ -26,7 +26,7 @@
                 "ignore": ["**/README.md"]
               }
             ],
-            "styles": ["src/styles/tokens.css", "src/styles.scss"]
+            "styles": ["@fontsource-variable/lexend/index.css", "src/styles/tokens.css", "src/styles.scss"]
           },
           "configurations": {
             "production": {
@@ -38,8 +38,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "10kB",
+                  "maximumError": "16kB"
                 }
               ],
               "outputHashing": "all"

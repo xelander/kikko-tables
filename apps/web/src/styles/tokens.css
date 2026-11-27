@@ -4,33 +4,36 @@
  * Valori attuali: SEGNAPOSTO in attesa degli asset reali (vedi public/assets/brand/README.md).
  */
 :root {
-  /* Colori di brand */
-  --color-primary: #c8102e;
-  --color-primary-strong: #9e0c24;
+  /* Colori del brand Kikko, presi dal menù stampato */
+  --color-primary: #9d1c23; /* rosso delle testate */
+  --color-primary-strong: #7c151b;
   --color-on-primary: #ffffff;
-  --color-accent: #e0a526;
-  --color-on-accent: #1c1a17;
+  --color-accent: #cf683f; /* terracotta: solo decorazioni e testo grande */
+  --color-on-accent: #ffffff;
+  --color-brand-sea: #87d6c8; /* acqua: sfondo del menù */
+  --color-brand-sea-strong: #5fbfae;
 
   /* Superfici e testo */
-  --color-bg: #faf7f2;
-  --color-surface: #ffffff;
-  --color-surface-muted: #f1ece4;
-  --color-border: #e2dbd0;
-  --color-text: #1c1a17;
-  --color-text-muted: #5f5a52;
+  --color-bg: #f6f3e5; /* crema delle schede */
+  --color-surface: #fffdf6;
+  --color-surface-muted: #eee8d4;
+  --color-border: #e0d6bd;
+  --color-text: #204d4b; /* verde scuro dei testi */
+  --color-text-muted: #4c6b68;
 
   /* Stati */
   --color-success: #1f7a4d;
   --color-success-bg: #e3f3ea;
   --color-warning: #8a5a00;
   --color-warning-bg: #fdf1d8;
-  --color-danger: #b3261e;
+  --color-danger: #9d1c23;
   --color-danger-bg: #fbe5e3;
-  --color-focus: #2563eb;
+  --color-focus: #1b5fd1;
 
-  /* Tipografia */
-  --font-family-base: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  /* Tipografia: Lexend (OFL) ospitato in locale, simile al Marva del menù */
+  --font-family-base: 'Lexend Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-family-display: var(--font-family-base);
+  --letter-spacing-display: 0.12em;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-md: 1rem;
@@ -51,16 +54,16 @@
   --space-6: 2rem;
   --space-8: 3rem;
 
-  /* Raggi */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
+  /* Raggi: angoli morbidi come le schede del menù */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
   --radius-pill: 999px;
 
   /* Ombre */
-  --shadow-sm: 0 1px 2px rgb(28 26 23 / 0.08);
-  --shadow-md: 0 4px 14px rgb(28 26 23 / 0.1);
-  --shadow-lg: 0 12px 32px rgb(28 26 23 / 0.14);
+  --shadow-sm: 0 1px 2px rgb(32 77 75 / 0.1);
+  --shadow-md: 0 4px 14px rgb(32 77 75 / 0.14);
+  --shadow-lg: 0 12px 32px rgb(32 77 75 / 0.2);
 
   /* Dimensioni minime dei tocchi (accessibilità) */
   --touch-target: 48px;

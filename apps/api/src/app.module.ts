@@ -1,16 +1,19 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { DispositivoThrottlerGuard } from './common/throttler.guard.js';
 import { AuthModule } from './auth/auth.module.js';
 import { ClienteModule } from './cliente/cliente.module.js';
 import { type Env, validateEnv } from './config/env.js';
 import { EventiModule } from './eventi/eventi.module.js';
 import { FormuleModule } from './formule/formule.module.js';
 import { HealthModule } from './health/health.module.js';
+import { MenuModule } from './menu/menu.module.js';
 import { PinModule } from './pin/pin.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { RealtimeModule } from './realtime/realtime.module.js';
+import { SalaModule } from './sala/sala.module.js';
 import { TavoliModule } from './tavoli/tavoli.module.js';
 
 @Module({
@@ -29,10 +32,12 @@ import { TavoliModule } from './tavoli/tavoli.module.js';
     AuthModule,
     FormuleModule,
     TavoliModule,
+    MenuModule,
     ClienteModule,
+    SalaModule,
     RealtimeModule,
   ],
   // Rate limiting runs before authentication (AuthGuard is registered in AuthModule).
-  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
+  providers: [{ provide: APP_GUARD, useClass: DispositivoThrottlerGuard }],
 })
 export class AppModule {}

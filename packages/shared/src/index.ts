@@ -8,3 +8,5 @@ export * from './schemas/config.js';
 export * from './schemas/menu.js';
 export * from './schemas/tables.js';
 export * from './sedute.js';
+export * from './clienti.js';
+export * from './regole.js';

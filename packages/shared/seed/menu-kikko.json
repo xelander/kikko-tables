@@ -1,0 +1,5490 @@
+{
+  "versione": 2,
+  "fonte": "Menu AYCE cena (PDF del ristorante), trascritto il 2026-11-27. Allergeni come indicati nel menù: da verificare con il ristorante.",
+  "categorie": [
+    {
+      "codice": "antipasti",
+      "nome": {
+        "it": "Antipasti",
+        "en": "Starters"
+      },
+      "sezione": "MENU",
+      "ordine": 10
+    },
+    {
+      "codice": "primi",
+      "nome": {
+        "it": "Primi",
+        "en": "Rice and noodles"
+      },
+      "sezione": "MENU",
+      "ordine": 20
+    },
+    {
+      "codice": "secondi",
+      "nome": {
+        "it": "Secondi",
+        "en": "Mains"
+      },
+      "sezione": "MENU",
+      "ordine": 30
+    },
+    {
+      "codice": "maki",
+      "nome": {
+        "it": "Maki",
+        "en": "Maki"
+      },
+      "sezione": "MENU",
+      "ordine": 40
+    },
+    {
+      "codice": "nigiri",
+      "nome": {
+        "it": "Nigiri",
+        "en": "Nigiri"
+      },
+      "sezione": "MENU",
+      "ordine": 50
+    },
+    {
+      "codice": "sushi-jo",
+      "nome": {
+        "it": "Sushi jo",
+        "en": "Sushi jo"
+      },
+      "sezione": "MENU",
+      "ordine": 60
+    },
+    {
+      "codice": "temaki",
+      "nome": {
+        "it": "Temaki",
+        "en": "Temaki"
+      },
+      "sezione": "MENU",
+      "ordine": 70
+    },
+    {
+      "codice": "onigiri",
+      "nome": {
+        "it": "Onigiri",
+        "en": "Onigiri"
+      },
+      "sezione": "MENU",
+      "ordine": 80
+    },
+    {
+      "codice": "sashimi",
+      "nome": {
+        "it": "Sashimi",
+        "en": "Sashimi"
+      },
+      "sezione": "MENU",
+      "ordine": 90
+    },
+    {
+      "codice": "carpacci",
+      "nome": {
+        "it": "Carpacci",
+        "en": "Carpaccio"
+      },
+      "sezione": "MENU",
+      "ordine": 100
+    },
+    {
+      "codice": "uramaki-sake",
+      "nome": {
+        "it": "Uramaki sake",
+        "en": "Salmon uramaki"
+      },
+      "sezione": "MENU",
+      "ordine": 110
+    },
+    {
+      "codice": "uramaki-ebi",
+      "nome": {
+        "it": "Uramaki ebi",
+        "en": "Prawn uramaki"
+      },
+      "sezione": "MENU",
+      "ordine": 120
+    },
+    {
+      "codice": "uramaki-maguro",
+      "nome": {
+        "it": "Uramaki maguro",
+        "en": "Tuna uramaki"
+      },
+      "sezione": "MENU",
+      "ordine": 130
+    },
+    {
+      "codice": "uramaki-crab",
+      "nome": {
+        "it": "Uramaki crab",
+        "en": "Crab uramaki"
+      },
+      "sezione": "MENU",
+      "ordine": 140
+    },
+    {
+      "codice": "uramaki-veg",
+      "nome": {
+        "it": "Uramaki veg",
+        "en": "Veggie uramaki"
+      },
+      "sezione": "MENU",
+      "ordine": 150
+    },
+    {
+      "codice": "uramaki-venere",
+      "nome": {
+        "it": "Uramaki venere",
+        "en": "Black rice uramaki"
+      },
+      "sezione": "MENU",
+      "ordine": 160
+    },
+    {
+      "codice": "nigiri-maki-roll",
+      "nome": {
+        "it": "Nigiri maki roll",
+        "en": "Nigiri maki roll"
+      },
+      "sezione": "MENU",
+      "ordine": 170
+    },
+    {
+      "codice": "uramaki-special",
+      "nome": {
+        "it": "Uramaki special",
+        "en": "Special uramaki"
+      },
+      "sezione": "MENU",
+      "ordine": 180
+    },
+    {
+      "codice": "dolci-frutta",
+      "nome": {
+        "it": "Dolci e frutta",
+        "en": "Desserts and fruit"
+      },
+      "sezione": "MENU",
+      "ordine": 190
+    },
+    {
+      "codice": "bevande",
+      "nome": {
+        "it": "Bevande",
+        "en": "Drinks"
+      },
+      "sezione": "BEVANDE",
+      "ordine": 1000
+    }
+  ],
+  "gruppi": [
+    {
+      "codice": "sashimi",
+      "nome": {
+        "it": "Sashimi",
+        "en": "Sashimi"
+      },
+      "maxPerPersona": 4
+    },
+    {
+      "codice": "carpacci-ponzu",
+      "nome": {
+        "it": "Carpacci in salsa ponzu",
+        "en": "Carpaccio with ponzu sauce"
+      },
+      "maxPerPersona": 4
+    }
+  ],
+  "piatti": [
+    {
+      "codice": "piatto-1",
+      "numero": "1",
+      "nome": {
+        "it": "Involtini primavera",
+        "en": "Spring rolls"
+      },
+      "descrizione": {
+        "it": "Involtini artigianali ripieni di carote e verza",
+        "en": "Handmade rolls filled with carrots and savoy cabbage"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-002",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAQAgCdASoQAAwAA4BaJQBOgCFpp4x10/LAAP7vyzSOf5fDMDYmhzpS2LvFz0pmWg0H4N9n6n0sB9UgxRAM0CeRW97bI6GngAA="
+      },
+      "allergeni": ["EGGS"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-2",
+      "numero": "2",
+      "nome": {
+        "it": "Haki maki",
+        "en": "Haki maki"
+      },
+      "descrizione": {
+        "it": "Involtini artigianali ripieni di gambero",
+        "en": "Handmade rolls filled with prawns"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-001",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAwAgCdASoQAAwAA4BaJYgCdAELUGD59lJYAAD+79+9f1bHA+1V6LWHuZdIvekh2zix8uQGN7gyNQ2tssB1bqLZs9QN4DcAAAA="
+      },
+      "allergeni": ["CRUSTACEANS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-3",
+      "numero": "3",
+      "nome": {
+        "it": "Gyoza di carne",
+        "en": "Meat gyoza"
+      },
+      "descrizione": {
+        "it": "Ravioli artigianali al vapore ripieni di carne",
+        "en": "Handmade steamed dumplings filled with meat"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-004",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAQCdASoQAAwAA4BaJQBOgCHaW4AbAAAA/u/f63TMR+QwRZWxgm5zmUfGFkOQdSl8p8IRxCmHkx3rd4ISWmsqouJ+20AA"
+      },
+      "allergeni": ["SESAME", "CELERY", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-4",
+      "numero": "4",
+      "nome": {
+        "it": "Gyoza di gambero",
+        "en": "Prawn gyoza"
+      },
+      "descrizione": {
+        "it": "Ravioli artigianali al vapore ripieni di gambero",
+        "en": "Handmade steamed dumplings filled with prawns"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-003",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAQAgCdASoQAAwAA4BaJYwCdAEPDH3nwzlAAP7v9/MFT9XubfukyCsWD9ONHHxuAnH+9SFxrgkuHiYhoQX14MiAAAA="
+      },
+      "allergeni": ["SESAME", "CRUSTACEANS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-5",
+      "numero": "5",
+      "nome": {
+        "it": "Shu mai",
+        "en": "Shumai"
+      },
+      "descrizione": {
+        "it": "Ravioli artigianali al vapore ripieni di pesce",
+        "en": "Handmade steamed dumplings filled with fish"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-006",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAwAgCdASoQAAwAA4BaJZACdAEUpRxNeO7tAAD+7Y3iTOzRr8yfG5JdEWh+CqNyNLcrwkfJeSubKL7c64wslrpZuKwxnB7kAAA="
+      },
+      "allergeni": ["SESAME", "FISH", "CRUSTACEANS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-119",
+      "numero": "119",
+      "nome": {
+        "it": "Gyoza vegetariani",
+        "en": "Vegetarian gyoza"
+      },
+      "descrizione": {
+        "it": "Ravioli artigianali con sfoglia agli spinaci e spirulina ripieni di bambù, arachidi, carota, cavolo cappuccio. Salsa sesamo a parte",
+        "en": "Handmade dumplings with spinach and spirulina pastry, filled with bamboo, peanuts, carrot and white cabbage. Sesame sauce on the side"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-005",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAwAA4BaJbACdAD1/FGjYAAA/lVjqahc5g5b6w81VYdCgfNfQ2J7wIdAirKxIvXLP9JdTqiAAA=="
+      },
+      "allergeni": ["SESAME", "SOY", "NUTS"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "piatto-6",
+      "numero": "6",
+      "nome": {
+        "it": "Gamberi pasta fillo",
+        "en": "Prawns in filo pastry"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-007",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAQCdASoQAAwAA4BaJQBOgCHhjy+fHIAA/uDWmVPIdZs7YbIh2vtqQLZq+yZOYD2DS8rrUfz5VlN3trwImt2HbfDhyPdhbJYhh1OZgSIuweAA"
+      },
+      "allergeni": ["CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 70
+    },
+    {
+      "codice": "piatto-7",
+      "numero": "7",
+      "nome": {
+        "it": "Gamberetti saltati con sale e pepe",
+        "en": "Stir-fried shrimps with salt and pepper"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "antipasti",
+      "pezzi": 6,
+      "immagine": {
+        "file": "foto-008",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAAwAA4BaJYgCdAEMyK44EIgAAP7tiMWR8hq2BfTOIRcXxYRYrTRoZFhy99YXIPke5fIj/H4C6OrwC7eBFa5MIgsYTCshxAAAAA=="
+      },
+      "allergeni": ["CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 80
+    },
+    {
+      "codice": "piatto-8",
+      "numero": "8",
+      "nome": {
+        "it": "Tempura mista",
+        "en": "Mixed tempura"
+      },
+      "descrizione": {
+        "it": "2 gamberi e 2 verdure",
+        "en": "2 prawns and 2 vegetables"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-009",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwAgCdASoQAAwAA4BaJQBOgB6vj1jDKDTLYAD+34gFQvDrZdKIACABm/se9CZpnSc7nXcCOGCyjcLh4Bz8egKuv9kbZp+ynXcnouSHLLySykAA"
+      },
+      "allergeni": ["CRUSTACEANS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 90
+    },
+    {
+      "codice": "piatto-8a",
+      "numero": "8a",
+      "nome": {
+        "it": "Tempura solo gamberi",
+        "en": "Prawn tempura"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-009",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwAgCdASoQAAwAA4BaJQBOgB6vj1jDKDTLYAD+34gFQvDrZdKIACABm/se9CZpnSc7nXcCOGCyjcLh4Bz8egKuv9kbZp+ynXcnouSHLLySykAA"
+      },
+      "allergeni": ["CRUSTACEANS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 100
+    },
+    {
+      "codice": "piatto-8b",
+      "numero": "8b",
+      "nome": {
+        "it": "Tempura solo verdure",
+        "en": "Vegetable tempura"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-009",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwAgCdASoQAAwAA4BaJQBOgB6vj1jDKDTLYAD+34gFQvDrZdKIACABm/se9CZpnSc7nXcCOGCyjcLh4Bz8egKuv9kbZp+ynXcnouSHLLySykAA"
+      },
+      "allergeni": ["SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 110
+    },
+    {
+      "codice": "piatto-9",
+      "numero": "9",
+      "nome": {
+        "it": "Saccottini di carne",
+        "en": "Meat purses"
+      },
+      "descrizione": {
+        "it": "Saccottini ripieni di carne, zenzero, carote e verza",
+        "en": "Purses filled with meat, ginger, carrots and savoy cabbage"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-010",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQAgCdASoQAAwAA4BaJZACdAEfbqhA/FRAAP7t62XmQ7MJHrHmldvBSfmcyYWEKyeh9vMl42sgv5pzK1D2hsOHozJlOWqy29dVOS11jD+/gAAA"
+      },
+      "allergeni": ["SESAME", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 120
+    },
+    {
+      "codice": "piatto-11",
+      "numero": "11",
+      "nome": {
+        "it": "Edamame",
+        "en": "Edamame"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "antipasti",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-013",
+        "larghezza": 374,
+        "altezza": 231,
+        "anteprima": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAwAgCdASoQAAoAA4BaJbACdAE3B59GxlRnsAD+uAFabxp0ipDmyh9QuKPzKXbdwcf73AIOe+DXSKbS+enGJL9M/aO8n6kSfiJs8BE/pKAQ7Fh1QAAAAA=="
+      },
+      "allergeni": ["SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 130
+    },
+    {
+      "codice": "piatto-12",
+      "numero": "12",
+      "nome": {
+        "it": "Alghe wakame",
+        "en": "Wakame seaweed"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "antipasti",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-012",
+        "larghezza": 463,
+        "altezza": 331,
+        "anteprima": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAwAgCdASoQAAsAA4BaJbACdADRtuHGp4AGAAD+9ArTkUOCqr2BvHhzq2nUQdGcbiFLAk7J8ruNXu/7JvbJDj1y57p1zjMlFc55II0Hp+L0BfGKLoOibmAAAAA="
+      },
+      "allergeni": ["SESAME", "SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 140
+    },
+    {
+      "codice": "piatto-10",
+      "numero": "10",
+      "nome": {
+        "it": "Miso shiru",
+        "en": "Miso soup"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "antipasti",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-011",
+        "larghezza": 480,
+        "altezza": 307,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoQAAoAA4BaJYgCdAEacpyaAFz5gAD+9RjbzOKucBCD+G44zcXODQEngagHUI6TkaE5zRdmLBlSSP6UWpdUS8Rn+umMOx9t+AAAAA=="
+      },
+      "allergeni": ["SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 350,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 150
+    },
+    {
+      "codice": "piatto-113",
+      "numero": "113",
+      "nome": {
+        "it": "Bao bun",
+        "en": "Bao bun"
+      },
+      "descrizione": {
+        "it": "Pane cinese al vapore ripieno di pulled pork orientale, carote julienne, insalata, teriyaki e sesamo",
+        "en": "Steamed Chinese bun filled with oriental pulled pork, julienned carrots, lettuce, teriyaki and sesame"
+      },
+      "categoria": "antipasti",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-015",
+        "larghezza": 433,
+        "altezza": 545,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAABwAgCdASoNABAAA4BaJZgCdH8AGEUPDgXtbJ4AAP7xHdTnLgWI81H2D3dYLzYL7Fxqy6+lumAtg28tfQn3XFv0ARJl3Iu58YmGz5oETQAAAA=="
+      },
+      "allergeni": ["SESAME", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 160
+    },
+    {
+      "codice": "piatto-15",
+      "numero": "15",
+      "nome": {
+        "it": "Pollo karaage",
+        "en": "Chicken karaage"
+      },
+      "descrizione": {
+        "it": "Bocconcini di sovracoscia di pollo marinato con mix di spezie orientali e sake, impanati con panko, nanami e cumino",
+        "en": "Chicken thigh bites marinated in oriental spices and sake, coated in panko, nanami and cumin"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-014",
+        "larghezza": 435,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADwAQCdASoNABAAA4BaJbACdAD1burdUAAA/u+RfUMW36wwlUpGn/kO7Xxd4VjK4jBLuEUSmSoRvfc6/zvm9UH7ogUuva9BNgzk4i7vjPDm4iLWToRqoCxIAAA="
+      },
+      "allergeni": ["SOY", "EGGS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 170
+    },
+    {
+      "codice": "piatto-17",
+      "numero": "17",
+      "nome": {
+        "it": "Nuvolette di drago",
+        "en": "Prawn crackers"
+      },
+      "descrizione": {
+        "it": "Chips tipiche cinesi",
+        "en": "Traditional Chinese chips"
+      },
+      "categoria": "antipasti",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-017",
+        "larghezza": 381,
+        "altezza": 251,
+        "anteprima": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAABwAgCdASoQAAsAA4BaJQBOkGQDBN1gX14qoHAAAP4AenITYl+iZdZlnmOr/eMsZvmhx1UZh46H0fPBLSvItjDLzldE7AsPu+/RBT0LWk9aIou2EYpuBrMAAAA="
+      },
+      "allergeni": ["CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 300,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 180
+    },
+    {
+      "codice": "piatto-18",
+      "numero": "18",
+      "nome": {
+        "it": "Patatine fritte",
+        "en": "French fries"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "antipasti",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-016",
+        "larghezza": 480,
+        "altezza": 271,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoQAAkAA4BaJbACdHMAAxURgCzWkAD+8/cffzbs+fvgnrVnNXYFa6L1MWQY9no7OmAMe3rIuz7V57j8rUcp6PmROqO3Gb54AAA="
+      },
+      "allergeni": [],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 300,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 190
+    },
+    {
+      "codice": "piatto-14",
+      "numero": "14",
+      "nome": {
+        "it": "Cotoletta di pollo",
+        "en": "Chicken cutlet"
+      },
+      "descrizione": {
+        "it": "Petto di pollo in crosta di panko",
+        "en": "Chicken breast in a panko crust"
+      },
+      "categoria": "antipasti",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-018",
+        "larghezza": 438,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAABQAgCdASoNABAAA4BaJbACdGaAAsYoisPMnAAA/sIV1bOZoIHczONjsrJ3fN5uKFCfp8gEAChbEWPCTb28AXrPUCO1hN7f8DDBFwg1Ageevt2MR6eYNDO5vJKunFUTFACAAA=="
+      },
+      "allergeni": ["EGGS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 200
+    },
+    {
+      "codice": "piatto-114",
+      "numero": "114",
+      "nome": {
+        "it": "Pane cinese a vapore",
+        "en": "Steamed Chinese bun"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "antipasti",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-019",
+        "larghezza": 435,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAABQAgCdASoNABAAA4BaJagCdFQAAzqcKGJKyAAA9yml+NLXkk5uj44prWA71eGYDW/raQJqQO4ya9zltKNa4T3I8GVhu0yNRkPnO9ZnR1kAAA=="
+      },
+      "allergeni": [],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 100,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 210
+    },
+    {
+      "codice": "piatto-16",
+      "numero": "16",
+      "nome": {
+        "it": "Calamari fritti",
+        "en": "Fried squid"
+      },
+      "descrizione": {
+        "it": "Anelli di calamari in crosta di panko",
+        "en": "Squid rings in a panko crust"
+      },
+      "categoria": "antipasti",
+      "pezzi": 6,
+      "immagine": {
+        "file": "foto-020",
+        "larghezza": 435,
+        "altezza": 547,
+        "anteprima": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAQCdASoNABAAA4BaJbACdAClDaywQAD7odcF6aWydL2Dg6dpN5Sie6UAdinocTsYK5NV/bXdBBihjpv7dMhZTTM0jKMU1JudA8AA"
+      },
+      "allergeni": ["MOLLUSCS", "EGGS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 750,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 220
+    },
+    {
+      "codice": "piatto-117",
+      "numero": "117",
+      "nome": {
+        "it": "Takoyaki",
+        "en": "Takoyaki"
+      },
+      "descrizione": {
+        "it": "Frittelle giapponesi ripiene di polpo, con salsa teriyaki e maionese",
+        "en": "Japanese octopus fritters with teriyaki sauce and mayonnaise"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-021",
+        "larghezza": 435,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABQAgCdASoNABAAA4BaJbACdAECwdcf2l+prgAA/RmUmbNDElbUD0bZdtgM41wxK2SlT30tjW1Dt4z5I/d70ssyORAwEAGAAAA="
+      },
+      "allergeni": ["SOY", "MOLLUSCS", "EGGS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 230
+    },
+    {
+      "codice": "piatto-118",
+      "numero": "118",
+      "nome": {
+        "it": "Pepite di salmone",
+        "en": "Salmon nuggets"
+      },
+      "descrizione": {
+        "it": "Polpette di salmone con salsa miso e yuzu",
+        "en": "Salmon balls with miso and yuzu sauce"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-022",
+        "larghezza": 435,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoNABAAA4BaJaACdAD8HEoL//AAAPudCRb8vMqYJQrdL+lZs95Fccla6CWGSdzfkFmU+TOUm8LKl70tAmsqXjCvidYm7AwAAAA="
+      },
+      "allergeni": ["EGGS", "FISH", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 240
+    },
+    {
+      "codice": "piatto-20",
+      "numero": "20",
+      "nome": {
+        "it": "Chele di granchio",
+        "en": "Crab claws"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-023",
+        "larghezza": 438,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoNABAAA4BaJbACdAELJ5BYgAAA/XT49OZRYgWmp7/EGBHbjlFMGoHqUAq4/6Sqx+z23eefbIV2UQenKyAKMzt/v7I9Y+aa1AA="
+      },
+      "allergeni": ["EGGS", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 250
+    },
+    {
+      "codice": "piatto-110",
+      "numero": "110",
+      "nome": {
+        "it": "Tacos di salmone",
+        "en": "Salmon taco"
+      },
+      "descrizione": {
+        "it": "Tartare di salmone, avocado, philadelphia, teriyaki, sesamo",
+        "en": "Salmon tartare, avocado, cream cheese, teriyaki, sesame"
+      },
+      "categoria": "antipasti",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-024",
+        "larghezza": 435,
+        "altezza": 547,
+        "anteprima": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQAgCdASoNABAAA4BaJbACdAECuWEH400AAP145iakqU0fZkZM5mM2SDPxkCT0UmhjVd7OGX5PpiSNw3Qu8zxSZaWA+kE5Ep3337jLUVLxQ1SMAAA="
+      },
+      "allergeni": ["SOY", "SESAME", "MILK", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 350,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 260
+    },
+    {
+      "codice": "piatto-111",
+      "numero": "111",
+      "nome": {
+        "it": "Tacos di tonno",
+        "en": "Tuna taco"
+      },
+      "descrizione": {
+        "it": "Tartare di tonno, mango, olio evo, sale e pepe, sesamo, masago",
+        "en": "Tuna tartare, mango, extra virgin olive oil, salt and pepper, sesame, masago"
+      },
+      "categoria": "antipasti",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-025",
+        "larghezza": 435,
+        "altezza": 547,
+        "anteprima": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoNABAAA4BaJbACdADz4Txv3iaAAP3r1r/8NqCsTqP9//WvRgARyyptpxc4z8J6kr2fA9+FstsfHdsxg+3Nlq/RKoMciSdmdp1P2b+NZnsUAAAA"
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 270
+    },
+    {
+      "codice": "piatto-112",
+      "numero": "112",
+      "nome": {
+        "it": "Tacos di gamberi",
+        "en": "Prawn taco"
+      },
+      "descrizione": {
+        "it": "Tartare di gambero cotto, avocado, maionese, salsa sweet, sesamo",
+        "en": "Cooked prawn tartare, avocado, mayonnaise, sweet sauce, sesame"
+      },
+      "categoria": "antipasti",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-026",
+        "larghezza": 435,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAQCdASoNABAAA4BaJbACdADcV+yhDQAA/s+DBBH44hzLwEmGQgNsFNPquP1f++12ahbeXDC3d5G9mPuqzn9sgPo/kdpHDfkcCslZ5RasP7IpYAA="
+      },
+      "allergeni": ["CRUSTACEANS", "SESAME", "MILK", "EGGS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 350,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 280
+    },
+    {
+      "codice": "piatto-120",
+      "numero": "120",
+      "nome": {
+        "it": "Cannolo sushi",
+        "en": "Sushi cannolo"
+      },
+      "descrizione": {
+        "it": "Sfoglia di pasta fillo con ripieno di philadelphia, tonno, riso e pistacchio; sopra maionese al basilico",
+        "en": "Filo pastry filled with cream cheese, tuna, rice and pistachio; topped with basil mayonnaise"
+      },
+      "categoria": "antipasti",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-027",
+        "larghezza": 435,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAQCdASoNABAAA4BaJaACdAEDXXzDOwAA/ttNIt/gvX37KjJx/nxihTqhGaHjmIdMC6WbkJSnRkIpIXGd44XFYh8uowq5L31GMBzDw9erci5ZNYAAAA=="
+      },
+      "allergeni": ["NUTS", "FISH", "MILK", "EGGS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 300,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 290
+    },
+    {
+      "codice": "piatto-115",
+      "numero": "115",
+      "nome": {
+        "it": "Okonomiyaki",
+        "en": "Okonomiyaki"
+      },
+      "descrizione": {
+        "it": "Pancake giapponese con cavolo cappuccio, carota, maionese, teriyaki, cipollotto, katsuobushi",
+        "en": "Japanese pancake with white cabbage, carrot, mayonnaise, teriyaki, spring onion, katsuobushi"
+      },
+      "categoria": "antipasti",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-028",
+        "larghezza": 480,
+        "altezza": 603,
+        "anteprima": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwAgCdASoNABAAA4BaJbACdAECoihuaEaAAAD+76EumnT6uOoi0goUfG+a8OXqx/Q0QX+XwPhKfJ/zjgNJ9u3DrA5snizOy3s7F5dnh8HbAAAA"
+      },
+      "allergeni": ["EGGS", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": 2,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 300
+    },
+    {
+      "codice": "piatto-116",
+      "numero": "116",
+      "nome": {
+        "it": "Okonomiyaki vegetariano",
+        "en": "Vegetarian okonomiyaki"
+      },
+      "descrizione": {
+        "it": "Versione veg: senza katsuobushi",
+        "en": "Veggie version: without katsuobushi"
+      },
+      "categoria": "antipasti",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-028",
+        "larghezza": 480,
+        "altezza": 603,
+        "anteprima": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwAgCdASoNABAAA4BaJbACdAECoihuaEaAAAD+76EumnT6uOoi0goUfG+a8OXqx/Q0QX+XwPhKfJ/zjgNJ9u3DrA5snizOy3s7F5dnh8HbAAAA"
+      },
+      "allergeni": ["EGGS", "SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": 2,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 310
+    },
+    {
+      "codice": "piatto-123",
+      "numero": "123",
+      "nome": {
+        "it": "Tartare di salmone",
+        "en": "Salmon tartare"
+      },
+      "descrizione": {
+        "it": "Tartare di salmone con avocado, mango, sesamo e uova di lompo; tobiko, salsa ponzu e pasta kataifi",
+        "en": "Salmon tartare with avocado, mango, sesame and lumpfish roe; tobiko, ponzu sauce and kataifi pastry"
+      },
+      "categoria": "antipasti",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-030",
+        "larghezza": 435,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAABQAgCdASoNABAAA4BaJbACdAEQ/XUdJSMIhgAA/cVpAhtRBS8u90zS/sDVKk/Pi/JAzsVJs/xhiL+5JvUVBidaEt1AZNYtOmMNfTrJLGn9gftGQAA="
+      },
+      "allergeni": ["SOY", "SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 1300,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 320
+    },
+    {
+      "codice": "piatto-124",
+      "numero": "124",
+      "nome": {
+        "it": "Tartare di tonno",
+        "en": "Tuna tartare"
+      },
+      "descrizione": {
+        "it": "Tartare di tonno con avocado, mango, tobiko; salsa ponzu, cardamomo e pasta kataifi",
+        "en": "Tuna tartare with avocado, mango, tobiko; ponzu sauce, cardamom and kataifi pastry"
+      },
+      "categoria": "antipasti",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-029",
+        "larghezza": 435,
+        "altezza": 548,
+        "anteprima": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAQCdASoNABAAA4BaJbACdADbWlbtYkAA/pFhlDzI4qB3i3tGMStd/t0VG/G9rsa+me450e5jkG1yjH0sLz3hbMiWhtAbq1E9YZsX5R69uAAA"
+      },
+      "allergeni": ["SOY", "SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 1400,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 330
+    },
+    {
+      "codice": "piatto-121",
+      "numero": "121",
+      "nome": {
+        "it": "Involtino vietnamita",
+        "en": "Vietnamese roll"
+      },
+      "descrizione": {
+        "it": "Involtino di sfoglia di riso ripieno di gambero cotto, salmone, insalata, alga wakame, cetriolo, avocado; con salsa di sesamo e arachidi",
+        "en": "Rice paper roll filled with cooked prawn, salmon, lettuce, wakame seaweed, cucumber, avocado; with sesame and peanut sauce"
+      },
+      "categoria": "antipasti",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-031",
+        "larghezza": 357,
+        "altezza": 478,
+        "anteprima": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAwAgCdASoMABAAA4BaJZgCdAELZIbAZlJpoAD+8EdvdPFs1mAxmkM3s6bdRqtd1AXFne0WskL3Jwelpr2aHe4hmns2E+NSfPAohWAA"
+      },
+      "allergeni": ["FISH", "SESAME", "NUTS", "CRUSTACEANS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 340
+    },
+    {
+      "codice": "piatto-21",
+      "numero": "21",
+      "nome": {
+        "it": "Udon alla piastra con verdure",
+        "en": "Stir-fried udon with vegetables"
+      },
+      "descrizione": {
+        "it": "Con uova, zucchine e carote",
+        "en": "With egg, courgettes and carrots"
+      },
+      "categoria": "primi",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-032",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAAwAA4BaJZACdAD0rMzr2HAAAP7t4DD6ToxTzEMvxtPqI6dyuGL4p/q1hMjFE6bLp3JUI4EcY0Dq48dXRrrv2qLoBO2YAAA="
+      },
+      "allergeni": ["EGGS", "SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-22",
+      "numero": "22",
+      "nome": {
+        "it": "Udon alla piastra con pollo",
+        "en": "Stir-fried udon with chicken"
+      },
+      "descrizione": {
+        "it": "Con uova, zucchine, carote e pollo",
+        "en": "With egg, courgettes, carrots and chicken"
+      },
+      "categoria": "primi",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-032",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAAwAA4BaJZACdAD0rMzr2HAAAP7t4DD6ToxTzEMvxtPqI6dyuGL4p/q1hMjFE6bLp3JUI4EcY0Dq48dXRrrv2qLoBO2YAAA="
+      },
+      "allergeni": ["EGGS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 800,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-23",
+      "numero": "23",
+      "nome": {
+        "it": "Udon alla piastra con gamberi",
+        "en": "Stir-fried udon with prawns"
+      },
+      "descrizione": {
+        "it": "Con uova, zucchine, carote e gamberi",
+        "en": "With egg, courgettes, carrots and prawns"
+      },
+      "categoria": "primi",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-032",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAAwAA4BaJZACdAD0rMzr2HAAAP7t4DD6ToxTzEMvxtPqI6dyuGL4p/q1hMjFE6bLp3JUI4EcY0Dq48dXRrrv2qLoBO2YAAA="
+      },
+      "allergeni": ["CRUSTACEANS", "EGGS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 800,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-24",
+      "numero": "24",
+      "nome": {
+        "it": "Riso alla piastra con verdure",
+        "en": "Fried rice with vegetables"
+      },
+      "descrizione": {
+        "it": "Con uova, zucchine, carote e mais",
+        "en": "With egg, courgettes, carrots and sweetcorn"
+      },
+      "categoria": "primi",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-033",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAQCdASoQAAwAA4BaJQBOgBX9qHJ0AAD+7Yi29+3lBDy6sAk+z013UDTSnW35fQm4ykuVNeOptEnWMKq0kNtAtq+t4x5bJhCXDu6ehwAAAA=="
+      },
+      "allergeni": ["SESAME", "EGGS", "SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-25",
+      "numero": "25",
+      "nome": {
+        "it": "Riso alla piastra con pollo",
+        "en": "Fried rice with chicken"
+      },
+      "descrizione": {
+        "it": "Con uova, zucchine, carote e pollo",
+        "en": "With egg, courgettes, carrots and chicken"
+      },
+      "categoria": "primi",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-033",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAQCdASoQAAwAA4BaJQBOgBX9qHJ0AAD+7Yi29+3lBDy6sAk+z013UDTSnW35fQm4ykuVNeOptEnWMKq0kNtAtq+t4x5bJhCXDu6ehwAAAA=="
+      },
+      "allergeni": ["SESAME", "EGGS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-26",
+      "numero": "26",
+      "nome": {
+        "it": "Riso alla piastra con gamberi",
+        "en": "Fried rice with prawns"
+      },
+      "descrizione": {
+        "it": "Con uova, zucchine, carote e gamberi",
+        "en": "With egg, courgettes, carrots and prawns"
+      },
+      "categoria": "primi",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-033",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAQCdASoQAAwAA4BaJQBOgBX9qHJ0AAD+7Yi29+3lBDy6sAk+z013UDTSnW35fQm4ykuVNeOptEnWMKq0kNtAtq+t4x5bJhCXDu6ehwAAAA=="
+      },
+      "allergeni": ["CRUSTACEANS", "SESAME", "EGGS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "piatto-27",
+      "numero": "27",
+      "nome": {
+        "it": "Spaghettini di riso alla piastra con verdure",
+        "en": "Stir-fried rice noodles with vegetables"
+      },
+      "descrizione": {
+        "it": "Con uova, zucchine e carote",
+        "en": "With egg, courgettes and carrots"
+      },
+      "categoria": "primi",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-034",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoQAAwAA4BaJaACdAEfbSIXyEGwAAD+7eGCKMlMu7KqM2V9tiQIWkSfta9Z5xZ0MeOXcsQ/bIQs2uPEjHFPvxR8s70P7DLGAAA="
+      },
+      "allergeni": ["EGGS", "SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 70
+    },
+    {
+      "codice": "piatto-28",
+      "numero": "28",
+      "nome": {
+        "it": "Spaghettini di riso alla piastra con pollo",
+        "en": "Stir-fried rice noodles with chicken"
+      },
+      "descrizione": {
+        "it": "Con uova, zucchine, carote e pollo",
+        "en": "With egg, courgettes, carrots and chicken"
+      },
+      "categoria": "primi",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-034",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoQAAwAA4BaJaACdAEfbSIXyEGwAAD+7eGCKMlMu7KqM2V9tiQIWkSfta9Z5xZ0MeOXcsQ/bIQs2uPEjHFPvxR8s70P7DLGAAA="
+      },
+      "allergeni": ["EGGS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 800,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 80
+    },
+    {
+      "codice": "piatto-29",
+      "numero": "29",
+      "nome": {
+        "it": "Spaghettini di riso alla piastra con gamberi",
+        "en": "Stir-fried rice noodles with prawns"
+      },
+      "descrizione": {
+        "it": "Con uova, zucchine, carote e gamberi",
+        "en": "With egg, courgettes, carrots and prawns"
+      },
+      "categoria": "primi",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-034",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoQAAwAA4BaJaACdAEfbSIXyEGwAAD+7eGCKMlMu7KqM2V9tiQIWkSfta9Z5xZ0MeOXcsQ/bIQs2uPEjHFPvxR8s70P7DLGAAA="
+      },
+      "allergeni": ["CRUSTACEANS", "EGGS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 800,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 90
+    },
+    {
+      "codice": "piatto-31",
+      "numero": "31",
+      "nome": {
+        "it": "Udon in brodo",
+        "en": "Udon noodle soup"
+      },
+      "descrizione": {
+        "it": "Brodo di miso e soia con uovo, alghe, gamberi e polpo",
+        "en": "Miso and soy broth with egg, seaweed, prawns and octopus"
+      },
+      "categoria": "primi",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-035",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAwAgCdASoQAAwAA4BaJagCdAEQygspfGxfAAD+lNc2V9jpwTtNFAp7kjhdluOMeRtxqv7Qnfq+ZkO72E7nQ0eicHaplTtChXgtrV1QLT1qDfo9D8VAAA=="
+      },
+      "allergeni": ["EGGS", "MOLLUSCS", "CRUSTACEANS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 1100,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 100
+    },
+    {
+      "codice": "piatto-32",
+      "numero": "32",
+      "nome": {
+        "it": "Sakedon",
+        "en": "Sake don"
+      },
+      "descrizione": {
+        "it": "Fette di salmone alla piastra su riso bianco con salsa teriyaki",
+        "en": "Grilled salmon slices on white rice with teriyaki sauce"
+      },
+      "categoria": "primi",
+      "pezzi": null,
+      "immagine": {
+        "file": "foto-036",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAABQAgCdASoQAAwAA4BaJQBOkCYivf4paIp6uKAA/u3gN8tBC7p/eJg38PC53pjirmbvlWgfHlQZdBO0FEmM/L5o4EQmDy8jCtQie3kO8bMhsAAA"
+      },
+      "allergeni": ["FISH", "SESAME", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 1100,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 110
+    },
+    {
+      "codice": "piatto-33",
+      "numero": "33",
+      "nome": {
+        "it": "Tataki di tonno",
+        "en": "Tuna tataki"
+      },
+      "descrizione": {
+        "it": "Tonno scottato con teriyaki e semi di sesamo",
+        "en": "Seared tuna with teriyaki and sesame seeds"
+      },
+      "categoria": "secondi",
+      "pezzi": 3,
+      "immagine": {
+        "file": "foto-037",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAwAgCdASoQAAwAA4BaJZwC7AELZYHC1/g1wAD+79+9hTM/vt4VapQm0W7JE0MduDgttSuXHJ9XEbYwXRwwAA=="
+      },
+      "allergeni": ["FISH", "SESAME", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 1900,
+      "maxPerPersona": 2,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-35",
+      "numero": "35",
+      "nome": {
+        "it": "Yakitori",
+        "en": "Yakitori"
+      },
+      "descrizione": {
+        "it": "Spiedini di pollo con salsa teriyaki e semi di sesamo",
+        "en": "Chicken skewers with teriyaki sauce and sesame seeds"
+      },
+      "categoria": "secondi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-038",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQAgCdASoQAAwAA4BaJQBOgB4kSKqxTPjAAP7t62f062IOnF37lDip5FWX1R/S7JewB2sSW/s7Q1sDkWk8QXhIsGox46yr/BJoAA=="
+      },
+      "allergeni": ["SESAME", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 800,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-34",
+      "numero": "34",
+      "nome": {
+        "it": "Spiedini di gamberi",
+        "en": "Prawn skewers"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "secondi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-039",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoQAAwAA4BaJQBOgCPsAG+3aAAA/vH6cO4FIVLsDTtwENaQ4thLfJ6buR45l3Eo57IXs1gjn932qqQhCaGWudK20AA="
+      },
+      "allergeni": ["CRUSTACEANS", "CELERY", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 800,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-36",
+      "numero": "36",
+      "nome": {
+        "it": "Gamberoni alla piastra",
+        "en": "Grilled king prawns"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "secondi",
+      "pezzi": 2,
+      "immagine": {
+        "file": "foto-040",
+        "larghezza": 480,
+        "altezza": 603,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoNABAAA4BaJbACdAEDH/DPb5NXAADLFDtA9eAz7JEnnH8WH26kfik8rmAzWyCUU3l+jOuH7XavL31phWHqTD5xEX2ZXWwJ+b2AAA=="
+      },
+      "allergeni": ["CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": 2,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-37",
+      "numero": "37",
+      "nome": {
+        "it": "Orata alla piastra",
+        "en": "Grilled sea bream"
+      },
+      "descrizione": {
+        "it": "Fettine di orata alla piastra con salsa teriyaki e semi di sesamo",
+        "en": "Grilled sea bream slices with teriyaki sauce and sesame seeds"
+      },
+      "categoria": "secondi",
+      "pezzi": 3,
+      "immagine": {
+        "file": "foto-040",
+        "larghezza": 480,
+        "altezza": 603,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoNABAAA4BaJbACdAEDH/DPb5NXAADLFDtA9eAz7JEnnH8WH26kfik8rmAzWyCUU3l+jOuH7XavL31phWHqTD5xEX2ZXWwJ+b2AAA=="
+      },
+      "allergeni": ["FISH", "SESAME", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": 2,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-38",
+      "numero": "38",
+      "nome": {
+        "it": "Salmone alla piastra",
+        "en": "Grilled salmon"
+      },
+      "descrizione": {
+        "it": "Fettine di salmone alla piastra con salsa teriyaki e semi di sesamo",
+        "en": "Grilled salmon slices with teriyaki sauce and sesame seeds"
+      },
+      "categoria": "secondi",
+      "pezzi": 3,
+      "immagine": {
+        "file": "foto-040",
+        "larghezza": 480,
+        "altezza": 603,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoNABAAA4BaJbACdAEDH/DPb5NXAADLFDtA9eAz7JEnnH8WH26kfik8rmAzWyCUU3l+jOuH7XavL31phWHqTD5xEX2ZXWwJ+b2AAA=="
+      },
+      "allergeni": ["FISH", "SESAME", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": 2,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "piatto-39",
+      "numero": "39",
+      "nome": {
+        "it": "Maki tonno",
+        "en": "Tuna maki"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "maki",
+      "pezzi": 6,
+      "immagine": {
+        "file": "foto-041",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAAwAA4BaJZQCdAELVZu1QTEAAP7x/Te2ymgT/ouaS+VtJ4ochHd4vq7xGNQAAAA="
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-40",
+      "numero": "40",
+      "nome": {
+        "it": "Maki salmone",
+        "en": "Salmon maki"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "maki",
+      "pezzi": 6,
+      "immagine": {
+        "file": "foto-041",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAAwAA4BaJZQCdAELVZu1QTEAAP7x/Te2ymgT/ouaS+VtJ4ochHd4vq7xGNQAAAA="
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 450,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-41",
+      "numero": "41",
+      "nome": {
+        "it": "Maki avocado",
+        "en": "Avocado maki"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "maki",
+      "pezzi": 6,
+      "immagine": {
+        "file": "foto-041",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAAwAA4BaJZQCdAELVZu1QTEAAP7x/Te2ymgT/ouaS+VtJ4ochHd4vq7xGNQAAAA="
+      },
+      "allergeni": [],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-42",
+      "numero": "42",
+      "nome": {
+        "it": "Maki cetriolo",
+        "en": "Cucumber maki"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "maki",
+      "pezzi": 6,
+      "immagine": {
+        "file": "foto-041",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAAwAA4BaJZQCdAELVZu1QTEAAP7x/Te2ymgT/ouaS+VtJ4ochHd4vq7xGNQAAAA="
+      },
+      "allergeni": [],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-43",
+      "numero": "43",
+      "nome": {
+        "it": "Maki orata",
+        "en": "Sea bream maki"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "maki",
+      "pezzi": 6,
+      "immagine": {
+        "file": "foto-041",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAAwAA4BaJZQCdAELVZu1QTEAAP7x/Te2ymgT/ouaS+VtJ4ochHd4vq7xGNQAAAA="
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-44",
+      "numero": "44",
+      "nome": {
+        "it": "Maki gambero cotto",
+        "en": "Cooked prawn maki"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "maki",
+      "pezzi": 6,
+      "immagine": {
+        "file": "foto-041",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAAwAA4BaJZQCdAELVZu1QTEAAP7x/Te2ymgT/ouaS+VtJ4ochHd4vq7xGNQAAAA="
+      },
+      "allergeni": ["CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "piatto-139",
+      "numero": "139",
+      "nome": {
+        "it": "Maki wakame",
+        "en": "Wakame maki"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "maki",
+      "pezzi": 6,
+      "immagine": {
+        "file": "foto-041",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAAwAA4BaJZQCdAELVZu1QTEAAP7x/Te2ymgT/ouaS+VtJ4ochHd4vq7xGNQAAAA="
+      },
+      "allergeni": ["SOY", "SESAME"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 70
+    },
+    {
+      "codice": "piatto-45",
+      "numero": "45",
+      "nome": {
+        "it": "Futomaki",
+        "en": "Futomaki"
+      },
+      "descrizione": {
+        "it": "Maki gigante con salmone, tonno, avocado, gambero cotto, surimi, cetrioli, frittata, tobiko e fungo shiitake",
+        "en": "Giant maki with salmon, tuna, avocado, cooked prawn, surimi, cucumber, omelette, tobiko and shiitake mushroom"
+      },
+      "categoria": "maki",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-042",
+        "larghezza": 288,
+        "altezza": 363,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABQAgCdASoNABAAA4BaJbACdH8AFXx22yfHKAAA/uqW6YVYNXeT4IUt4cwKvqf0pVnysZIA5UvCORDdyt9FfE1+Yeh2KLUAizAAAA=="
+      },
+      "allergeni": ["FISH", "CRUSTACEANS", "EGGS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 80
+    },
+    {
+      "codice": "piatto-46",
+      "numero": "46",
+      "nome": {
+        "it": "Nigiri salmone",
+        "en": "Salmon nigiri"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "nigiri",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-043",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAwAA4BaJQBOj+ADAlQtuAAA/vN5GBqXsW63ZmJgJhOlPeJvLYgLe+gQukJIAAA="
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-47",
+      "numero": "47",
+      "nome": {
+        "it": "Nigiri gambero cotto",
+        "en": "Cooked prawn nigiri"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "nigiri",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-043",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAwAA4BaJQBOj+ADAlQtuAAA/vN5GBqXsW63ZmJgJhOlPeJvLYgLe+gQukJIAAA="
+      },
+      "allergeni": ["CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-48",
+      "numero": "48",
+      "nome": {
+        "it": "Nigiri tonno",
+        "en": "Tuna nigiri"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "nigiri",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-043",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAwAA4BaJQBOj+ADAlQtuAAA/vN5GBqXsW63ZmJgJhOlPeJvLYgLe+gQukJIAAA="
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 800,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-49",
+      "numero": "49",
+      "nome": {
+        "it": "Nigiri orata",
+        "en": "Sea bream nigiri"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "nigiri",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-043",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAwAA4BaJQBOj+ADAlQtuAAA/vN5GBqXsW63ZmJgJhOlPeJvLYgLe+gQukJIAAA="
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-50",
+      "numero": "50",
+      "nome": {
+        "it": "Nigiri polpo cotto",
+        "en": "Cooked octopus nigiri"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "nigiri",
+      "pezzi": 2,
+      "immagine": {
+        "file": "foto-043",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAwAA4BaJQBOj+ADAlQtuAAA/vN5GBqXsW63ZmJgJhOlPeJvLYgLe+gQukJIAAA="
+      },
+      "allergeni": ["MOLLUSCS", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": 2,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-51",
+      "numero": "51",
+      "nome": {
+        "it": "Nigiri anguilla",
+        "en": "Eel nigiri"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "nigiri",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-043",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAwAA4BaJQBOj+ADAlQtuAAA/vN5GBqXsW63ZmJgJhOlPeJvLYgLe+gQukJIAAA="
+      },
+      "allergeni": ["SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 300,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "piatto-125",
+      "numero": "125",
+      "nome": {
+        "it": "Nigiri alici",
+        "en": "Anchovy nigiri"
+      },
+      "descrizione": {
+        "it": "Nigiri di alice in tempura con salsa miso e yuzu",
+        "en": "Tempura anchovy nigiri with miso and yuzu sauce"
+      },
+      "categoria": "nigiri",
+      "pezzi": 2,
+      "immagine": {
+        "file": "foto-043",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAwAA4BaJQBOj+ADAlQtuAAA/vN5GBqXsW63ZmJgJhOlPeJvLYgLe+gQukJIAAA="
+      },
+      "allergeni": ["SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 70
+    },
+    {
+      "codice": "piatto-126",
+      "numero": "126",
+      "nome": {
+        "it": "Amaebi",
+        "en": "Amaebi"
+      },
+      "descrizione": {
+        "it": "Nigiri di gambero crudo",
+        "en": "Raw prawn nigiri"
+      },
+      "categoria": "nigiri",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-043",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAwAA4BaJQBOj+ADAlQtuAAA/vN5GBqXsW63ZmJgJhOlPeJvLYgLe+gQukJIAAA="
+      },
+      "allergeni": ["CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 300,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 80
+    },
+    {
+      "codice": "piatto-149",
+      "numero": "149",
+      "nome": {
+        "it": "Nigiri tonno scottato",
+        "en": "Seared tuna nigiri"
+      },
+      "descrizione": {
+        "it": "Tonno scottato con salsa miso e yuzu",
+        "en": "Seared tuna with miso and yuzu sauce"
+      },
+      "categoria": "nigiri",
+      "pezzi": 2,
+      "immagine": {
+        "file": "foto-044",
+        "larghezza": 480,
+        "altezza": 363,
+        "anteprima": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQAgCdASoQAAwAA4BaJQBOgCG+4QdRtaYAAP7rJ2z3UT24e3w4Q4zn/WWJWvqDfNg7v8aXXcslRu6FdBh8pqlF9ud8fqTkxL8MAAAA"
+      },
+      "allergeni": ["SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": 3,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 90
+    },
+    {
+      "codice": "piatto-148",
+      "numero": "148",
+      "nome": {
+        "it": "Nigiri orata scottata",
+        "en": "Seared sea bream nigiri"
+      },
+      "descrizione": {
+        "it": "Orata scottata con uova di lompo",
+        "en": "Seared sea bream with lumpfish roe"
+      },
+      "categoria": "nigiri",
+      "pezzi": 2,
+      "immagine": {
+        "file": "foto-044",
+        "larghezza": 480,
+        "altezza": 363,
+        "anteprima": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQAgCdASoQAAwAA4BaJQBOgCG+4QdRtaYAAP7rJ2z3UT24e3w4Q4zn/WWJWvqDfNg7v8aXXcslRu6FdBh8pqlF9ud8fqTkxL8MAAAA"
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": 3,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 100
+    },
+    {
+      "codice": "piatto-52",
+      "numero": "52",
+      "nome": {
+        "it": "Nigiri salmone scottato",
+        "en": "Seared salmon nigiri"
+      },
+      "descrizione": {
+        "it": "Nigiri di salmone scottato, salsa teriyaki, mayo lemon, lime e ikura",
+        "en": "Seared salmon nigiri, teriyaki sauce, lemon mayo, lime and ikura"
+      },
+      "categoria": "nigiri",
+      "pezzi": 2,
+      "immagine": {
+        "file": "foto-044",
+        "larghezza": 480,
+        "altezza": 363,
+        "anteprima": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQAgCdASoQAAwAA4BaJQBOgCG+4QdRtaYAAP7rJ2z3UT24e3w4Q4zn/WWJWvqDfNg7v8aXXcslRu6FdBh8pqlF9ud8fqTkxL8MAAAA"
+      },
+      "allergeni": ["EGGS", "FISH", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": 3,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 110
+    },
+    {
+      "codice": "piatto-53",
+      "numero": "53",
+      "nome": {
+        "it": "Sushi jo philadelphia",
+        "en": "Sushi jo philadelphia"
+      },
+      "descrizione": {
+        "it": "Salmone e philadelphia",
+        "en": "Salmon and cream cheese"
+      },
+      "categoria": "sushi-jo",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-045",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAABQAgCdASoQAAwAA4BaJZACdH8IIABgafZm8oAA/u1E9dbhI65ZF7UjN/2k1bm6g1Kmt5nMZYfWNvBaY9wAAA=="
+      },
+      "allergeni": ["MILK", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 900,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-54",
+      "numero": "54",
+      "nome": {
+        "it": "Sushi jo tartare di salmone",
+        "en": "Salmon tartare sushi jo"
+      },
+      "descrizione": {
+        "it": "Salmone, philadelphia, teriyaki, semi di sesamo",
+        "en": "Salmon, cream cheese, teriyaki, sesame seeds"
+      },
+      "categoria": "sushi-jo",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-046",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAwAA4BaJbACdAEO/EAbkAD+7Vq0J61dINHJ2+oKRGX7oChtcjVcefNLuvxEWNRuJnGuAQAAAA=="
+      },
+      "allergeni": ["SESAME", "SOY", "MILK", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 900,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-55",
+      "numero": "55",
+      "nome": {
+        "it": "Sushi jo tartare di tonno spicy",
+        "en": "Spicy tuna tartare sushi jo"
+      },
+      "descrizione": {
+        "it": "Tonno condito con tabasco, teriyaki, tobiko, olio di sesamo, erba cipollina, maionese, lime e mandorle",
+        "en": "Tuna dressed with tabasco, teriyaki, tobiko, sesame oil, chives, mayonnaise, lime and almonds"
+      },
+      "categoria": "sushi-jo",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-048",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAQAgCdASoQAAwAA4BaJZgCdH8AF7PWUtAAAP7tXyeCp+UhQ9ksM8u1AcoaQEZKdMmrWxUDpiX/2dxRwcAAAA=="
+      },
+      "allergeni": ["SESAME", "EGGS", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 1000,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-56",
+      "numero": "56",
+      "nome": {
+        "it": "Sushi jo tartare di orata",
+        "en": "Sea bream tartare sushi jo"
+      },
+      "descrizione": {
+        "it": "Orata, tobiko, avocado, olio evo, semi di sesamo",
+        "en": "Sea bream, tobiko, avocado, extra virgin olive oil, sesame seeds"
+      },
+      "categoria": "sushi-jo",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-047",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAwAA4BaJQBOgBjLkAXhgAD+5zwOyAeatzcz5yaW8HUMmoCkzN8LLGHtwq1sM0C3shd160AAAA=="
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 900,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-128",
+      "numero": "128",
+      "nome": {
+        "it": "Sushi jo pummarola",
+        "en": "Sushi jo pummarola"
+      },
+      "descrizione": {
+        "it": "Orata, pesto di pomodorini semidry filiera Carbone, pistacchio",
+        "en": "Sea bream, semi-dried cherry tomato pesto (Carbone supply chain), pistachio"
+      },
+      "categoria": "sushi-jo",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-049",
+        "larghezza": 439,
+        "altezza": 328,
+        "anteprima": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAQAgCdASoQAAwAA4BaJYgCdAD0raW39c6EAP7PWpnWlIN2AX9+ikVhq211pSEXLZEs/MY9ZWpeixEEqGgN3Xf+YWfppaAA"
+      },
+      "allergeni": ["NUTS", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 900,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-57",
+      "numero": "57",
+      "nome": {
+        "it": "Temaki salmone e avocado",
+        "en": "Salmon and avocado temaki"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "temaki",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-051",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAwAA4BaJYgAAqpJpAL9IAD+7eGDWD1nWj7bnWp7xWroNKOwJT+2ymtcR9zUDVtTuPmNqUT/3uQ/IQPkAA=="
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-58",
+      "numero": "58",
+      "nome": {
+        "it": "Temaki tonno e avocado",
+        "en": "Tuna and avocado temaki"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "temaki",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-050",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADQAQCdASoQAAwAA4BaJQAAVUXCwfOvAAD+7/LuTViMaD/Y8EdG5HAnSrlsOOMApsuOFBqMhjS7bnJix+Ns1XvjxT1NRoMAAAA="
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-59",
+      "numero": "59",
+      "nome": {
+        "it": "Temaki orata e avocado",
+        "en": "Sea bream and avocado temaki"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "temaki",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-052",
+        "larghezza": 480,
+        "altezza": 364,
+        "anteprima": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoQAAwAA4BaJYwAAuoaSOEAAAD+6ydcn7GsHW8O9c1DZ8mBIvuWtL8krdv5KA8mqV4EEl/B272TAAAA"
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-60",
+      "numero": "60",
+      "nome": {
+        "it": "Temaki gambero in tempura",
+        "en": "Tempura prawn temaki"
+      },
+      "descrizione": {
+        "it": "Gambero in tempura con philadelphia e teriyaki",
+        "en": "Tempura prawn with cream cheese and teriyaki"
+      },
+      "categoria": "temaki",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-053",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACwAQCdASoQAAwAA4BaJQAAQdL94HQAAP7t62f062hWBoDdEc/IqobmT5HEnlTP9DQ7ihlNGDSpMGIvgt70L0MwAAA="
+      },
+      "allergeni": ["SESAME", "SOY", "MILK", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-61",
+      "numero": "61",
+      "nome": {
+        "it": "Temaki tartare di salmone spicy e avocado",
+        "en": "Spicy salmon tartare and avocado temaki"
+      },
+      "descrizione": {
+        "it": "Salmone condito con tabasco, teriyaki, olio di sesamo, maionese, erba cipollina",
+        "en": "Salmon dressed with tabasco, teriyaki, sesame oil, mayonnaise, chives"
+      },
+      "categoria": "temaki",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-054",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAQCdASoQAAwAA4BaJYgAAuEQoHPkAAD+4ezj91jG3nNUzS4Qnm8XaWtbV95tc6v3mjryw0mwGFVFZ9IvwMB/cmd0kYAA"
+      },
+      "allergeni": ["EGGS", "FISH", "SESAME", "SOY"],
+      "vegetariano": false,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-62",
+      "numero": "62",
+      "nome": {
+        "it": "Temaki tartare di tonno spicy e avocado",
+        "en": "Spicy tuna tartare and avocado temaki"
+      },
+      "descrizione": {
+        "it": "Tonno condito con tabasco, teriyaki, tobiko, olio di sesamo, erba cipollina, maionese",
+        "en": "Tuna dressed with tabasco, teriyaki, tobiko, sesame oil, chives, mayonnaise"
+      },
+      "categoria": "temaki",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-055",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAwAA4BaJQAAVUPRmovJwAD+7eGEuqPWc2iLml6FJUoIaFVgzLS1o50aCsIj0FlwJz/CGxf2hpUL0AgAAA=="
+      },
+      "allergeni": ["EGGS", "FISH", "SESAME", "SOY"],
+      "vegetariano": false,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 650,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "piatto-63",
+      "numero": "63",
+      "nome": {
+        "it": "Onigiri salmone",
+        "en": "Salmon onigiri"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "onigiri",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-056",
+        "larghezza": 480,
+        "altezza": 602,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoNABAAA4BaJbACsADdqMv2ZsYIAAD+FXWAE22ZTcSj4kJ91/N8yKZ37ugbh1nhEPo6mrDQo9wNd8VVn4w5IYbjA5XIBet2AAA="
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-64",
+      "numero": "64",
+      "nome": {
+        "it": "Onigiri tonno",
+        "en": "Tuna onigiri"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "onigiri",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-056",
+        "larghezza": 480,
+        "altezza": 602,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoNABAAA4BaJbACsADdqMv2ZsYIAAD+FXWAE22ZTcSj4kJ91/N8yKZ37ugbh1nhEPo6mrDQo9wNd8VVn4w5IYbjA5XIBet2AAA="
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 450,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-66",
+      "numero": "66",
+      "nome": {
+        "it": "Sashimi salmone",
+        "en": "Salmon sashimi"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "sashimi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-057",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQAgCdASoQAAwAA4BaJYgCdADOgpVBZQgAAP7nV1qiHm+erTXc3P4M2KZm+fW3e9pTe6DZHKCgGd7y2Fu2TMKaVWLBsDofY3wAAA=="
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 800,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": "sashimi",
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-67",
+      "numero": "67",
+      "nome": {
+        "it": "Sashimi tonno",
+        "en": "Tuna sashimi"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "sashimi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-057",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQAgCdASoQAAwAA4BaJYgCdADOgpVBZQgAAP7nV1qiHm+erTXc3P4M2KZm+fW3e9pTe6DZHKCgGd7y2Fu2TMKaVWLBsDofY3wAAA=="
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 900,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": "sashimi",
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-68",
+      "numero": "68",
+      "nome": {
+        "it": "Sashimi orata",
+        "en": "Sea bream sashimi"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "sashimi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-057",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQAgCdASoQAAwAA4BaJYgCdADOgpVBZQgAAP7nV1qiHm+erTXc3P4M2KZm+fW3e9pTe6DZHKCgGd7y2Fu2TMKaVWLBsDofY3wAAA=="
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 800,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": "sashimi",
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-69",
+      "numero": "69",
+      "nome": {
+        "it": "Carpaccio di salmone in salsa ponzu",
+        "en": "Salmon carpaccio with ponzu sauce"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "carpacci",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-058",
+        "larghezza": 480,
+        "altezza": 600,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAABQAgCdASoNABAAA4BaJZACdAEQ5XpJ7dDppAAA/oLK6qu9u4Pkc9NC80E/+0wPu+LG6xcnkNmJqP9nBiJ2N+sZcna+UUESSXXspkt5eWAAAA=="
+      },
+      "allergeni": ["SESAME", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": "carpacci-ponzu",
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-70",
+      "numero": "70",
+      "nome": {
+        "it": "Carpaccio di tonno in salsa ponzu",
+        "en": "Tuna carpaccio with ponzu sauce"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "carpacci",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-058",
+        "larghezza": 480,
+        "altezza": 600,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAABQAgCdASoNABAAA4BaJZACdAEQ5XpJ7dDppAAA/oLK6qu9u4Pkc9NC80E/+0wPu+LG6xcnkNmJqP9nBiJ2N+sZcna+UUESSXXspkt5eWAAAA=="
+      },
+      "allergeni": ["SESAME", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": "carpacci-ponzu",
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-71",
+      "numero": "71",
+      "nome": {
+        "it": "Carpaccio di orata in salsa ponzu",
+        "en": "Sea bream carpaccio with ponzu sauce"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "carpacci",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-058",
+        "larghezza": 480,
+        "altezza": 600,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAABQAgCdASoNABAAA4BaJZACdAEQ5XpJ7dDppAAA/oLK6qu9u4Pkc9NC80E/+0wPu+LG6xcnkNmJqP9nBiJ2N+sZcna+UUESSXXspkt5eWAAAA=="
+      },
+      "allergeni": ["SESAME", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": "carpacci-ponzu",
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-72",
+      "numero": "72",
+      "nome": {
+        "it": "Carpaccio di polpo cotto in salsa ponzu",
+        "en": "Cooked octopus carpaccio with ponzu sauce"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "carpacci",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-058",
+        "larghezza": 480,
+        "altezza": 600,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAABQAgCdASoNABAAA4BaJZACdAEQ5XpJ7dDppAAA/oLK6qu9u4Pkc9NC80E/+0wPu+LG6xcnkNmJqP9nBiJ2N+sZcna+UUESSXXspkt5eWAAAA=="
+      },
+      "allergeni": ["SESAME", "SOY", "MOLLUSCS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 800,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": "carpacci-ponzu",
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-122",
+      "numero": "122",
+      "nome": {
+        "it": "Carpaccio di orata in salsa miso e yuzu",
+        "en": "Sea bream carpaccio with miso and yuzu sauce"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "carpacci",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-059",
+        "larghezza": 480,
+        "altezza": 467,
+        "anteprima": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAABQAgCdASoQABAAA4BaJaACdAEflawudgcODWAA/kz3YoVx6kFXEzh0LBYEJmwnbzqyhrJITMsHQzxTg3lVcfrCgh5OsZAYiURgMvZESbIAAA=="
+      },
+      "allergeni": ["SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-73",
+      "numero": "73",
+      "nome": {
+        "it": "California maki",
+        "en": "California maki"
+      },
+      "descrizione": {
+        "it": "Salmone e avocado",
+        "en": "Salmon and avocado"
+      },
+      "categoria": "uramaki-sake",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-061",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAAAwAgCdASoQAAwAA4BaJZQCdH8AGEv9pgPMAAD+7UlNyJ1U9ghxgmH91xJmdKHDDGQs4+4zSlgAAA=="
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-153",
+      "numero": "153",
+      "nome": {
+        "it": "California maki piccante",
+        "en": "Spicy California maki"
+      },
+      "descrizione": {
+        "it": "Salmone e avocado, salsa spicy",
+        "en": "Salmon and avocado, spicy sauce"
+      },
+      "categoria": "uramaki-sake",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-060",
+        "larghezza": 480,
+        "altezza": 362,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQAgCdASoQAAwAA4BaJbACdAEKqiujY74AAP7V619BLCA/12oXJQS5kidCF7jmjTV+2pPjNsHG+9rh36O39/llLmqpHdyK7AAAAA=="
+      },
+      "allergeni": ["EGGS", "SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-75",
+      "numero": "75",
+      "nome": {
+        "it": "California maki philadelphia",
+        "en": "California maki philadelphia"
+      },
+      "descrizione": {
+        "it": "Salmone, avocado, philadelphia",
+        "en": "Salmon, avocado, cream cheese"
+      },
+      "categoria": "uramaki-sake",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-063",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAQAgCdASoQAAwAA4BaJZQCdAEPAADIfuiAAP7nG9rSvXLjrRDvTDLhTNrsQpd4rglVSAAA"
+      },
+      "allergeni": ["MILK", "SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-76",
+      "numero": "76",
+      "nome": {
+        "it": "California hot salmon",
+        "en": "California hot salmon"
+      },
+      "descrizione": {
+        "it": "Salmone cotto, philadelphia, teriyaki",
+        "en": "Cooked salmon, cream cheese, teriyaki"
+      },
+      "categoria": "uramaki-sake",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-062",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAQAgCdASoQAAwAA4BaJZQCdH8AGEhEd1AAAP7qfGI7SzZxKmG3PxuuQHNJd1UHX7rEDRAA"
+      },
+      "allergeni": ["SOY", "MILK", "SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-77",
+      "numero": "77",
+      "nome": {
+        "it": "California spicy salmon",
+        "en": "California spicy salmon"
+      },
+      "descrizione": {
+        "it": "Tartare di salmone condita con tabasco, teriyaki, olio di sesamo, maionese, erba cipollina; granella di pistacchio e lime",
+        "en": "Salmon tartare dressed with tabasco, teriyaki, sesame oil, mayonnaise, chives; chopped pistachio and lime"
+      },
+      "categoria": "uramaki-sake",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-064",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoQAAwAA4BaJYgCdADp9HFeJwAA/uqIWWwnEY3UOn3oskga4xyj3tO/HLXWwraLR3AAAA=="
+      },
+      "allergeni": ["SESAME", "EGGS", "SOY", "NUTS", "FISH"],
+      "vegetariano": false,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-78",
+      "numero": "78",
+      "nome": {
+        "it": "Hot roll philadelphia",
+        "en": "Hot roll philadelphia"
+      },
+      "descrizione": {
+        "it": "Roll impanato con salmone, ciuffo di philadelphia e teriyaki",
+        "en": "Breaded roll with salmon, a swirl of cream cheese and teriyaki"
+      },
+      "categoria": "uramaki-sake",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-065",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAwAA4BaJYgCdAEO/HVnKYAA/u1Fl/9Cb08fEfdfC+KZm93Vv2a1qjZhEHmgAAA="
+      },
+      "allergeni": ["SOY", "MILK", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "piatto-79",
+      "numero": "79",
+      "nome": {
+        "it": "California crunchy salmon",
+        "en": "California crunchy salmon"
+      },
+      "descrizione": {
+        "it": "Salmone in tempura, mayo lemon e teriyaki",
+        "en": "Tempura salmon, lemon mayo and teriyaki"
+      },
+      "categoria": "uramaki-sake",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-067",
+        "larghezza": 438,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoNABAAA4BaJagCdH8AFlxousAAAPhdGRIAdzTg8alzkKL8WLy/QUwcnGwDrQKoAp0RvLYz6jdrjKHd9eWWWCDg2iuPDDpAAAA="
+      },
+      "allergeni": ["EGGS", "SESAME", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 70
+    },
+    {
+      "codice": "piatto-150",
+      "numero": "150",
+      "nome": {
+        "it": "California maki tartufo",
+        "en": "California maki with truffle"
+      },
+      "descrizione": {
+        "it": "Salmone, avocado; sopra tartare di salmone e tartufo",
+        "en": "Salmon, avocado; topped with salmon tartare and truffle"
+      },
+      "categoria": "uramaki-sake",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-066",
+        "larghezza": 435,
+        "altezza": 548,
+        "anteprima": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAQAgCdASoNABAAA4BaJbACdAEO5D5/VEQAAP7XCr6XQpsqgs31P65KphVB19qcyhfVIpa/w1BpAf/ieq/hsal+zVm31aAA"
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 800,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 80
+    },
+    {
+      "codice": "piatto-151",
+      "numero": "151",
+      "nome": {
+        "it": "Hot roll Kikko spicy",
+        "en": "Hot roll Kikko spicy"
+      },
+      "descrizione": {
+        "it": "Uramaki impanato e fritto con salmone, philadelphia, salsa spicy",
+        "en": "Breaded and fried uramaki with salmon, cream cheese, spicy sauce"
+      },
+      "categoria": "uramaki-sake",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-068",
+        "larghezza": 438,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoNABAAA4BaJbACdAEQ6ytKAAAA/dgdJwVdQ+L6F82xtXZpeveXbL/4o0+VTKCe7JxN2vyaAAA="
+      },
+      "allergeni": ["MILK", "EGGS", "FISH"],
+      "vegetariano": false,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 90
+    },
+    {
+      "codice": "piatto-152",
+      "numero": "152",
+      "nome": {
+        "it": "California Kikko spicy",
+        "en": "California Kikko spicy"
+      },
+      "descrizione": {
+        "it": "Uramaki impanato e fritto con salmone, tartare di salmone, salsa spicy",
+        "en": "Breaded and fried uramaki with salmon, salmon tartare, spicy sauce"
+      },
+      "categoria": "uramaki-sake",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-069",
+        "larghezza": 437,
+        "altezza": 543,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoNABAAA4BaJZACdADcSIdBwAD+61YZPzifV87fXtaxm4YQdJJ42kbda4V3G74BuKZtWjZ1oxQAAA=="
+      },
+      "allergeni": ["EGGS", "FISH"],
+      "vegetariano": false,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 100
+    },
+    {
+      "codice": "piatto-154",
+      "numero": "154",
+      "nome": {
+        "it": "Uramaki sake yuzu",
+        "en": "Uramaki sake yuzu"
+      },
+      "descrizione": {
+        "it": "Salmone cotto in salsa teriyaki, avocado, philadelphia, salsa miso e yuzu",
+        "en": "Cooked salmon in teriyaki sauce, avocado, cream cheese, miso and yuzu sauce"
+      },
+      "categoria": "uramaki-sake",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-070",
+        "larghezza": 436,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAQAgCdASoNABAAA4BaJZgCdADHoDq27vcgAP7qw3tfeFAFeN2zj6qURL1jHBrsnpKdUWsle1M0ztDjE7gAAA=="
+      },
+      "allergeni": ["MILK", "SOY", "SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 110
+    },
+    {
+      "codice": "piatto-80",
+      "numero": "80",
+      "nome": {
+        "it": "California ebi maki",
+        "en": "California ebi maki"
+      },
+      "descrizione": {
+        "it": "Gambero al vapore e avocado",
+        "en": "Steamed prawn and avocado"
+      },
+      "categoria": "uramaki-ebi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-072",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAAAQAgCdASoQAAwAA4BaJZQCdH8AGBqm9qwAAP7tSUxcPfzKsUMljJof9yjdJ2wTAQAAAA=="
+      },
+      "allergeni": ["SESAME", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-81",
+      "numero": "81",
+      "nome": {
+        "it": "California ebi philadelphia",
+        "en": "California ebi philadelphia"
+      },
+      "descrizione": {
+        "it": "Gambero in tempura, rucola, philadelphia e teriyaki",
+        "en": "Tempura prawn, rocket, cream cheese and teriyaki"
+      },
+      "categoria": "uramaki-ebi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-071",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoQAAwAA4BaJYwCdADGu4LAQAD+6pXWV6B8h1xv1v1bid9bCI8orP4FvHmw+el4gEYXCAAA"
+      },
+      "allergeni": ["SOY", "MILK", "SESAME", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-82",
+      "numero": "82",
+      "nome": {
+        "it": "California ebi wakame",
+        "en": "California ebi wakame"
+      },
+      "descrizione": {
+        "it": "Gambero al vapore, alga wakame e maionese; sopra tonno, sesamo al wasabi e teriyaki",
+        "en": "Steamed prawn, wakame seaweed and mayonnaise; topped with tuna, wasabi sesame and teriyaki"
+      },
+      "categoria": "uramaki-ebi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-073",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACwAQCdASoQAAwAA4BaJQBOgCG6gpAAAP7tXyeC10/JO39PKuHEQj2md4Z8d1E1ixQ3BObNNncrQAAA"
+      },
+      "allergeni": ["EGGS", "SOY", "FISH", "SESAME", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-83",
+      "numero": "83",
+      "nome": {
+        "it": "California ebi mango",
+        "en": "California ebi mango"
+      },
+      "descrizione": {
+        "it": "Gambero in tempura e mango; sopra salmone e salsa mango",
+        "en": "Tempura prawn and mango; topped with salmon and mango sauce"
+      },
+      "categoria": "uramaki-ebi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-074",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoQAAwAA4BaJYgCdAEO/HW0uAAA/u1K8gazqRL7c3brVjWF+YY96cyX4kM6Za50rhOQAA=="
+      },
+      "allergeni": ["FISH", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-84",
+      "numero": "84",
+      "nome": {
+        "it": "California ebi lemon",
+        "en": "California ebi lemon"
+      },
+      "descrizione": {
+        "it": "Gambero in tempura e avocado; sopra salmone e mayo lemon",
+        "en": "Tempura prawn and avocado; topped with salmon and lemon mayo"
+      },
+      "categoria": "uramaki-ebi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-075",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoQAAwAA4BaJZgCdAEN4HCUEAD+6nx5iYugVyvOO+SDN5z9uGY+0bw8md+TzYHQ+0GsgAAA"
+      },
+      "allergeni": ["EGGS", "FISH", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-85",
+      "numero": "85",
+      "nome": {
+        "it": "California ebi sweet",
+        "en": "California ebi sweet"
+      },
+      "descrizione": {
+        "it": "Gambero in tempura e avocado; sopra salmone, salsa sweet e granella di pistacchio",
+        "en": "Tempura prawn and avocado; topped with salmon, sweet sauce and chopped pistachio"
+      },
+      "categoria": "uramaki-ebi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-076",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoQAAwAA4BaJZACdAEO++We4AD+7VrVpkb/JGCcy0XGd8Ywl1i69A6DNjjv2JNggJYb3ytgAAA="
+      },
+      "allergeni": ["MILK", "EGGS", "FISH", "NUTS", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "piatto-86",
+      "numero": "86",
+      "nome": {
+        "it": "California ebiten",
+        "en": "California ebiten"
+      },
+      "descrizione": {
+        "it": "Gamberone argentino in tempura, teriyaki e tobiko",
+        "en": "Argentinian king prawn in tempura, teriyaki and tobiko"
+      },
+      "categoria": "uramaki-ebi",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-077",
+        "larghezza": 480,
+        "altezza": 354,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAwAA4BaJZACdAD0hKiblAAA/uqW/OG3e8I50aAbvlJfuIAhfXCZ72+vI79iTZZpfHN/ZHoAAA=="
+      },
+      "allergeni": ["SOY", "FISH", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 70
+    },
+    {
+      "codice": "piatto-87",
+      "numero": "87",
+      "nome": {
+        "it": "California maguro",
+        "en": "California maguro"
+      },
+      "descrizione": {
+        "it": "Tonno e avocado",
+        "en": "Tuna and avocado"
+      },
+      "categoria": "uramaki-maguro",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-078",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAAwAA4BaJZQCdH8AGAG+4LqgAP7qfjDgPtXd8rN09WidZ4rvS/LTZlgKP9SAAAA="
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-157",
+      "numero": "157",
+      "nome": {
+        "it": "California maguro piccante",
+        "en": "Spicy California maguro"
+      },
+      "descrizione": {
+        "it": "Tonno, avocado, salsa spicy",
+        "en": "Tuna, avocado, spicy sauce"
+      },
+      "categoria": "uramaki-maguro",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-079",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAwAA4BaJagCdAC9uUYMgAAA/tWXrEYBi8unBRuNCGAmMyq5xwExSQTGOdnR1qbxa2TAVzpBTB/05oAAAA=="
+      },
+      "allergeni": ["EGGS", "SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-89",
+      "numero": "89",
+      "nome": {
+        "it": "California tuna",
+        "en": "California tuna"
+      },
+      "descrizione": {
+        "it": "Tonno cotto, philadelphia, teriyaki",
+        "en": "Cooked tuna, cream cheese, teriyaki"
+      },
+      "categoria": "uramaki-maguro",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-081",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAAwAA4BaJZQCdH8AGAErIe6AAP7tSUxdK5ZebOfgB6eM2LuZie2N0OR9hWRgAAA="
+      },
+      "allergeni": ["MILK", "SESAME", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-90",
+      "numero": "90",
+      "nome": {
+        "it": "California patatine",
+        "en": "California with crispy potatoes"
+      },
+      "descrizione": {
+        "it": "Tonno e salmone cotto in salsa teriyaki, mayo lemon e patatine",
+        "en": "Tuna and cooked salmon in teriyaki sauce, lemon mayo and crispy potatoes"
+      },
+      "categoria": "uramaki-maguro",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-080",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoQAAwAA4BaJYgCdADGU/zJIAD+7WEEtOxL7DSSwPb2q1WFBjsY0pV6WfsX8tvXVXXdLAAA"
+      },
+      "allergeni": ["EGGS", "SESAME", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-91",
+      "numero": "91",
+      "nome": {
+        "it": "California spicy tuna",
+        "en": "California spicy tuna"
+      },
+      "descrizione": {
+        "it": "Tartare di tonno condita con tabasco, teriyaki, tobiko, olio di sesamo ed erba cipollina, maionese; filetti di mandorle e lime",
+        "en": "Tuna tartare dressed with tabasco, teriyaki, tobiko, sesame oil and chives, mayonnaise; flaked almonds and lime"
+      },
+      "categoria": "uramaki-maguro",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-082",
+        "larghezza": 467,
+        "altezza": 348,
+        "anteprima": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoQAAwAA4BaJYgCdAD0f/Z2AAD+6pMGb/iL16RSajUDrPKV33RIHLGE+qJmPH+OWMwZyAAA"
+      },
+      "allergeni": ["NUTS", "EGGS", "SESAME", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-92",
+      "numero": "92",
+      "nome": {
+        "it": "California roll",
+        "en": "California roll"
+      },
+      "descrizione": {
+        "it": "Surimi, avocado, maionese",
+        "en": "Surimi, avocado, mayonnaise"
+      },
+      "categoria": "uramaki-crab",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-084",
+        "larghezza": 480,
+        "altezza": 356,
+        "anteprima": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAQAgCdASoQAAwAA4BaJZQCdIExGAG+rPoAAP7nIYbnbF4DXS1aK2cvgGvDzuh4bk46oAAA"
+      },
+      "allergeni": ["EGGS", "SESAME", "SOY", "FISH", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-93",
+      "numero": "93",
+      "nome": {
+        "it": "California crunchy roll",
+        "en": "California crunchy roll"
+      },
+      "descrizione": {
+        "it": "Surimi con cetrioli e ricoperto da cipolla croccante, teriyaki e mayo lemon",
+        "en": "Surimi with cucumber, topped with crispy onion, teriyaki and lemon mayo"
+      },
+      "categoria": "uramaki-crab",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-083",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACwAQCdASoQAAwAA4BaJQBOgBjLKAsAAP7tYR0mFrZImBcjnG+DY9f5bdSeIWE1XL2Fsga/YAA="
+      },
+      "allergeni": ["EGGS", "SESAME", "SOY", "FISH", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 450,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-94",
+      "numero": "94",
+      "nome": {
+        "it": "California spicy roll",
+        "en": "California spicy roll"
+      },
+      "descrizione": {
+        "it": "Surimi con rucola, ricoperto da masago al wasabi e salsa spicy",
+        "en": "Surimi with rocket, covered in wasabi masago and spicy sauce"
+      },
+      "categoria": "uramaki-crab",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-086",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoQAAwAA4BaJQBOgB0+aIzlNAAA/u1hf6jtd6H7hsmBsd3YIIBO9ieAiMEnKmcBephOcqkAAAA="
+      },
+      "allergeni": ["EGGS", "SESAME", "SOY", "FISH", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-95",
+      "numero": "95",
+      "nome": {
+        "it": "California Kikko",
+        "en": "California Kikko"
+      },
+      "descrizione": {
+        "it": "Uramaki impanato e fritto con surimi, salmone, tobiko, erba cipollina, philadelphia e teriyaki",
+        "en": "Breaded and fried uramaki with surimi, salmon, tobiko, chives, cream cheese and teriyaki"
+      },
+      "categoria": "uramaki-crab",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-085",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAwAA4BaJQBOgCG/xIYmDkAA/u1a1aVvH9qGiqVpkgvpdwEZ9REb5NtVpo9wRUDsvcAMBUAAAA=="
+      },
+      "allergeni": ["MILK", "SOY", "FISH", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-96",
+      "numero": "96",
+      "nome": {
+        "it": "California veggies",
+        "en": "California veggies"
+      },
+      "descrizione": {
+        "it": "Uramaki con verdure di stagione in tempura e teriyaki",
+        "en": "Uramaki with seasonal vegetables in tempura and teriyaki"
+      },
+      "categoria": "uramaki-veg",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-088",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADQAQCdASoQAAwAA4BaJQBOgCHgArq+/AD+6nxgpHClivKKyMsdGTxmwMrtKosTGU5AAA=="
+      },
+      "allergeni": ["SESAME", "SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-97",
+      "numero": "97",
+      "nome": {
+        "it": "California vegan",
+        "en": "California vegan"
+      },
+      "descrizione": {
+        "it": "Avocado, mango e cetrioli",
+        "en": "Avocado, mango and cucumber"
+      },
+      "categoria": "uramaki-veg",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-087",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAQAgCdASoQAAwAA4BaJYwCdIExGBp6Z1BgAP7tRPXW4c0qES9UtRHnzFUYYpk9IVpBUQAA"
+      },
+      "allergeni": ["SESAME"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 400,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-98",
+      "numero": "98",
+      "nome": {
+        "it": "California avocado e philadelphia",
+        "en": "California avocado and philadelphia"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "uramaki-veg",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-089",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAAwAA4BaJQBOgBnkrLw9GsAA/td/IneHQQqA2+w17PYw41rU/32HpyrMu+oQD8acHVNC1Fu2oAAA"
+      },
+      "allergeni": ["MILK", "SESAME"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-99",
+      "numero": "99",
+      "nome": {
+        "it": "California shiitake",
+        "en": "California shiitake"
+      },
+      "descrizione": {
+        "it": "Carote, rucola e fungo shiitake in salsa teriyaki",
+        "en": "Carrots, rocket and shiitake mushroom in teriyaki sauce"
+      },
+      "categoria": "uramaki-veg",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-090",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQAgCdASoQAAwAA4BaJQBOgCPzoYGopooAAP7oqFEfwveCEAY2S+OQac+2kSTmj4vxFDIuwcWXo7aJJo/UQ9F8pp4WPECh4J3OAA=="
+      },
+      "allergeni": ["SESAME", "SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 450,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-140",
+      "numero": "140",
+      "nome": {
+        "it": "Uramaki pummarola veg",
+        "en": "Veggie uramaki pummarola"
+      },
+      "descrizione": {
+        "it": "Riso venere, avocado, philadelphia; sopra pesto di pomodorini semidry, crema di edamame e pasta kataifi",
+        "en": "Black rice, avocado, cream cheese; topped with semi-dried cherry tomato pesto, edamame cream and kataifi pastry"
+      },
+      "categoria": "uramaki-veg",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-091",
+        "larghezza": 466,
+        "altezza": 348,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoQAAwAA4BaJZgCdACQkVsQqADN3SNrXfKZn6hgSsTdRWhpiRwF05WJf0zGHGdQZLNlSYK71gm2bCEL95Bp78DxekcdRq8PQAA="
+      },
+      "allergeni": ["NUTS", "MILK", "SESAME", "SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-141",
+      "numero": "141",
+      "nome": {
+        "it": "Uramaki edamame",
+        "en": "Edamame uramaki"
+      },
+      "descrizione": {
+        "it": "Carote e avocado; sopra crema di edamame e mandorle",
+        "en": "Carrots and avocado; topped with edamame cream and almonds"
+      },
+      "categoria": "uramaki-veg",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-092",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAQAgCdASoQAAwAA4BaJQBOgBu03coVW5gAAPKcEbaIuJ4IPiah/DN/59XryZZZEZyA7eK1Wj6ihUY35nXPLsaE4s6QDYAA"
+      },
+      "allergeni": ["SESAME", "NUTS", "SOY"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "piatto-142",
+      "numero": "142",
+      "nome": {
+        "it": "Uramaki broccoli veg",
+        "en": "Veggie broccoli uramaki"
+      },
+      "descrizione": {
+        "it": "Melanzana in tempura, broccoli e salsa spicy",
+        "en": "Tempura aubergine, broccoli and spicy sauce"
+      },
+      "categoria": "uramaki-veg",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-093",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoQAAwAA4BaJbACdAD5jsVOyQAA/cHzifw4DCLiRMD9pHVdYlS055BnhG4wc8bYe5V9UT3Rf6eFpuV2FO4s/DKeNa+AAA=="
+      },
+      "allergeni": ["EGGS", "SESAME"],
+      "vegetariano": true,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 70
+    },
+    {
+      "codice": "piatto-143",
+      "numero": "143",
+      "nome": {
+        "it": "Uramaki friggitelli veg",
+        "en": "Veggie friggitelli uramaki"
+      },
+      "descrizione": {
+        "it": "Avocado e rucola; sopra friggitelli e nanami",
+        "en": "Avocado and rocket; topped with friggitelli peppers and nanami"
+      },
+      "categoria": "uramaki-veg",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-095",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAQCdASoQAAwAA4BaJbACdADhAZofSgAA/omwFeyAd22lhMz8HWeVZVAWmMao7pSHWxUG07j51VV2uDUTlkAYyxo4e8Exvb9ahByV8OemwAAA"
+      },
+      "allergeni": ["SESAME"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 80
+    },
+    {
+      "codice": "piatto-144",
+      "numero": "144",
+      "nome": {
+        "it": "Uramaki crispy",
+        "en": "Crispy uramaki"
+      },
+      "descrizione": {
+        "it": "Avocado e cetrioli, teriyaki, mayo lemon e cipolla crispy",
+        "en": "Avocado and cucumber, teriyaki, lemon mayo and crispy onion"
+      },
+      "categoria": "uramaki-veg",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-094",
+        "larghezza": 480,
+        "altezza": 364,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAwAgCdASoQAAwAA4BaJbACdAEXb/d/gnb1AAD0bW/TAlg/cc72oQurqobFM/YBbnaPJ+bMxPsLHeT1P9EI/wAt8BoMzDHNMjAAAA=="
+      },
+      "allergeni": ["EGGS", "SOY", "SESAME"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 90
+    },
+    {
+      "codice": "piatto-145",
+      "numero": "145",
+      "nome": {
+        "it": "Uramaki basilico",
+        "en": "Basil uramaki"
+      },
+      "descrizione": {
+        "it": "Melanzana in tempura, pesto di pomodorini semidry e maionese al basilico",
+        "en": "Tempura aubergine, semi-dried cherry tomato pesto and basil mayonnaise"
+      },
+      "categoria": "uramaki-veg",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-096",
+        "larghezza": 480,
+        "altezza": 362,
+        "anteprima": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADQAQCdASoQAAwAA4BaJYwCdADivQO3gAD5baJtWzwpQThWKSKo9itP/ZAQ9Omz+6xkNIg/KcM4Smy/q2+eIYjqnN016hAAAAA="
+      },
+      "allergeni": ["NUTS", "EGGS", "SESAME"],
+      "vegetariano": true,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 100
+    },
+    {
+      "codice": "piatto-100",
+      "numero": "100",
+      "nome": {
+        "it": "California venere maki",
+        "en": "California venere maki"
+      },
+      "descrizione": {
+        "it": "Salmone e philadelphia",
+        "en": "Salmon and cream cheese"
+      },
+      "categoria": "uramaki-venere",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-098",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAQAgCdASoQAAwAA4BaJZQCdADw2z+blIIAAP7tXXyDbCuyg3vbDARFteH+e2llQrV5+D9plx7iqOMT1O4JTAAA"
+      },
+      "allergeni": ["FISH", "MILK", "SESAME"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-101",
+      "numero": "101",
+      "nome": {
+        "it": "California venere mango",
+        "en": "California venere mango"
+      },
+      "descrizione": {
+        "it": "Surimi e cetrioli; sopra tartare di tonno con mango, olio d'oliva, sale, pepe, succo di limone, sesamo e mandorle",
+        "en": "Surimi and cucumber; topped with tuna tartare with mango, olive oil, salt, pepper, lemon juice, sesame and almonds"
+      },
+      "categoria": "uramaki-venere",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-097",
+        "larghezza": 480,
+        "altezza": 368,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoQAAwAA4BaJQBOgBjSnDG8uAAA/uqW/OGvdCD3WNtgsrXZaqMzENCRhKET54QxwsOxDEusRO/SNIbDIJ6QXwJWlAAAAA=="
+      },
+      "allergeni": ["SOY", "NUTS", "SESAME", "CRUSTACEANS", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-155",
+      "numero": "155",
+      "nome": {
+        "it": "Uramaki ebi venere",
+        "en": "Ebi venere uramaki"
+      },
+      "descrizione": {
+        "it": "Gambero in tempura, crema di edamame, cipolla crispy",
+        "en": "Tempura prawn, edamame cream, crispy onion"
+      },
+      "categoria": "uramaki-venere",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-099",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAAwAA4BaJZgCdAEfkIw9he4AAP7gmDjKt+lVwG5apR2sunCAq6SDqJxqUi8ck4eW2IAXP5R8PrKa1a4k410RH6CHqABAAAA="
+      },
+      "allergeni": ["SOY", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-156",
+      "numero": "156",
+      "nome": {
+        "it": "Uramaki kataifi venere",
+        "en": "Kataifi venere uramaki"
+      },
+      "descrizione": {
+        "it": "Salmone cotto in salsa teriyaki, avocado, tartare di salmone, pasta kataifi, salsa spicy",
+        "en": "Cooked salmon in teriyaki sauce, avocado, salmon tartare, kataifi pastry, spicy sauce"
+      },
+      "categoria": "uramaki-venere",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-100",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQAgCdASoQAAwAA4BaJbACdAEOv7E3zhsAAP7hzyaykb1KITOwr/RqFLfEnzoZ+ULSZMMn7T+ylcpP0YRKbSikJFOKYBjxO1yaUw70xXnODwAA"
+      },
+      "allergeni": ["EGGS", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-106",
+      "numero": "106",
+      "nome": {
+        "it": "Nigiri maki venere",
+        "en": "Nigiri maki venere"
+      },
+      "descrizione": {
+        "it": "Gambero in tempura, philadelphia e avocado; ricoperto da avocado e teriyaki",
+        "en": "Tempura prawn, cream cheese and avocado; covered with avocado and teriyaki"
+      },
+      "categoria": "nigiri-maki-roll",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-101",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAwAA4BaJZQCdIExERIuTAAA/u1hBN88SwHy2R4gTbDgtt3SmSwdxMHR+s/fM3IYO8eAtAAAAA=="
+      },
+      "allergeni": ["SESAME", "SOY", "MILK", "CRUSTACEANS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-107",
+      "numero": "107",
+      "nome": {
+        "it": "Nigiri maki rainbow roll",
+        "en": "Nigiri maki rainbow roll"
+      },
+      "descrizione": {
+        "it": "Salmone e avocado; ricoperto da fette di salmone, tonno, orata",
+        "en": "Salmon and avocado; covered with slices of salmon, tuna and sea bream"
+      },
+      "categoria": "nigiri-maki-roll",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-102",
+        "larghezza": 435,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAAAQAgCdASoNABAAA4BaJbACdH8AE7u/siMAAP68YH5hy3WFnrx985dKz0r9c0gpRZI2UzW5+tw/Tpi50vkxmO2VZB2xKRddDnCL09IvqO/1tpwPz9ouOn66uwvvRgqAgAA="
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-137",
+      "numero": "137",
+      "nome": {
+        "it": "Uramaki maguro yuzu",
+        "en": "Uramaki maguro yuzu"
+      },
+      "descrizione": {
+        "it": "Salmone e avocado; sopra tonno scottato e salsa miso e yuzu",
+        "en": "Salmon and avocado; topped with seared tuna and miso and yuzu sauce"
+      },
+      "categoria": "nigiri-maki-roll",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-103",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAQCdASoQAAwAA4BaJbACdABwaFwAAP7Q29L4Mu2Pb5CfrZRu5ElCJZ4EwZDqA+qVc5aZdxMBKqxwNjP58jw7vo1Me2ZbjSDl4AAA"
+      },
+      "allergeni": ["SESAME", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-102",
+      "numero": "102",
+      "nome": {
+        "it": "Nigiri maki salmon",
+        "en": "Nigiri maki salmon"
+      },
+      "descrizione": {
+        "it": "Salmone e avocado; sopra fette di salmone",
+        "en": "Salmon and avocado; topped with salmon slices"
+      },
+      "categoria": "nigiri-maki-roll",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-104",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAwAA4BaJQBOgCG8BkgXgAD+6n4w4EUHcvL3R6l05V3cedQXceG+cBngcGmpOaLVgoW9pQAAAA=="
+      },
+      "allergeni": ["FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-103",
+      "numero": "103",
+      "nome": {
+        "it": "Nigiri maki salmon philadelphia",
+        "en": "Nigiri maki salmon philadelphia"
+      },
+      "descrizione": {
+        "it": "Salmone e avocado; sopra fette di salmone, ciuffo di philadelphia, teriyaki e granella di pistacchio",
+        "en": "Salmon and avocado; topped with salmon slices, a swirl of cream cheese, teriyaki and chopped pistachio"
+      },
+      "categoria": "nigiri-maki-roll",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-105",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoQAAwAA4BaJZgCdAEO+TP+cAAA/uc5j7qe+RasKiwpwkc8ZQY2Ffux8sWDYK6ziyAwAA=="
+      },
+      "allergeni": ["MILK", "NUTS", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 650,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-104",
+      "numero": "104",
+      "nome": {
+        "it": "Nigiri maki scottato",
+        "en": "Seared nigiri maki"
+      },
+      "descrizione": {
+        "it": "Gambero in tempura, philadelphia, avocado; avvolto da salmone scottato, teriyaki e granella di pistacchio",
+        "en": "Tempura prawn, cream cheese, avocado; wrapped in seared salmon, teriyaki and chopped pistachio"
+      },
+      "categoria": "nigiri-maki-roll",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-107",
+        "larghezza": 480,
+        "altezza": 358,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAwAA4BaJQBOgBjcnqbYAAD+7WANp/R6EGZZLZaYZrWX4kMWNHz/IjD7hyfUk1Rb6GRHVwAAAA=="
+      },
+      "allergeni": ["CRUSTACEANS", "SESAME", "MILK", "NUTS", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "piatto-105",
+      "numero": "105",
+      "nome": {
+        "it": "Nigiri maki maguro scottato",
+        "en": "Seared maguro nigiri maki"
+      },
+      "descrizione": {
+        "it": "Tonno in tempura, philadelphia, avocado; avvolto da tonno scottato, teriyaki, lime e mandorle",
+        "en": "Tempura tuna, cream cheese, avocado; wrapped in seared tuna, teriyaki, lime and almonds"
+      },
+      "categoria": "nigiri-maki-roll",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-106",
+        "larghezza": 480,
+        "altezza": 362,
+        "anteprima": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAQAgCdASoQAAwAA4BaJYwCdAEPAO582ngAAP7qj/qN/zGaI8VKGfwURvcK6gFIMhC8aAQA"
+      },
+      "allergeni": ["SESAME", "MILK", "NUTS", "SOY", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 750,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 70
+    },
+    {
+      "codice": "piatto-129",
+      "numero": "129",
+      "nome": {
+        "it": "Uramaki alice",
+        "en": "Anchovy uramaki"
+      },
+      "descrizione": {
+        "it": "Alice in olio d'oliva, rucola, avocado; sopra orata, maionese al basilico e uova di lompo",
+        "en": "Anchovy in olive oil, rocket, avocado; topped with sea bream, basil mayonnaise and lumpfish roe"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-108",
+        "larghezza": 480,
+        "altezza": 365,
+        "anteprima": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAwAgCdASoQAAwAA4BaJZQAAqsndH1YPgG6AAD+6jg70MeHxPi2O6m29KyRyydCPyMIcUbN2SNWxVkBdRoFmM4bMW+FHDQLom44kbYqbKk2YdDQ+AA="
+      },
+      "allergeni": ["EGGS", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": 2,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-130",
+      "numero": "130",
+      "nome": {
+        "it": "Uramaki tonno e broccoli",
+        "en": "Tuna and broccoli uramaki"
+      },
+      "descrizione": {
+        "it": "Tonno; sopra broccoli filiera Carbone e nanami",
+        "en": "Tuna; topped with broccoli (Carbone supply chain) and nanami"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-109",
+        "larghezza": 480,
+        "altezza": 359,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoQAAwAA4BaJbACdADCgpjaGAAA+EVxnE/pDlj4AnErsMKODJE3vH2rdJGqsqeuM7dAeTPj5zsaU23ZyDRMy5iNNnizWjaAAAA="
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 650,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "piatto-131",
+      "numero": "131",
+      "nome": {
+        "it": "Uramaki friggitelli",
+        "en": "Friggitelli uramaki"
+      },
+      "descrizione": {
+        "it": "Tartare di gambero cotto, avocado, maionese; sopra friggitello arrostito e nanami",
+        "en": "Cooked prawn tartare, avocado, mayonnaise; topped with roasted friggitello pepper and nanami"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-111",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoQAAwAA4BaJaACdAEG4uSYpcAA/nXLbFlnUHaB22yhKN4mk98iAAvew7Pcz9dAHqB+ZGRbV6nyOzIy1KvBSac5S666ZgAA"
+      },
+      "allergeni": ["EGGS", "CRUSTACEANS", "SESAME"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 650,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "piatto-132",
+      "numero": "132",
+      "nome": {
+        "it": "Uramaki genovese",
+        "en": "Genovese uramaki"
+      },
+      "descrizione": {
+        "it": "Genovese di tonno e salmone; sopra avocado e sesamo",
+        "en": "Tuna and salmon genovese; topped with avocado and sesame"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-110",
+        "larghezza": 480,
+        "altezza": 362,
+        "anteprima": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADwAQCdASoQAAwAA4BaJagCdAC9IEjtbyAA/qoBQycG9qSF6dr/6vYYvivsIjRwzha5duz+pG/630dnuYmyLd7MOeLBf3vEzpimDbgxVxT77RfW8d4+KQcAAAA="
+      },
+      "allergeni": ["CELERY", "SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 650,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "piatto-133",
+      "numero": "133",
+      "nome": {
+        "it": "Uramaki tartufo",
+        "en": "Truffle uramaki"
+      },
+      "descrizione": {
+        "it": "Tartare di gambero cotto, avocado, maionese; sopra crema di edamame, fettina di tartufo nero",
+        "en": "Cooked prawn tartare, avocado, mayonnaise; topped with edamame cream and a slice of black truffle"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-112",
+        "larghezza": 480,
+        "altezza": 362,
+        "anteprima": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAwAgCdASoQAAwAA4BaJbACdAD6ELZwQSToAAD+0k6qnnj12BMd3+CYG1YVqnsU9aSVd4aZVnMroY0ipfZqArF2VpFH77D8axnbSWRO3Yk6pZIcuuxAAA=="
+      },
+      "allergeni": ["CRUSTACEANS", "SOY", "EGGS", "SESAME"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 750,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "piatto-134",
+      "numero": "134",
+      "nome": {
+        "it": "Uramaki pummarola",
+        "en": "Uramaki pummarola"
+      },
+      "descrizione": {
+        "it": "Riso venere, tonno, avocado, pesto di pomodorini semidry filiera Carbone, rucola croccante",
+        "en": "Black rice, tuna, avocado, semi-dried cherry tomato pesto (Carbone supply chain), crispy rocket"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-114",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAwAgCdASoQAAwAA4BaJbACdAED/yqyNiLBgAD+6jCMYp0i20MZgJCtfpIAqxZTJF/3/F7btopHHACuGEbysV4xaesYM1kTA5gAAA=="
+      },
+      "allergeni": ["SESAME", "NUTS", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "piatto-136",
+      "numero": "136",
+      "nome": {
+        "it": "Uramaki mulignane",
+        "en": "Mulignane uramaki"
+      },
+      "descrizione": {
+        "it": "Tonno, melanzana fritta, crema di melanzane e mandorle",
+        "en": "Tuna, fried aubergine, aubergine cream and almonds"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-113",
+        "larghezza": 480,
+        "altezza": 362,
+        "anteprima": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoQAAwAA4BaJYgCdAEUTUY5XoiOAAD+waP2AhFNd1wZHJrbWXdRJqrTlVS40W/7873Wbr+95tiayeUgYaXg+aE8MKKIWI8AAAA="
+      },
+      "allergeni": ["SESAME", "SOY", "NUTS", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 70
+    },
+    {
+      "codice": "piatto-138",
+      "numero": "138",
+      "nome": {
+        "it": "Uramaki amalfitano",
+        "en": "Amalfi uramaki"
+      },
+      "descrizione": {
+        "it": "Alice in tempura, avocado, limone IGP amalfitano",
+        "en": "Tempura anchovy, avocado, Amalfi PGI lemon"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-115",
+        "larghezza": 480,
+        "altezza": 363,
+        "anteprima": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAAwAA4BaJbACdAC6FbVshAAA/Zv2rjn5J/DL4GgkKrKWbegT7mjaLrbYrRx/5vnMigZRdneAAAAA"
+      },
+      "allergeni": ["SESAME", "FISH"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 80
+    },
+    {
+      "codice": "piatto-162",
+      "numero": "162",
+      "nome": {
+        "it": "Uramaki chicken roll",
+        "en": "Chicken roll uramaki"
+      },
+      "descrizione": {
+        "it": "Pollo fritto, insalata, maionese, teriyaki",
+        "en": "Fried chicken, lettuce, mayonnaise, teriyaki"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-116",
+        "larghezza": 480,
+        "altezza": 362,
+        "anteprima": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAQCdASoQAAwAA4BaJYgCdADIb9SWoAD+rZck1LfjpCAgTBFkK5zcRrOlahxodL6+tczBbnkrN7cMpPPK7dK1AStkN6vq4+GYgwAA"
+      },
+      "allergeni": ["SOY", "EGGS", "SESAME"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 500,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 90
+    },
+    {
+      "codice": "piatto-147",
+      "numero": "147",
+      "nome": {
+        "it": "Uramaki spicy chicken",
+        "en": "Spicy chicken uramaki"
+      },
+      "descrizione": {
+        "it": "Pollo fritto, alga wakame, salsa spicy e cipolla crispy",
+        "en": "Fried chicken, wakame seaweed, spicy sauce and crispy onion"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-118",
+        "larghezza": 480,
+        "altezza": 357,
+        "anteprima": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQAgCdASoQAAwAA4BaJbACdAEK7BiovgKAAM2db2W/L/lkEr3V7NvOIXrtpD/cU9kjDgym9D6bBTqVMhekfINJOmRv7AYUhPhGqtv+K8XdtZwVqojBjtWlAAA="
+      },
+      "allergeni": ["FISH", "SOY", "EGGS", "SESAME"],
+      "vegetariano": false,
+      "piccante": true,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 100
+    },
+    {
+      "codice": "piatto-158",
+      "numero": "158",
+      "nome": {
+        "it": "Uramaki tai alice",
+        "en": "Tai alice uramaki"
+      },
+      "descrizione": {
+        "it": "Orata, avocado; sopra crema di edamame, alice in olio d'oliva",
+        "en": "Sea bream, avocado; topped with edamame cream and anchovy in olive oil"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-117",
+        "larghezza": 480,
+        "altezza": 362,
+        "anteprima": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoQAAwAA4BaJYwAAt1i5sw4AAD+yUChQuUa7VxIAeI0kIG3oy3cxhgCzsZhhik/ArKmZaeiL4LgcxRRwAA="
+      },
+      "allergeni": ["FISH", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": true,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 110
+    },
+    {
+      "codice": "piatto-159",
+      "numero": "159",
+      "nome": {
+        "it": "Uramaki tropical",
+        "en": "Tropical uramaki"
+      },
+      "descrizione": {
+        "it": "Salmone, avocado; sopra gambero al vapore, philadelphia, salsa mango",
+        "en": "Salmon, avocado; topped with steamed prawn, cream cheese, mango sauce"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-120",
+        "larghezza": 480,
+        "altezza": 363,
+        "anteprima": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAwAgCdASoQAAwAA4BaJagCdAEVuL6PXLCagAD+s64wBCXTjP1aOJ72gD5bFY2P3JSvMHpFB3eKcjAc1yAAAA=="
+      },
+      "allergeni": ["MILK", "CRUSTACEANS", "FISH", "SESAME"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 700,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 120
+    },
+    {
+      "codice": "piatto-160",
+      "numero": "160",
+      "nome": {
+        "it": "Uramaki crunchy edamame",
+        "en": "Crunchy edamame uramaki"
+      },
+      "descrizione": {
+        "it": "Salmone fritto in tempura; sopra crema di edamame",
+        "en": "Tempura fried salmon; topped with edamame cream"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-119",
+        "larghezza": 480,
+        "altezza": 361,
+        "anteprima": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoQAAwAA4BaJYgCdAEJcKxIAAD+3xG0CZKyn6+ZDY2ZiDuE7mcwovdstX5sKcI+MTt7vryO1Q4F1DgA"
+      },
+      "allergeni": ["FISH", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 550,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 130
+    },
+    {
+      "codice": "piatto-161",
+      "numero": "161",
+      "nome": {
+        "it": "Uramaki mulignane yuzu",
+        "en": "Mulignane yuzu uramaki"
+      },
+      "descrizione": {
+        "it": "Salmone cotto in salsa teriyaki, avocado; sopra crema di melanzane, salsa miso e yuzu",
+        "en": "Cooked salmon in teriyaki sauce, avocado; topped with aubergine cream, miso and yuzu sauce"
+      },
+      "categoria": "uramaki-special",
+      "pezzi": 4,
+      "immagine": {
+        "file": "foto-121",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAAwAA4BaJYgCdACwGaTEgAAA/usTBKK/e9tL8vWYD+/jKveyXOwU7JS75pfZcmSA/N1ulZtKbXAA"
+      },
+      "allergeni": ["FISH", "SOY"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 600,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 140
+    },
+    {
+      "codice": "piatto-108",
+      "numero": "108",
+      "nome": {
+        "it": "Calzoncello con crema alla nocciola",
+        "en": "Calzoncello with hazelnut cream"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "dolci-frutta",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-123",
+        "larghezza": 480,
+        "altezza": 360,
+        "anteprima": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAwAgCdASoQAAwAA4BaJQBOgCP/xOGZPne4AAD+7WvZWa6hmsUk2j0oXhzLjcQlPyCvrKXXlMbyDFEAzQJ4g7/joAA="
+      },
+      "allergeni": ["SOY", "MILK", "EGGS"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 100,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "piatto-109",
+      "numero": "109",
+      "nome": {
+        "it": "Ciotola di frutta",
+        "en": "Fruit bowl"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "dolci-frutta",
+      "pezzi": 1,
+      "immagine": {
+        "file": "foto-122",
+        "larghezza": 435,
+        "altezza": 546,
+        "anteprima": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoNABAAA4BaJbACdADc+VHZ2AAA/sABqcr7qzbCepu0o2Xo2rlaEH3sNwzjE5R7X8ahbA8jMWke0mdTx8DA1XpMGbAAAA=="
+      },
+      "allergeni": [],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": true,
+      "prezzoExtraCent": null,
+      "prezzoCartaCent": 300,
+      "maxPerPersona": 1,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "bevanda-acqua-naturale",
+      "numero": null,
+      "nome": {
+        "it": "Acqua naturale 0,75 l",
+        "en": "Still water 0.75 l"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": [],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 250,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 10
+    },
+    {
+      "codice": "bevanda-acqua-frizzante",
+      "numero": null,
+      "nome": {
+        "it": "Acqua frizzante 0,75 l",
+        "en": "Sparkling water 0.75 l"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": [],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 250,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 20
+    },
+    {
+      "codice": "bevanda-cola",
+      "numero": null,
+      "nome": {
+        "it": "Cola 33 cl",
+        "en": "Cola 33 cl"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": [],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 350,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 30
+    },
+    {
+      "codice": "bevanda-cola-zero",
+      "numero": null,
+      "nome": {
+        "it": "Cola zero 33 cl",
+        "en": "Cola zero 33 cl"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": [],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 350,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 40
+    },
+    {
+      "codice": "bevanda-aranciata",
+      "numero": null,
+      "nome": {
+        "it": "Aranciata 33 cl",
+        "en": "Orange soda 33 cl"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": [],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 350,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 50
+    },
+    {
+      "codice": "bevanda-te-freddo-pesca",
+      "numero": null,
+      "nome": {
+        "it": "Tè freddo alla pesca 33 cl",
+        "en": "Peach iced tea 33 cl"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": [],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 350,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 60
+    },
+    {
+      "codice": "bevanda-birra-giapponese",
+      "numero": null,
+      "nome": {
+        "it": "Birra giapponese 33 cl",
+        "en": "Japanese beer 33 cl"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": ["GLUTEN"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 500,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 70
+    },
+    {
+      "codice": "bevanda-birra-cinese",
+      "numero": null,
+      "nome": {
+        "it": "Birra cinese 64 cl",
+        "en": "Chinese beer 64 cl"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": ["GLUTEN"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 600,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 80
+    },
+    {
+      "codice": "bevanda-sake-caldo",
+      "numero": null,
+      "nome": {
+        "it": "Sakè caldo",
+        "en": "Hot sake"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": ["SULPHITES"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 600,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 90
+    },
+    {
+      "codice": "bevanda-vino-bianco-calice",
+      "numero": null,
+      "nome": {
+        "it": "Vino bianco, calice",
+        "en": "White wine, glass"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": ["SULPHITES"],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 500,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 100
+    },
+    {
+      "codice": "bevanda-te-verde",
+      "numero": null,
+      "nome": {
+        "it": "Tè verde caldo",
+        "en": "Hot green tea"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": [],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 250,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 110
+    },
+    {
+      "codice": "bevanda-caffe",
+      "numero": null,
+      "nome": {
+        "it": "Caffè espresso",
+        "en": "Espresso"
+      },
+      "descrizione": {
+        "it": "",
+        "en": ""
+      },
+      "categoria": "bevande",
+      "pezzi": null,
+      "immagine": null,
+      "allergeni": [],
+      "vegetariano": false,
+      "piccante": false,
+      "senzaGlutine": false,
+      "inFormula": false,
+      "prezzoExtraCent": 150,
+      "prezzoCartaCent": null,
+      "maxPerPersona": null,
+      "maxPerGiro": null,
+      "gruppo": null,
+      "disponibile": true,
+      "ordine": 120
+    }
+  ]
+}

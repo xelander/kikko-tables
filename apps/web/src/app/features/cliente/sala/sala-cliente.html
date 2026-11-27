@@ -1,0 +1,327 @@
+@let t = testiSala();
+@let s = store.seduta();
+<app-connessione-banner
+  [testoPerso]="lingua() === 'it' ? 'Connessione persa, riprovo…' : 'Connection lost, retrying…'"
+  [testoRipristinato]="lingua() === 'it' ? 'Ripristinato' : 'Back online'"
+/>
+
+<div class="sala">
+  <header class="testata">
+    <img class="testata__logo" src="/assets/brand/logo.svg" alt="Kikko" width="40" height="40" />
+    <div class="testata__info">
+      <strong>{{ t.tavolo }} {{ s?.tavoli?.join(' + ') }}</strong>
+      @if (store.io(); as io) {
+        <span class="testata__io">{{ io.emoji }} {{ io.soprannome }}</span>
+      }
+    </div>
+    <div class="lingue" role="group" aria-label="Lingua / Language">
+      @for (l of lingue; track l) {
+        <button type="button" class="lingua" [attr.aria-pressed]="lingua() === l" (click)="scegliLingua(l)">
+          {{ l.toUpperCase() }}
+        </button>
+      }
+    </div>
+  </header>
+
+  @if (s) {
+    <div class="stato" data-testid="stato-tavolo">
+      <span>{{ s.formula.nome[lingua()] }}</span>
+      <span>
+        @if (store.tempoRimasto() > 0) {
+          {{ t.tempoRimasto(Math.ceil(store.tempoRimasto() / 60000)) }}
+        } @else {
+          <strong class="stato__scaduto">{{ t.tempoScaduto }}</strong>
+        }
+      </span>
+      @if (store.attesaProssimoGiro() > 0) {
+        <span class="stato__timer" data-testid="timer">⏱ {{ t.prossimoGiro(conto(store.attesaProssimoGiro())) }}</span>
+      }
+    </div>
+  }
+
+  <nav class="sezioni" aria-label="Sezioni">
+    <button type="button" [class.attiva]="sezione() === 'MENU'" (click)="sezione.set('MENU')">{{ t.menu }}</button>
+    <button type="button" [class.attiva]="sezione() === 'BEVANDE'" (click)="sezione.set('BEVANDE')">
+      {{ t.bevande }}
+    </button>
+  </nav>
+
+  <div class="categorie">
+    <button type="button" class="filtro" [class.filtro--attivo]="numeroFiltri() > 0" (click)="apriFiltri()">
+      ☰ {{ numeroFiltri() > 0 ? t.filtriAttivi(numeroFiltri()) : t.filtri }}
+    </button>
+    @for (sez of sezioni(); track sez.categoria.id) {
+      <button type="button" class="chip" (click)="vaiA(sez.categoria.id)">{{ nomeCategoria(sez.categoria) }}</button>
+    }
+  </div>
+
+  <main class="menu">
+    @if (store.errore() === 'rete' && !store.menu()) {
+      <p class="avviso avviso--errore">
+        {{ t.erroreRete }} <button type="button" class="link" (click)="store.carica()">{{ t.riprova }}</button>
+      </p>
+    } @else if (!store.menu()) {
+      <div class="scheletro" aria-hidden="true">
+        @for (i of [1, 2, 3, 4, 5]; track i) {
+          <div class="scheletro__riga"></div>
+        }
+      </div>
+    }
+    @if (sezione() === 'MENU' && store.menu()) {
+      <p class="avviso">{{ t.avvisoAllergeni }}</p>
+    }
+    @for (sez of sezioni(); track sez.categoria.id) {
+      <section class="categoria" [id]="'cat-' + sez.categoria.id">
+        <h2 class="categoria__titolo">{{ nomeCategoria(sez.categoria) }}</h2>
+        <ul class="lista">
+          @for (p of sez.piatti; track p.id) {
+            <li>
+              <app-scheda-piatto
+                [piatto]="p"
+                [lingua]="lingua()"
+                [testi]="t"
+                [quantita]="store.quantitaMia(p.id)"
+                [disponibili]="store.disponibili(p.id)"
+                [altri]="altri(p.id)"
+                (cambia)="store.imposta(p.id, $event)"
+                (apri)="apriDettaglio(p)"
+              />
+            </li>
+          }
+        </ul>
+      </section>
+    } @empty {
+      @if (store.menu()) {
+        <p class="avviso">{{ t.nessunRisultato }}</p>
+      }
+    }
+  </main>
+
+  <footer class="barra">
+    @let c = store.contatoreGiro();
+    <div class="barra__contatore" data-testid="contatore-giro">
+      <span
+        >{{ t.giro }}: <strong>{{ c.nelGiro }}/{{ c.limite }}</strong></span
+      >
+      <span class="progresso" aria-hidden="true"
+        ><span class="progresso__barra" [style.width.%]="c.limite ? (100 * c.nelGiro) / c.limite : 0"></span
+      ></span>
+    </div>
+    <button type="button" class="barra__carrello" data-testid="apri-carrello" (click)="apriCarrello()">
+      {{ t.apriCarrello }}
+      @if (store.pezziNelCarrello() > 0) {
+        @for (n of [store.pezziNelCarrello()]; track n) {
+          <span class="barra__conteggio">{{ n }}</span>
+        }
+      }
+    </button>
+  </footer>
+</div>
+
+<!-- Dish detail -->
+<dialog #dialogoDettaglio class="foglio" (close)="dettaglio.set(null)" aria-labelledby="dettaglio-titolo">
+  @if (dettaglio(); as p) {
+    @if (p.immagine; as img) {
+      <img
+        class="foglio__foto"
+        [src]="img.src480"
+        [width]="img.larghezza"
+        [height]="img.altezza"
+        alt=""
+        [style.background-image]="'url(' + img.anteprima + ')'"
+      />
+    }
+    <div class="foglio__corpo">
+      <h2 id="dettaglio-titolo">
+        @if (p.numero) {
+          <span class="foglio__numero">{{ p.numero }}</span>
+        }
+        {{ p.nome[lingua()] }}
+      </h2>
+      @if (p.descrizione[lingua()]) {
+        <p>{{ p.descrizione[lingua()] }}</p>
+      }
+      <p class="foglio__badge">
+        @if (p.pezzi) {
+          <span>{{ t.pezzi(p.pezzi) }}</span>
+        }
+        @if (p.vegetariano) {
+          <span>🌿 {{ t.vegetariano }}</span>
+        }
+        @if (p.piccante) {
+          <span>🌶️ {{ t.piccante }}</span>
+        }
+        @if (p.senzaGlutine) {
+          <span>🌾 {{ t.senzaGlutine }}</span>
+        }
+        @if (p.maxPerPersona) {
+          <span>{{ t.massimoPersona(p.maxPerPersona) }}</span>
+        }
+      </p>
+      <h3>{{ t.allergeni }}</h3>
+      @if (p.allergeni.length) {
+        <ul class="allergeni" data-testid="allergeni">
+          @for (a of p.allergeni; track a) {
+            <li>{{ nomeAllergene(a, lingua()) }}</li>
+          }
+        </ul>
+      } @else {
+        <p>{{ t.nessunAllergene }}</p>
+      }
+      <p class="avviso">{{ t.avvisoAllergeni }}</p>
+      <div class="foglio__azioni">
+        @if (p.disponibile) {
+          <app-stepper
+            [valore]="store.quantitaMia(p.id)"
+            [puoAggiungere]="store.disponibili(p.id) !== 0"
+            [etichettaAggiungi]="t.aggiungi(p.nome[lingua()])"
+            [etichettaTogli]="t.togli(p.nome[lingua()])"
+            (cambia)="store.imposta(p.id, $event)"
+          />
+        }
+        <button type="button" class="secondario" (click)="chiudi(dialogoDettaglio)">{{ t.chiudi }}</button>
+      </div>
+    </div>
+  }
+</dialog>
+
+<!-- Filters -->
+<dialog #dialogoFiltri class="foglio" aria-labelledby="filtri-titolo">
+  <div class="foglio__corpo">
+    <h2 id="filtri-titolo">{{ t.filtri }}</h2>
+    <label class="interruttore">
+      <input
+        type="checkbox"
+        [checked]="filtri().soloVegetariani"
+        (change)="impostaFiltro('soloVegetariani', $any($event.target).checked)"
+      />
+      🌿 {{ t.soloVegetariani }}
+    </label>
+    <label class="interruttore">
+      <input
+        type="checkbox"
+        [checked]="filtri().soloSenzaGlutine"
+        (change)="impostaFiltro('soloSenzaGlutine', $any($event.target).checked)"
+      />
+      🌾 {{ t.soloSenzaGlutine }}
+    </label>
+    <fieldset class="allergeni-filtro">
+      <legend>{{ t.escludiAllergeni }}</legend>
+      @for (a of allergeni; track a) {
+        <label class="interruttore">
+          <input
+            type="checkbox"
+            [attr.data-testid]="'escludi-' + a"
+            [checked]="filtri().esclusi.includes(a)"
+            (change)="escludi(a, $any($event.target).checked)"
+          />
+          {{ nomeAllergene(a, lingua()) }}
+        </label>
+      }
+    </fieldset>
+    <p class="avviso">{{ t.avvisoAllergeni }}</p>
+    <div class="foglio__azioni">
+      <button type="button" class="secondario" (click)="azzeraFiltri()">{{ t.azzeraFiltri }}</button>
+      <button type="button" class="primario" (click)="chiudi(dialogoFiltri)">{{ t.chiudi }}</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Cart -->
+<dialog #dialogoCarrello class="foglio" aria-labelledby="carrello-titolo" data-testid="carrello">
+  <div class="foglio__corpo">
+    <h2 id="carrello-titolo">{{ t.carrello }}</h2>
+    @let cg = store.contatoreGiro();
+    <p class="carrello__contatore" [class.carrello__contatore--troppi]="cg.nelGiro > cg.limite">
+      {{ t.giro }}: <strong>{{ cg.nelGiro }}/{{ cg.limite }}</strong>
+    </p>
+    @if (righeCarrello().length === 0) {
+      <p>{{ t.carrelloVuoto }}</p>
+    } @else {
+      <ul class="righe">
+        @for (r of righeCarrello(); track r.piatto.id) {
+          <li class="riga">
+            <div>
+              <strong>{{ r.piatto.nome[lingua()] }}</strong>
+              <span class="riga__chi">{{ r.chi.join(' · ') }}</span>
+              @if (r.piatto.prezzoExtraCent !== null) {
+                <span class="riga__prezzo">{{ prezzo(r.piatto.prezzoExtraCent * r.totale) }}</span>
+              }
+            </div>
+            @if (r.piatto.disponibile) {
+              <app-stepper
+                [valore]="store.quantitaMia(r.piatto.id)"
+                [puoAggiungere]="store.disponibili(r.piatto.id) !== 0"
+                [etichettaAggiungi]="t.aggiungi(r.piatto.nome[lingua()])"
+                [etichettaTogli]="t.togli(r.piatto.nome[lingua()])"
+                (cambia)="store.imposta(r.piatto.id, $event)"
+              />
+            }
+          </li>
+        }
+      </ul>
+      @if (store.totaleExtraCent() > 0) {
+        <p class="carrello__extra">
+          {{ t.totaleExtra }}: <strong>{{ prezzo(store.totaleExtraCent()) }}</strong>
+        </p>
+      }
+    }
+
+    @for (m of messaggiErrore(); track m) {
+      <p class="avviso avviso--errore" role="alert">{{ m }}</p>
+    }
+    @if (store.statoInvio() === 'in-coda') {
+      <p class="avviso avviso--attesa" role="status" data-testid="giro-in-coda">{{ t.inCoda }}</p>
+    }
+    @if (store.statoInvio() === 'inviato') {
+      <p class="avviso avviso--ok" role="status" data-testid="giro-inviato">✓ {{ t.inviato }}</p>
+    }
+
+    @let attesa = store.attesaProssimoGiro();
+    <button
+      type="button"
+      class="primario invia"
+      data-testid="invia-giro"
+      [class.invia--ok]="store.statoInvio() === 'inviato'"
+      [disabled]="
+        store.pezziNelCarrello() === 0 ||
+        store.statoInvio() === 'invio' ||
+        store.statoInvio() === 'in-coda' ||
+        (attesa > 0 && !store.soloExtraNelCarrello())
+      "
+      (click)="invia()"
+    >
+      @switch (store.statoInvio()) {
+        @case ('invio') {
+          {{ t.invio }}
+        }
+        @default {
+          @if (attesa > 0 && !store.soloExtraNelCarrello()) {
+            {{ t.prossimoGiro(conto(attesa)) }}
+          } @else {
+            {{ store.soloExtraNelCarrello() ? t.inviaExtra : t.inviaGiro }}
+          }
+        }
+      }
+    </button>
+
+    @if (s && s.giri.length) {
+      <h3>{{ t.giriInviati }}</h3>
+      <ul class="giri" data-testid="giri">
+        @for (g of s.giri.slice().reverse(); track g.id) {
+          <li class="giro" [attr.data-stato]="g.stato">
+            <strong>{{ t.giroN(g.numero) }}</strong>
+            @if (g.soloExtra) {
+              <span>({{ t.soloExtra }})</span>
+            }
+            <span class="giro__stato">{{ t.statoGiro[g.stato] }}</span>
+            @if (g.motivoRifiuto) {
+              <span class="giro__motivo">{{ g.motivoRifiuto }}</span>
+            }
+          </li>
+        }
+      </ul>
+    }
+    <button type="button" class="secondario" (click)="chiudi(dialogoCarrello)">{{ t.chiudi }}</button>
+  </div>
+</dialog>

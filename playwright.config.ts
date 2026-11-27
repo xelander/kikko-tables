@@ -28,6 +28,8 @@ export default defineConfig({
   webServer: [
     {
       command: 'npm run start -w @kikko/api',
+      // Many logins and PIN attempts from one machine in a few seconds: relax the public rate limit.
+      env: { ...(process.env as Record<string, string>), THROTTLE_PUBLIC_LIMIT: '1000' },
       url: API_HEALTH_URL,
       reuseExistingServer: !isCI,
       timeout: 60_000,

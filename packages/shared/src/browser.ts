@@ -7,3 +7,4 @@ export * from './eventi.js';
 export * from './formula.js';
 export * from './health.js';
 export * from './roles.js';
+export * from './regole.js';

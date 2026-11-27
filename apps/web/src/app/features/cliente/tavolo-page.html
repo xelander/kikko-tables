@@ -1,125 +1,114 @@
 @let testi = t();
-<app-connessione-banner [testoPerso]="testi.connessionePersa" [testoRipristinato]="testi.ripristinato" />
+@if (connesso()) {
+  <app-sala-cliente />
+} @else {
+  <app-connessione-banner [testoPerso]="testi.connessionePersa" [testoRipristinato]="testi.ripristinato" />
 
-<main class="cliente">
-  <header class="cliente__testata">
-    <img class="cliente__logo" src="/assets/brand/logo.svg" alt="" width="40" height="40" />
-    <div class="lingue" role="group" [attr.aria-label]="testi.lingua">
-      @for (l of lingue; track l) {
-        <button type="button" class="lingua" [attr.aria-pressed]="i18n.lingua() === l" (click)="scegliLingua(l)">
-          {{ l.toUpperCase() }}
-        </button>
+  <main class="cliente">
+    <header class="cliente__testata">
+      <img class="cliente__logo" src="/assets/brand/logo.svg" alt="" width="40" height="40" />
+      <div class="lingue" role="group" [attr.aria-label]="testi.lingua">
+        @for (l of lingue; track l) {
+          <button type="button" class="lingua" [attr.aria-pressed]="i18n.lingua() === l" (click)="scegliLingua(l)">
+            {{ l.toUpperCase() }}
+          </button>
+        }
+      </div>
+    </header>
+
+    @switch (vista().tipo) {
+      @case ('caricamento') {
+        <p class="cliente__attesa" aria-live="polite">{{ testi.caricamento }}</p>
       }
-    </div>
-  </header>
-
-  @switch (vista().tipo) {
-    @case ('caricamento') {
-      <p class="cliente__attesa" aria-live="polite">{{ testi.caricamento }}</p>
-    }
-    @case ('inesistente') {
-      <section class="scheda">
-        <p class="scheda__emoji" aria-hidden="true">🤔</p>
-        <h1>{{ testi.tavoloInesistente }}</h1>
-      </section>
-    }
-    @case ('chiuso') {
-      <section class="scheda scheda--festa" data-testid="tavolo-chiuso">
-        <p class="scheda__emoji" aria-hidden="true">🙏</p>
-        <h1>{{ testi.chiusoTitolo }}</h1>
-        <p>{{ testi.chiusoTesto }}</p>
-      </section>
-    }
-    @case ('errore') {
-      <section class="scheda">
-        <p>{{ testi.erroreRete }}</p>
-        <button type="button" class="primario" (click)="riprova()">{{ testi.riprova }}</button>
-      </section>
-    }
-    @case ('stato') {
-      @let v = vista();
-      @if (v.tipo === 'stato') {
-        @let s = v.stato;
-        @switch (s.stato) {
-          @case ('NON_ATTIVO') {
-            <section class="scheda" data-testid="non-attivo">
-              <p class="scheda__tavolo">{{ testi.tavolo }} {{ s.tavolo.numero }}</p>
-              <p class="scheda__emoji" aria-hidden="true">🍽️</p>
-              <h1>{{ testi.nonAttivoTitolo }}</h1>
-              <p>{{ testi.nonAttivoTesto }}</p>
-              <button type="button" class="primario" (click)="riprova()">{{ testi.riprova }}</button>
-            </section>
-          }
-          @case ('PIN_RICHIESTO') {
-            <section class="scheda">
-              <p class="scheda__tavolo">{{ testi.tavolo }} {{ s.tavolo.numero }}</p>
-              <h1>{{ testi.pinTitolo }}</h1>
-              <p>{{ testi.pinTesto }}</p>
-              <form class="pin" (submit)="$event.preventDefault(); entra()">
-                <label class="pin__campo">
-                  <span class="visually-hidden">{{ testi.pinEtichetta }}</span>
-                  <input
-                    class="pin__input"
-                    name="pin"
-                    inputmode="numeric"
-                    autocomplete="one-time-code"
-                    pattern="[0-9]*"
-                    maxlength="4"
-                    data-testid="pin-input"
-                    [value]="pin()"
-                    [disabled]="secondiBlocco() > 0"
-                    (input)="scriviPin($any($event.target).value)"
-                  />
-                  <span class="pin__caselle" aria-hidden="true">
-                    @for (i of [0, 1, 2, 3]; track i) {
-                      <span class="pin__casella" [class.pin__casella--piena]="i < pin().length">{{
-                        pin()[i] ?? ''
-                      }}</span>
-                    }
-                  </span>
-                </label>
-                <label class="soprannome">
-                  {{ testi.soprannomeEtichetta }}
-                  <input
-                    name="soprannome"
-                    maxlength="20"
-                    autocomplete="given-name"
-                    [value]="soprannome()"
-                    (input)="soprannome.set($any($event.target).value)"
-                  />
-                </label>
-                <button
-                  type="submit"
-                  class="primario"
-                  [disabled]="pin().length !== 4 || invio() || secondiBlocco() > 0"
-                >
-                  {{ testi.entra }}
-                </button>
-              </form>
-              @if (secondiBlocco() > 0) {
-                <p class="avviso" role="alert" data-testid="bloccato">{{ testi.bloccato(secondiBlocco()) }}</p>
-              } @else if (errore(); as e) {
-                <p class="avviso" role="alert">{{ e }}</p>
-              }
-            </section>
-          }
-          @case ('CONNESSO') {
-            <section class="scheda scheda--festa" data-testid="connesso">
-              <p class="scheda__emoji scheda__emoji--grande" aria-hidden="true">{{ s.dispositivo.emoji }}</p>
-              <h1>{{ testi.benvenuto }} {{ s.tavolo.numero }}</h1>
-              <dl class="info">
-                <dt>{{ testi.sei }}</dt>
-                <dd>{{ s.dispositivo.emoji }} {{ s.dispositivo.soprannome }}</dd>
-                <dt>{{ testi.formula }}</dt>
-                <dd>{{ i18n.scegli(s.formula.nome) }}</dd>
-                <dt>{{ testi.tempo }}</dt>
-                <dd>{{ testi.minuti(minutiRimasti()) }}</dd>
-              </dl>
-              <p class="nota">{{ testi.menuInArrivo }}</p>
-            </section>
+      @case ('inesistente') {
+        <section class="scheda">
+          <p class="scheda__emoji" aria-hidden="true">🤔</p>
+          <h1>{{ testi.tavoloInesistente }}</h1>
+        </section>
+      }
+      @case ('chiuso') {
+        <section class="scheda scheda--festa" data-testid="tavolo-chiuso">
+          <p class="scheda__emoji" aria-hidden="true">🙏</p>
+          <h1>{{ testi.chiusoTitolo }}</h1>
+          <p>{{ testi.chiusoTesto }}</p>
+        </section>
+      }
+      @case ('errore') {
+        <section class="scheda">
+          <p>{{ testi.erroreRete }}</p>
+          <button type="button" class="primario" (click)="riprova()">{{ testi.riprova }}</button>
+        </section>
+      }
+      @case ('stato') {
+        @let v = vista();
+        @if (v.tipo === 'stato') {
+          @let s = v.stato;
+          @switch (s.stato) {
+            @case ('NON_ATTIVO') {
+              <section class="scheda" data-testid="non-attivo">
+                <p class="scheda__tavolo">{{ testi.tavolo }} {{ s.tavolo.numero }}</p>
+                <p class="scheda__emoji" aria-hidden="true">🍽️</p>
+                <h1>{{ testi.nonAttivoTitolo }}</h1>
+                <p>{{ testi.nonAttivoTesto }}</p>
+                <button type="button" class="primario" (click)="riprova()">{{ testi.riprova }}</button>
+              </section>
+            }
+            @case ('PIN_RICHIESTO') {
+              <section class="scheda">
+                <p class="scheda__tavolo">{{ testi.tavolo }} {{ s.tavolo.numero }}</p>
+                <h1>{{ testi.pinTitolo }}</h1>
+                <p>{{ testi.pinTesto }}</p>
+                <form class="pin" (submit)="$event.preventDefault(); entra()">
+                  <label class="pin__campo">
+                    <span class="visually-hidden">{{ testi.pinEtichetta }}</span>
+                    <input
+                      class="pin__input"
+                      name="pin"
+                      inputmode="numeric"
+                      autocomplete="one-time-code"
+                      pattern="[0-9]*"
+                      maxlength="4"
+                      data-testid="pin-input"
+                      [value]="pin()"
+                      [disabled]="secondiBlocco() > 0"
+                      (input)="scriviPin($any($event.target).value)"
+                    />
+                    <span class="pin__caselle" aria-hidden="true">
+                      @for (i of [0, 1, 2, 3]; track i) {
+                        <span class="pin__casella" [class.pin__casella--piena]="i < pin().length">{{
+                          pin()[i] ?? ''
+                        }}</span>
+                      }
+                    </span>
+                  </label>
+                  <label class="soprannome">
+                    {{ testi.soprannomeEtichetta }}
+                    <input
+                      name="soprannome"
+                      maxlength="20"
+                      autocomplete="given-name"
+                      [value]="soprannome()"
+                      (input)="soprannome.set($any($event.target).value)"
+                    />
+                  </label>
+                  <button
+                    type="submit"
+                    class="primario"
+                    [disabled]="pin().length !== 4 || invio() || secondiBlocco() > 0"
+                  >
+                    {{ testi.entra }}
+                  </button>
+                </form>
+                @if (secondiBlocco() > 0) {
+                  <p class="avviso" role="alert" data-testid="bloccato">{{ testi.bloccato(secondiBlocco()) }}</p>
+                } @else if (errore(); as e) {
+                  <p class="avviso" role="alert">{{ e }}</p>
+                }
+              </section>
+            }
           }
         }
       }
     }
-  }
-</main>
+  </main>
+}

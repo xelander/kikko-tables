@@ -1,3 +1,5 @@
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { defineConfig } from 'vitest/config';
 
 export const TEST_DATABASE_URL =
@@ -13,6 +15,7 @@ export default defineConfig({
       DATABASE_URL: TEST_DATABASE_URL,
       THROTTLE_PUBLIC_LIMIT: '10000',
       THROTTLE_DEFAULT_LIMIT: '10000',
+      MEDIA_DIR: join(tmpdir(), 'kikko-test-media'),
     },
     // Integration tests share one database: run files sequentially.
     fileParallelism: false,
