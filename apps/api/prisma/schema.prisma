@@ -84,6 +84,7 @@ enum TipoEvento {
   TAVOLO_CHIUSO
   CONFIG_MODIFICATA
   CLIENT_RICONNESSO
+  COPERTI_MODIFICATI
 }
 
 /// Impostazioni globali del locale: una sola riga (id = 1).
@@ -265,6 +266,8 @@ model Seduta {
   chiusaDaId      String?              @db.Uuid
   chiusaDa        UtenteStaff?         @relation("ChiusaDa", fields: [chiusaDaId], references: [id])
   minutiExtra     Int                  @default(0)
+  /// Seduta in cui questa è confluita quando due tavoli aperti sono stati uniti.
+  unitaInId       String?              @db.Uuid
   tavoli          SedutaTavolo[]
   tavoliCorrenti  Tavolo[]             @relation("SedutaCorrente")
   dispositivi     DispositivoCliente[]
@@ -296,6 +299,8 @@ model DispositivoCliente {
   tokenHash     String         @unique
   soprannome    String
   emoji         String
+  /// Valorizzato per il "dispositivo" con cui un membro dello staff ordina per conto del tavolo (F3).
+  utenteStaffId String?        @db.Uuid
   creatoIl      DateTime       @default(now())
   ultimoAccesso DateTime       @default(now())
   revocatoIl    DateTime?

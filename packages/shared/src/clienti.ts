@@ -112,3 +112,23 @@ export interface ErroreGiroDto {
   codice: 'REGOLE_VIOLATE';
   errori: ErroreRegola[];
 }
+
+// ---------- Staff view of a session (waiter app, F3) ----------
+
+export interface SedutaDettaglioDto {
+  sedutaId: string;
+  ora: string;
+  tavoli: { id: string; numero: number; slugQr: string }[];
+  copertiAdulti: number;
+  copertiBambini: number;
+  formula: SedutaClienteDto['formula'] & { codice: string };
+  apertaIl: string;
+  apertaDa: string;
+  minutiExtra: number;
+  scadeIl: string;
+  pinGeneratoIl: string;
+  /** Customer phones and staff ordering devices (with `staff: true`). */
+  dispositivi: (DispositivoClienteDto & { staff: boolean })[];
+  carrello: VoceCarrelloDto[];
+  giri: GiroDto[];
+}

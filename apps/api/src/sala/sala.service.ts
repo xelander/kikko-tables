@@ -13,6 +13,7 @@ import {
 } from '@kikko/shared';
 import type { ClienteAutenticato } from '../cliente/cliente.service.js';
 import type { Attore } from '../common/attore.js';
+import { tokenCasuale, sha256 } from '../common/crypto.js';
 import { conRiprova } from '../common/serializzabile.js';
 import { EventiService, type Tx } from '../eventi/eventi.service.js';
 import { Prisma } from '../generated/prisma/client.js';
@@ -34,7 +35,23 @@ export function giroDto(g: GiroConVoci): GiroDto {
   };
 }
 
-const attoreCliente = (c: ClienteAutenticato): Attore => ({ ruolo: 'CLIENTE', id: c.dispositivo.id });
+/** Who is ordering: a customer's phone, or a staff member ordering on behalf of the table. */
+export interface Ordinante {
+  sedutaId: string;
+  dispositivo: { id: string; soprannome: string; emoji: string };
+  attore: Attore;
+}
+
+export function ordinanteCliente(c: ClienteAutenticato): Ordinante {
+  return {
+    sedutaId: c.seduta.id,
+    dispositivo: { id: c.dispositivo.id, soprannome: c.dispositivo.soprannome, emoji: c.dispositivo.emoji },
+    attore: { ruolo: 'CLIENTE', id: c.dispositivo.id },
+  };
+}
+
+/** Emoji of the device a staff member uses to order for a table. */
+export const EMOJI_STAFF = '🧑‍🍳';
 
 /**
  * The table's shared cart and rounds (CLAUDE.md §3–4).
@@ -49,8 +66,37 @@ export class SalaService {
     private readonly menu: MenuService,
   ) {}
 
-  async stato(cliente: ClienteAutenticato): Promise<SedutaClienteDto> {
-    const sedutaId = cliente.seduta.id;
+  /**
+   * The device a staff member uses to order for a table: created on first use, never given a usable token.
+   * Its lines appear in the shared cart with the chef emoji, so customers see what the waiter added.
+   */
+  async ordinanteStaff(sedutaId: string, utente: { id: string; nome: string }, attore: Attore): Promise<Ordinante> {
+    const seduta = await this.prisma.seduta.findUnique({ where: { id: sedutaId } });
+    if (!seduta) throw new NotFoundException({ codice: 'SEDUTA_INESISTENTE' });
+    if (seduta.stato !== 'APERTA') throw new HttpException({ codice: 'SEDUTA_CHIUSA' }, HttpStatus.CONFLICT);
+    const esistente = await this.prisma.dispositivoCliente.findFirst({
+      where: { sedutaId, utenteStaffId: utente.id, revocatoIl: null },
+    });
+    const dispositivo =
+      esistente ??
+      (await this.prisma.dispositivoCliente.create({
+        data: {
+          sedutaId,
+          utenteStaffId: utente.id,
+          tokenHash: sha256(tokenCasuale()),
+          soprannome: utente.nome,
+          emoji: EMOJI_STAFF,
+        },
+      }));
+    return {
+      sedutaId,
+      dispositivo: { id: dispositivo.id, soprannome: dispositivo.soprannome, emoji: dispositivo.emoji },
+      attore,
+    };
+  }
+
+  async stato(chi: Ordinante): Promise<SedutaClienteDto> {
+    const sedutaId = chi.sedutaId;
     const [seduta, dispositivi, carrello, giri, tavoli] = await Promise.all([
       this.prisma.seduta.findUniqueOrThrow({ where: { id: sedutaId } }),
       this.prisma.dispositivoCliente.findMany({
@@ -66,7 +112,7 @@ export class SalaService {
       }),
     ]);
     const formula = seduta.formulaSnapshot as unknown as FormulaSnapshot;
-    const io = cliente.dispositivo;
+    const io = chi.dispositivo;
     return {
       sedutaId,
       ora: new Date().toISOString(),
@@ -91,9 +137,9 @@ export class SalaService {
   }
 
   /** Sets this device's quantity of a dish in the shared cart (0 removes the line). */
-  async impostaVoce(cliente: ClienteAutenticato, piattoId: string, quantita: number): Promise<VoceCarrelloDto[]> {
-    const sedutaId = cliente.seduta.id;
-    const dispositivoId = cliente.dispositivo.id;
+  async impostaVoce(chi: Ordinante, piattoId: string, quantita: number): Promise<VoceCarrelloDto[]> {
+    const sedutaId = chi.sedutaId;
+    const dispositivoId = chi.dispositivo.id;
     return this.eventi.transazione(async (tx, registro) => {
       const piatto = await tx.piatto.findUnique({ where: { id: piattoId }, select: { id: true } });
       if (!piatto) throw new NotFoundException({ codice: 'PIATTO_INESISTENTE' });
@@ -109,7 +155,7 @@ export class SalaService {
           });
         await registro.registra({
           tipo: 'CARRELLO_MODIFICATO',
-          attore: attoreCliente(cliente),
+          attore: chi.attore,
           sedutaId,
           payload: { piattoId, quantita, dispositivoId },
         });
@@ -123,8 +169,8 @@ export class SalaService {
    * Idempotent: the same key always returns the same round (a double tap or a retry after a network
    * error never creates a duplicate). Concurrent sends from two phones are serialised by PostgreSQL.
    */
-  async inviaGiro(cliente: ClienteAutenticato, chiaveIdempotenza: string): Promise<{ giro: GiroDto; nuovo: boolean }> {
-    const sedutaId = cliente.seduta.id;
+  async inviaGiro(chi: Ordinante, chiaveIdempotenza: string): Promise<{ giro: GiroDto; nuovo: boolean }> {
+    const sedutaId = chi.sedutaId;
     const esistente = await this.giroPerChiave(sedutaId, chiaveIdempotenza);
     if (esistente) return { giro: esistente, nuovo: false };
 
@@ -170,7 +216,7 @@ export class SalaService {
                 chiaveIdempotenza,
                 soloExtra: soloExtra(ctx, voci),
                 inviatoIl: ctx.ora,
-                inviatoDaId: cliente.dispositivo.id,
+                inviatoDaId: chi.dispositivo.id,
                 voci: {
                   create: voci.map((v) => {
                     const p = regole.piatti.get(v.piattoId)!;
@@ -189,7 +235,7 @@ export class SalaService {
             const tavolo = await tx.sedutaTavolo.findFirst({ where: { sedutaId, alIl: null } });
             await registro.registra({
               tipo: 'GIRO_INVIATO',
-              attore: attoreCliente(cliente),
+              attore: chi.attore,
               sedutaId,
               tavoloId: tavolo?.tavoloId ?? null,
               payload: {

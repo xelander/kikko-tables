@@ -13,7 +13,8 @@ const CAMPI_CLIENTE: Partial<Record<TipoEvento, readonly string[]>> = {
   TEMPO_SCADUTO: [],
   TEMPO_ESTESO: ['minuti', 'scadeIl'],
   TAVOLI_UNITI: ['tavoli'],
-  TAVOLO_SPOSTATO: ['tavoloNumero'],
+  TAVOLO_SPOSTATO: ['tavoloNumero', 'tavoli'],
+  COPERTI_MODIFICATI: ['copertiAdulti', 'copertiBambini'],
   TAVOLO_CHIUSO: [],
 };
 

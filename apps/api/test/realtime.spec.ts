@@ -282,6 +282,33 @@ describe('real-time gateway', () => {
     expect(Object.keys(luca.diTipo('GIRO_INVIATO')[0]!.payload).sort()).toEqual(['giroId', 'numero']);
   });
 
+  it('when two open tables are merged, the absorbed phones reconnect into the merged session', async () => {
+    const cena = await formulaCena(prisma);
+    const server = app.getHttpServer();
+    const a = await apriTavolo(server, mario, (await tavolo(prisma, 7)).id, cena.id);
+    const b = await apriTavolo(server, mario, (await tavolo(prisma, 8)).id, cena.id);
+    const cookieLuca = await clienteAlTavolo(8, b.pin);
+    const luca = client({ cookie: cookieLuca });
+    await luca.connetti();
+    await attendi(() => luca.ultimaSync !== null);
+
+    await request(server)
+      .post(`/api/sedute/${a.seduta.id}/unisci`)
+      .set('Authorization', `Bearer ${mario.accessToken}`)
+      .send({ sedutaId: b.seduta.id })
+      .expect(200);
+    await attendi(() => luca.terminata !== null && !luca.socket.connected);
+    expect(luca.terminata).toEqual({ motivo: 'TAVOLI_UNITI' });
+
+    // reconnecting with the same cookie puts the phone in the merged session's room
+    const dopo = client({ cookie: cookieLuca });
+    await dopo.connetti();
+    await attendi(() => dopo.ultimaSync !== null);
+    await clienteAlTavolo(7, a.pin);
+    await attendi(() => dopo.diTipo('DISPOSITIVO_UNITO').length === 1);
+    expect(dopo.diTipo('DISPOSITIVO_UNITO')[0]!.sedutaId).toBe(a.seduta.id);
+  });
+
   it('closing the table ends the customer session and refuses reconnection', async () => {
     const cena = await formulaCena(prisma);
     const server = app.getHttpServer();

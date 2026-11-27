@@ -13,7 +13,7 @@ import { Pubblico } from '../auth/decorators.js';
 import { ClienteCorrente, ClienteGuard } from '../cliente/cliente.guard.js';
 import type { ClienteAutenticato } from '../cliente/cliente.service.js';
 import { ZodPipe } from '../common/zod.pipe.js';
-import { SalaService } from './sala.service.js';
+import { SalaService, ordinanteCliente } from './sala.service.js';
 
 /** Customer ordering: session state, shared cart, rounds. Authenticated by the device cookie. */
 @Controller('cliente')
@@ -28,7 +28,7 @@ export class SalaController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<SedutaClienteDto> {
     res.setHeader('Cache-Control', 'no-store');
-    return this.sala.stato(cliente);
+    return this.sala.stato(ordinanteCliente(cliente));
   }
 
   @Put('carrello/:piattoId')
@@ -37,7 +37,7 @@ export class SalaController {
     @Param('piattoId', new ParseUUIDPipe()) piattoId: string,
     @Body(new ZodPipe(ImpostaVoceSchema)) body: ImpostaVoceRichiesta,
   ): Promise<VoceCarrelloDto[]> {
-    return this.sala.impostaVoce(cliente, piattoId, body.quantita);
+    return this.sala.impostaVoce(ordinanteCliente(cliente), piattoId, body.quantita);
   }
 
   /** 201 for a new round, 200 when the key was already used (the same round is returned). */
@@ -47,7 +47,7 @@ export class SalaController {
     @Body(new ZodPipe(InviaGiroSchema)) body: InviaGiroRichiesta,
     @Res({ passthrough: true }) res: Response,
   ): Promise<GiroDto> {
-    const { giro, nuovo } = await this.sala.inviaGiro(cliente, body.chiaveIdempotenza);
+    const { giro, nuovo } = await this.sala.inviaGiro(ordinanteCliente(cliente), body.chiaveIdempotenza);
     res.status(nuovo ? HttpStatus.CREATED : HttpStatus.OK);
     return giro;
   }

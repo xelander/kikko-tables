@@ -158,6 +158,15 @@ export class RealtimeGateway implements OnGatewayInit, OnModuleDestroy {
       this.server.to(room).emit(SOCKET.terminata, motivo);
       this.server.in(room).disconnectSockets(true);
     }
+    // Two open tables merged: the phones of the absorbed session now belong to this one.
+    // They are told to reload and reconnect, which puts them in the right room.
+    const assorbita = evento.tipo === 'TAVOLI_UNITI' ? evento.payload['sedutaAssorbitaId'] : undefined;
+    if (typeof assorbita === 'string') {
+      const vecchia = stanza.seduta(assorbita);
+      const motivo: SessioneTerminata = { motivo: 'TAVOLI_UNITI' };
+      this.server.to(vecchia).emit(SOCKET.terminata, motivo);
+      this.server.in(vecchia).disconnectSockets(true);
+    }
   }
 
   private filtra(eventi: EventoDto[], identita: IdentitaSocket): EventoDto[] {

@@ -44,17 +44,34 @@ export interface DispositivoCondivisoInfo {
 
 // ---------- Tables and sessions (staff) ----------
 
+const coperti = {
+  copertiAdulti: z.number().int().min(0).max(50),
+  copertiBambini: z.number().int().min(0).max(50),
+};
+const almenoUnCoperto = (r: { copertiAdulti: number; copertiBambini: number }) =>
+  r.copertiAdulti + r.copertiBambini >= 1;
+
 export const ApriTavoloSchema = z
-  .object({
-    formulaId: z.uuid(),
-    copertiAdulti: z.number().int().min(0).max(50),
-    copertiBambini: z.number().int().min(0).max(50),
-  })
-  .refine((r) => r.copertiAdulti + r.copertiBambini >= 1, {
-    message: 'Serve almeno un coperto',
-    path: ['copertiAdulti'],
-  });
+  .object({ formulaId: z.uuid(), ...coperti })
+  .refine(almenoUnCoperto, { message: 'Serve almeno un coperto', path: ['copertiAdulti'] });
 export type ApriTavoloRichiesta = z.infer<typeof ApriTavoloSchema>;
+
+export const CopertiSchema = z
+  .object(coperti)
+  .refine(almenoUnCoperto, { message: 'Serve almeno un coperto', path: ['copertiAdulti'] });
+export type CopertiRichiesta = z.infer<typeof CopertiSchema>;
+
+/** Move the session from one of its tables to a free table. */
+export const SpostaTavoloSchema = z.object({ daTavoloId: z.uuid(), aTavoloId: z.uuid() });
+export type SpostaTavoloRichiesta = z.infer<typeof SpostaTavoloSchema>;
+
+/** Join a free table to an open session. */
+export const AggiungiTavoloSchema = z.object({ tavoloId: z.uuid() });
+export type AggiungiTavoloRichiesta = z.infer<typeof AggiungiTavoloSchema>;
+
+/** Merge another open session (same formula) into this one. */
+export const UnisciSeduteSchema = z.object({ sedutaId: z.uuid() });
+export type UnisciSeduteRichiesta = z.infer<typeof UnisciSeduteSchema>;
 
 export interface SedutaRiepilogo {
   id: string;
@@ -64,7 +81,15 @@ export interface SedutaRiepilogo {
   copertiAdulti: number;
   copertiBambini: number;
   formula: { id: string; codice: string; nome: { it: string; en: string } };
+  /** Customer phones joined (the staff ordering device is not counted). */
   dispositiviCollegati: number;
+  /** Numbers of every table of the session (more than one when tables are joined). */
+  tavoli: number[];
+  /** Rounds sent and waiting for approval. */
+  giriInAttesa: number;
+  /** Pieces currently in the shared cart. */
+  pezziNelCarrello: number;
+  ultimoGiroIl: string | null;
 }
 
 export interface TavoloStato {

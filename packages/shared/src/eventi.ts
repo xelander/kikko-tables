@@ -18,6 +18,7 @@ export const TIPI_EVENTO = [
   'TAVOLO_CHIUSO',
   'CONFIG_MODIFICATA',
   'CLIENT_RICONNESSO',
+  'COPERTI_MODIFICATI',
 ] as const;
 export type TipoEvento = (typeof TIPI_EVENTO)[number];
 
@@ -69,5 +70,6 @@ export type SyncRisposta =
   { esito: 'eventi'; eventi: EventoDto[]; ultimoSeq: number } | { esito: 'snapshot_required'; ultimoSeq: number };
 
 export interface SessioneTerminata {
-  motivo: 'TAVOLO_CHIUSO' | 'LOGOUT' | 'NON_AUTORIZZATO';
+  /** TAVOLI_UNITI: the table joined another open table; the client reloads and follows the new session. */
+  motivo: 'TAVOLO_CHIUSO' | 'TAVOLI_UNITI' | 'LOGOUT' | 'NON_AUTORIZZATO';
 }
