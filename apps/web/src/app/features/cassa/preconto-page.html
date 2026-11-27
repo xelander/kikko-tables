@@ -40,9 +40,9 @@
         <dd>{{ p.formula }}</dd>
         <dt>Coperti</dt>
         <dd>
-          {{ p.copertiAdulti }} adulti
+          {{ p.copertiAdulti }} {{ p.copertiAdulti === 1 ? 'adulto' : 'adulti' }}
           @if (p.copertiBambini > 0) {
-            + {{ p.copertiBambini }} bambini
+            + {{ p.copertiBambini }} {{ p.copertiBambini === 1 ? 'bambino' : 'bambini' }}
           }
         </dd>
         <dt>Data</dt>

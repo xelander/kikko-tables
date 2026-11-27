@@ -80,7 +80,7 @@ describe('PrecontoPage', () => {
     expect(testo(scontrino)).toContain('PRE-CONTO');
     expect(testo(scontrino)).toContain('Documento non fiscale');
     const dati = Array.from(scontrino.querySelectorAll('dd')).map((d) => testo(d).trim());
-    expect(dati.slice(0, 3)).toEqual(['4', 'Cena', '2 adulti + 1 bambini']);
+    expect(dati.slice(0, 3)).toEqual(['4', 'Cena', '2 adulti + 1 bambino']);
     const righe = Array.from(scontrino.querySelectorAll('tbody tr')).map((r) =>
       Array.from(r.querySelectorAll('td')).map((c) => testo(c).trim()),
     );

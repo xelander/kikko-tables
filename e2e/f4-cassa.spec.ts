@@ -103,7 +103,7 @@ test.describe('F4 – manager at the till', () => {
     await riga.getByRole('link', { name: 'Pre-conto' }).click();
     const scontrino = page.getByTestId('preconto');
     await expect(scontrino).toContainText('Documento non fiscale');
-    await expect(scontrino).toContainText('2 adulti + 1 bambini');
+    await expect(scontrino).toContainText('2 adulti + 1 bambino');
     await expect(scontrino).toContainText('Cola 33 cl');
 
     page.on('dialog', (d) => void d.accept());
